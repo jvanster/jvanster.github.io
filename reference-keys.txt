@@ -1,7 +1,0 @@
-fig:nice-fig
-tab:nice-tab
-introduction
-independent-t-test
-paired-samples-t-test
-one-way-anova
-two-way-anova
