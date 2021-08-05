@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="James Van Slyke" />
+
+
+<title>Intro to ggplot</title>
+
+<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Using R Studio for Statistics</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Basics
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Intro_to_R.html">Intro to R</a>
+    </li>
+    <li>
+      <a href="Covid_Cases.html">Covid Cases</a>
+    </li>
+    <li>
+      <a href="Descriptive_Statistics.html">Descriptive Statistics</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Graphs
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Intro_ggplot.html">Intro to ggplot</a>
+    </li>
+    <li>
+      <a href="Bar_Graphs_CI.html">Bar Graphs with 95% CIs</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Statistical Tests
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Independent_t-test.html">Independent t-test</a>
+    </li>
+    <li>
+      <a href="Paired_samples_t-test.html">Paired Samples t-test</a>
+    </li>
+    <li>
+      <a href="One_Way_ANOVA.html">One-Way ANOVA</a>
+    </li>
+    <li>
+      <a href="Two_Way_ANOVA.html">Two-Way ANOVA</a>
+    </li>
+    <li>
+      <a href="Chi_Square.html">Chi Square</a>
+    </li>
+    <li>
+      <a href="Regression.html">Regression</a>
+    </li>
+    <li>
+      <a href="Correlation.html">Correlation</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Intro to ggplot</h1>
+<h4 class="author">James Van Slyke</h4>
+
+</div>
+
+
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
+<p>ggplot is a graphic language that we use to make graphs. The basic text we use to understand how to do ggplot is called <em>R for Data Science</em></p>
+<p>Like a lot of other attractive things about R and R Studio the book is free!! and probably one of the best resources for understanding R and Data.</p>
+<p>You can find the book <a href="https://r4ds.had.co.nz/index.html">here</a></p>
+<p>I’ll be using several modified examples from chapter 3 of that book.</p>
+<p>First you’ll want to load “tidyverse” as a package. Here’s how we find and load packages in R Studio.</p>
+<ol style="list-style-type: decimal">
+<li>First search under “Packages” in the bottom right window</li>
+<li>Second Click on install and search for it in the CRAN responsitory</li>
+<li>Third Make sure you click on tidyverse under packages</li>
+</ol>
+<p>This will execute a command that looks like the following</p>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<p>We’ll start off by using a dataset called “mpg” It should have loaded with the tidyverse package. Just type it in to find it</p>
+<pre class="r"><code>mpg</code></pre>
+<pre><code>## # A tibble: 234 x 11
+##    manufacturer model displ  year   cyl trans drv     cty   hwy fl   
+##    &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;
+##  1 audi         a4      1.8  1999     4 auto… f        18    29 p    
+##  2 audi         a4      1.8  1999     4 manu… f        21    29 p    
+##  3 audi         a4      2    2008     4 manu… f        20    31 p    
+##  4 audi         a4      2    2008     4 auto… f        21    30 p    
+##  5 audi         a4      2.8  1999     6 auto… f        16    26 p    
+##  6 audi         a4      2.8  1999     6 manu… f        18    26 p    
+##  7 audi         a4      3.1  2008     6 auto… f        18    27 p    
+##  8 audi         a4 q…   1.8  1999     4 manu… 4        18    26 p    
+##  9 audi         a4 q…   1.8  1999     4 auto… 4        16    25 p    
+## 10 audi         a4 q…   2    2008     4 manu… 4        20    28 p    
+## # … with 224 more rows, and 1 more variable: class &lt;chr&gt;</code></pre>
+<p>It shows the dataset as a “tibble”, which just means table in the tidyverse</p>
+<p>You can also view it as a regular dataset</p>
+<pre class="r"><code>View(mpg)</code></pre>
+<p>Because it’s a preloaded dataset we can get information about it by using a question mark. A question mark in front of any command in R will automatically generate the help file</p>
+<pre class="r"><code>?mpg</code></pre>
+<p>Let’s start by creating a simple scatterplot graph</p>
+<pre class="r"><code>ggplot(data = mpg) +
+  geom_point(mapping = aes(x= displ, y=hwy))</code></pre>
+<p><img src="Intro_ggplot_files/figure-html/unnamed-chunk-5-1.png" width="672" /> There’s a few things to learn here in the code</p>
+<ol style="list-style-type: decimal">
+<li>ggplot is the basic command and within the parentheses is the data we’ll be running our graph on</li>
+<li>geom_point is the type of graph will be using, geom stands for geometrical shape. So in this case we are making a graph of “points”</li>
+<li>The “mapping” argument lays out the variables we are graphing and is always paired with “aes”. Finally x and y lay out which variables are going to be on our x and y axes.</li>
+</ol>
+<p>So our basic formual looks lke this: ggplot(data = <DATA>) + <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))</p>
+<p>About the variables</p>
+<p>If you look at the variables, you’ll notice that hwy and displ are numbers and R views them as integers or whole numbers. Scatterplots usually require data that are numeric like this, numbers that go up in scale.</p>
+<p>One peculiar thing about this graph is the group of numbers just above the numbers in the right corner. The general trend we see in these variables is that as displacement goes up (i.e. the engine using more gasoline) the highway mileage goes down. This is sometimes referred to as a negative relationship. The cars with the best highway mileage displace the least amount of gasoline. However, there’s a group of dots that range between 20 and 30 on the hwy variable, but seem to displace more gasoline than most. How can this be?</p>
+<p>One way we can answer this question is by adding in an additional variable. In this case the class or type of car. Let’s add that in now as an additional variable to our graph.</p>
+<pre class="r"><code>ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, color = class))</code></pre>
+<p><img src="Intro_ggplot_files/figure-html/unnamed-chunk-6-1.png" width="672" /> Notice how most of those dots are 2 seater cars. Thus the reason they get better gas mileage is because they are smaller cars!!</p>
+<p>Class is a particular kind of variable, in this case a nominal or categorical variable. r refers to them as characters. These are basically categories, so we can’t do any math on them. You can’t make a formula out of compact x midsize or minivan/pickup.</p>
+<p>Let’s do one more graph, but add a little color</p>
+<pre class="r"><code>ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy), color = &quot;blue&quot;)</code></pre>
+<p><img src="Intro_ggplot_files/figure-html/unnamed-chunk-7-1.png" width="672" /> Notice how when the word “color” is outside the x and y mappings it changes the color of our points. You can try several different colors for the points</p>
+<p>Let’s learn one more graph, which is especially important for categorical variables, the bar graph.</p>
+<p>First, download the “diamonds” data set</p>
+<pre class="r"><code>diamonds</code></pre>
+<pre><code>## # A tibble: 53,940 x 10
+##    carat cut       color clarity depth table price     x     y     z
+##    &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 0.23  Ideal     E     SI2      61.5    55   326  3.95  3.98  2.43
+##  2 0.21  Premium   E     SI1      59.8    61   326  3.89  3.84  2.31
+##  3 0.23  Good      E     VS1      56.9    65   327  4.05  4.07  2.31
+##  4 0.290 Premium   I     VS2      62.4    58   334  4.2   4.23  2.63
+##  5 0.31  Good      J     SI2      63.3    58   335  4.34  4.35  2.75
+##  6 0.24  Very Good J     VVS2     62.8    57   336  3.94  3.96  2.48
+##  7 0.24  Very Good I     VVS1     62.3    57   336  3.95  3.98  2.47
+##  8 0.26  Very Good H     SI1      61.9    55   337  4.07  4.11  2.53
+##  9 0.22  Fair      E     VS2      65.1    61   337  3.87  3.78  2.49
+## 10 0.23  Very Good H     VS1      59.4    61   338  4     4.05  2.39
+## # … with 53,930 more rows</code></pre>
+<p>You can check out more info about it with a ? mark in front of it.</p>
+<pre class="r"><code>?diamonds</code></pre>
+<p>So the basics of the formula is going to be the same, but this time we are using “geom_bar” as our geometrical shape to create a bar graph.</p>
+<pre class="r"><code>ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut))</code></pre>
+<p><img src="Intro_ggplot_files/figure-html/unnamed-chunk-10-1.png" width="672" /> 3.7 in R for Data Science does a good job explaining what the code is doing here.</p>
+<p>Here’s another example from scratch</p>
+<pre class="r"><code>Example &lt;- tribble(
+  ~group, ~number, 
+  &quot;Group 1&quot;, 30, 
+  &quot;Group 2&quot;, 50
+)</code></pre>
+<p>When we use a y variable for our bar chart we have to use a different stat for the bar chart, in this case, the stat is “identity” so it looks like this.</p>
+<pre class="r"><code>ggplot(data = Example) +
+  geom_bar(mapping = aes(x = group, y = number), stat = &quot;identity&quot;)</code></pre>
+<p>So this is the basic format to use for any bar graph.</p>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

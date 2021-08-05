@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="James Van Slyke" />
+
+
+<title>Covid Cases</title>
+
+<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Using R Studio for Statistics</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Basics
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Intro_to_R.html">Intro to R</a>
+    </li>
+    <li>
+      <a href="Covid_Cases.html">Covid Cases</a>
+    </li>
+    <li>
+      <a href="Descriptive_Statistics.html">Descriptive Statistics</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Graphs
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Intro_ggplot.html">Intro to ggplot</a>
+    </li>
+    <li>
+      <a href="Bar_Graphs_CI.html">Bar Graphs with 95% CIs</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Statistical Tests
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Independent_t-test.html">Independent t-test</a>
+    </li>
+    <li>
+      <a href="Paired_samples_t-test.html">Paired Samples t-test</a>
+    </li>
+    <li>
+      <a href="One_Way_ANOVA.html">One-Way ANOVA</a>
+    </li>
+    <li>
+      <a href="Two_Way_ANOVA.html">Two-Way ANOVA</a>
+    </li>
+    <li>
+      <a href="Chi_Square.html">Chi Square</a>
+    </li>
+    <li>
+      <a href="Regression.html">Regression</a>
+    </li>
+    <li>
+      <a href="Correlation.html">Correlation</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Covid Cases</h1>
+<h4 class="author">James Van Slyke</h4>
+
+</div>
+
+
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
+<p>###Scientific Notation</p>
+<p>When you first get R and R Studio set up, it may be using scientific notation to express larger numbers. So you’ll see numbers like this <span class="math display">\[
+5.234e+10
+\]</span> This is a type of exponent, which is in a scientific notation format. Here’s a simpler example to understand what this means. Let’s start with a number like 28.</p>
+<p>In scientific notation this would look like <span class="math display">\[
+2.8e+01
+\]</span> Or in an exponential form more familar <span class="math display">\[
+2.8x10^1
+\]</span> So it’s 2.8 times 10 to the first power. 280 Would look like this <span class="math display">\[
+2.8e+02/
+or/
+2.8x10^2
+\]</span> It’s basically an easier way to represent larger numbers like 280 million (280,000,000) <span class="math display">\[
+2.8e+08/
+or/
+2.8x10^8
+\]</span> To turn this off this setting do the following</p>
+<pre class="r"><code>options(scipen = 999)</code></pre>
+<p>If you want to turn it back on, do this</p>
+<pre class="r"><code>options(scipen = 0)</code></pre>
+<div id="more-work-on-databases" class="section level3">
+<h3>More work on databases</h3>
+<p>Let’s make up a database based on covid figures from the <em>New York Times</em>.</p>
+<ol style="list-style-type: decimal">
+<li>Create your objects</li>
+<li>Make sure to use quotations for objects that are names or titles (Remember these are categorical variables)</li>
+</ol>
+<pre class="r"><code>Countries &lt;- c(&quot;United States&quot;, &quot;India&quot;, &quot;Brazil&quot;, &quot;Russia&quot;, &quot;UK&quot;)</code></pre>
+<pre class="r"><code>Total_Cases  &lt;- c(24249722, 10581837,8511770,3574330, 3466849)</code></pre>
+<pre class="r"><code>Total_Deaths &lt;- c(400810, 152556, 210299,65632,91470)</code></pre>
+<p>Then you can use the data.frame command to put them all together</p>
+<pre class="r"><code>Covid &lt;- data.frame(Countries, Total_Cases, Total_Deaths)</code></pre>
+<p>You could actually do all these steps at the same time</p>
+<pre class="r"><code>Covid_Again &lt;- data.frame(Countries = c(&quot;United States&quot;, &quot;India&quot;, 
+                          &quot;Brazil&quot;, &quot;Russia&quot;, &quot;UK&quot;), 
+                          Total_Cases  = c(24249722, 10581837,8511770,
+                                           3574330, 3466849),  
+                          Total_Deaths = c(400810, 152556, 210299,65632,91470))</code></pre>
+<p>Another nice way to make a dataset is by using a <em>tibble</em></p>
+<p>This is part of the tidyverse package and simplifies the code somewhat. Notice that the command to make a tibble is actually <em>tribble</em>.</p>
+<pre class="r"><code>Covid_TR &lt;- tribble(
+            ~Countries, ~Total_Cases, ~Total_Deaths, 
+            &quot;United States&quot;, 24249722, 400810, 
+            &quot;India&quot;, 10581837, 152556, 
+            &quot;Brazil&quot;, 8511770, 210299, 
+            &quot;Russia&quot;, 3574330, 65632, 
+            &quot;UK&quot;, 3466849, 91470
+)</code></pre>
+<p>A tibble is nice because it sets it up more like a spreadsheet.</p>
+<p>Notice that the <em>~</em> specifies the columns or variables and then the rest are like rows.</p>
+</div>
+<div id="manipulate-data" class="section level3">
+<h3>Manipulate Data</h3>
+<p>Mortality rate is total deaths divided by the total number of cases. You can use R to calculate this for you and then create the object.</p>
+<pre class="r"><code>Mortality_Rate &lt;-  c(Total_Deaths/Total_Cases)</code></pre>
+<p>Then we can add all four variables together to remake our covid data.frame</p>
+<pre class="r"><code>Covid &lt;- data.frame(Countries,Total_Cases,Total_Deaths,Mortality_Rate)</code></pre>
+<p>Tidyverse supplies some other helps here if we are using tibbles.</p>
+<p>We can use <em>mutate</em> to add in the other variable based on a computation.</p>
+<pre class="r"><code>Covid_TR &lt;- mutate(Covid_TR, Mortality_Rate = Total_Deaths/Total_Cases)</code></pre>
+<p>We can use <em>rename</em> to change the name of our variable</p>
+<pre class="r"><code>Covid_TR &lt;- rename(Covid_TR, Mortality = Mortality_Rate)</code></pre>
+<p>You can practice this on your own.</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
