@@ -339,6 +339,10 @@ $(document).ready(function () {
 </script>
 <p><em>R</em> is the base program for R Studio, it does all the calculations, while <em>R studio</em> is the addition of several windows around R that helps with your analysis</p>
 <p>In R Studio, “R” performs calculations in the <em>console</em>. The console is in the lower left window. You can think of the console as a big calculator. You can do all the basics with R.</p>
+<p>The Editor is where you write</p>
+<p>Here is a picture of what the program looks like and the different sections.</p>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/8a64bb047429d7ae0e2acae35c40e421e6439bf6/80e5d/diagrams/rstudio-editor.png" /></p>
+<p>The <em>Editor</em> is where you write the code and notes to yourself in <em>scripts</em>. The console is where you code gets entered and run and the <em>output</em> is in the lower right hand corner. The upper left hand window is the <em>environment</em> and keeps track of the data and other things used in your analysis.</p>
 <div id="basic-calculations-using-r" class="section level3">
 <h3>Basic Calculations using R</h3>
 <p>Addition</p>
@@ -475,7 +479,7 @@ Sequence</code></pre>
 <p>Here’s two examples of good vs. bad code</p>
 <div id="bad-code" class="section level4">
 <h4>Bad code</h4>
-<p>df1&lt;-data.frame(a=rnorm(10,1,1),b=rnorm(10,4,8),c=rnorm(10,8,1),d=rnorm(10,7,2))</p>
+<pre class="r"><code>df1&lt;-data.frame(a=rnorm(10,1,1),b=rnorm(10,4,8),c=rnorm(10,8,1),d=rnorm(10,7,2))</code></pre>
 </div>
 <div id="good-code" class="section level4">
 <h4>Good code</h4>
@@ -490,7 +494,7 @@ Sequence</code></pre>
 <pre class="r"><code># Here&#39;s how to find the mean
 mean(iris$Sepal.Width)</code></pre>
 <pre><code>## [1] 3.057333</code></pre>
-<p>So you can use hashmarks “#” to write notes to yourself about the code you are using. Once you’ve typed in your code into the script you can hit CTRL+Return to send the code to the console and run it to get your output.</p>
+<p>So you can use <em>hashmarks</em> “#” to write notes to yourself about the code you are using. Once you’ve typed in your code into the script you can hit CTRL+Return to send the code to the console and run it to get your output.</p>
 <p>It’s a great way to teach yourself and remember what you learned and use the code again when you are in a similar situation.</p>
 </div>
 </div>
