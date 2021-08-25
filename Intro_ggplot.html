@@ -263,7 +263,7 @@ $(document).ready(function () {
       <a href="Intro_to_R.html">Intro to R</a>
     </li>
     <li>
-      <a href="Covid_Cases.html">Covid Cases</a>
+      <a href="Building_databases.html">Building Databases</a>
     </li>
     <li>
       <a href="Descriptive_Statistics.html">Descriptive Statistics</a>
@@ -370,24 +370,46 @@ $(document).ready(function () {
 <pre class="r"><code>View(mpg)</code></pre>
 <p>Because it’s a preloaded dataset we can get information about it by using a question mark. A question mark in front of any command in R will automatically generate the help file</p>
 <pre class="r"><code>?mpg</code></pre>
+<div id="levels-of-measurement" class="section level3">
+<h3>Levels of Measurement</h3>
+<ul>
+<li>Categorical
+<ul>
+<li>Binary variable</li>
+<li>Nominal variable</li>
+</ul></li>
+<li>Continuous
+<ul>
+<li>Interval variable</li>
+<li>Ratio variable</li>
+</ul></li>
+</ul>
+<p>Datasets contain several different variables. Notice in the mpg dataset, there are several different variables such as <em>model</em>, <em>year</em>, <em>cty</em>, and <em>hwy</em>. These are several different types of variables because they represent different kinds of things. In statistics we refer to this as <em>levels of measurement</em>. There are two broad types of variables, <em>categorical</em> and <em>continuous</em> (Field, 2009, pages 8-9). Categorical variables are based on particular categories, such a type of shoe, religious affiliation, or political affiliation. A <em>binary</em> variable is a type of categorical variable that only takes two categories. So things like being pregnant or not, voting yes or no on a certain bill, or being alive or dead are binary variables, there are only two possible things in the category. Categorical variables that take on more than 2 possibilities are called <em>nominal</em> variables (nominal means names)</p>
+<p>There’s no mathematics involved in determining categorical variables, it’s simply based on which category has the most accurate fit. Either you are a republican, democrat, or independent, there is no mathematical quantity that would determine the appropriate category. There is one type of categorical variable that is ordered based on the absence or presence of a particular property, which is an <em>ordinal</em> variable. Ordinal variables have a particular rank order, but the rankings are <em>not</em> equal or uniform. So for example, college basketball team rankings would be an ordinal variable. The teams are ranked from best to worst, but team #2 may be twice is good as team #3, while team #5 maybe four times as good as team #6. So ordinal data tells us more about the variable than nominal data, but it still doesn’t provide a standardized scale of measurement.</p>
+<p><em>Continuous</em> variables are the second broad category and involves some type of numerical measurement to define the property in the variable. Continuous variables can take on any value in the measurement scale defined by the variable. The first example of this type variable is an <em>interval</em> variable. These types of variables are based on a measurement scale with equal distances between the ranks based on the property measured; equal intervals in the scale are able to represent equal differences in the variable being measured. The Fahrenheit scale would be an interval scale because the difference in degree between 64 and 65 is the same as 74 and 75.</p>
+<p><em>Ratio</em> variables add one more dimension to the properties of an interval variable. In addition to having an equal distance in ranks, ratios have an absolute zero point. This allows for multiplication of the intervals or the use of ratios. So on a ratio scale of 0 to 5, a score of 4 would be twice as good as a score of 2. Time is a good example of a ratio scale. There is an absolute zero point (there is no such thing as negative time), the distance between 40 and 60 seconds is the same as the distance between 30 and 10 seconds. And 20 seconds is twice as long as 10 seconds. Another example, Fahrenheit is an interval scale because you can have negative degrees (e. g. -2 degrees below zero), while the Kelvin scale is a ratio scale because there is an absolute zero point and no negative numbers.</p>
+<p>One other property of continuous variables is that they allow for different degrees of measurement precision. So for example, the continuous ratio variable of time can be measured in hours, minutes, seconds, milliseconds, etc. In contrast, a <em>discrete</em> variable can only take on a fixed measurement scale, like a rank scale of 1 to 10. The scale requires that you choose a value between 1 and 10, 2.5 is not possible.</p>
 <p>Let’s start by creating a simple scatterplot graph</p>
 <pre class="r"><code>ggplot(data = mpg) +
   geom_point(mapping = aes(x= displ, y=hwy))</code></pre>
-<p><img src="Intro_ggplot_files/figure-html/unnamed-chunk-5-1.png" width="672" /> There’s a few things to learn here in the code</p>
+<p><img src="Intro_ggplot_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>There’s a few things to learn here in the code</p>
 <ol style="list-style-type: decimal">
 <li>ggplot is the basic command and within the parentheses is the data we’ll be running our graph on</li>
 <li>geom_point is the type of graph will be using, geom stands for geometrical shape. So in this case we are making a graph of “points”</li>
 <li>The “mapping” argument lays out the variables we are graphing and is always paired with “aes”. Finally x and y lay out which variables are going to be on our x and y axes.</li>
 </ol>
-<p>So our basic formual looks lke this: ggplot(data = <DATA>) + <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))</p>
-<p>About the variables</p>
-<p>If you look at the variables, you’ll notice that hwy and displ are numbers and R views them as integers or whole numbers. Scatterplots usually require data that are numeric like this, numbers that go up in scale.</p>
+<p>So our basic formula looks lke this: ggplot(data = <DATA>) + <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))</p>
+</div>
+<div id="about-the-variables" class="section level3">
+<h3>About the variables</h3>
+<p>If you look at the variables, you’ll notice that hwy and displ are numbers and R views them as integers or whole numbers. Scatterplots usually require data that are numeric like this, numbers that go up in scale. So in this case scatterplots typically require <em>interval</em> or <em>ratio</em> data.</p>
 <p>One peculiar thing about this graph is the group of numbers just above the numbers in the right corner. The general trend we see in these variables is that as displacement goes up (i.e. the engine using more gasoline) the highway mileage goes down. This is sometimes referred to as a negative relationship. The cars with the best highway mileage displace the least amount of gasoline. However, there’s a group of dots that range between 20 and 30 on the hwy variable, but seem to displace more gasoline than most. How can this be?</p>
 <p>One way we can answer this question is by adding in an additional variable. In this case the class or type of car. Let’s add that in now as an additional variable to our graph.</p>
 <pre class="r"><code>ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy, color = class))</code></pre>
-<p><img src="Intro_ggplot_files/figure-html/unnamed-chunk-6-1.png" width="672" /> Notice how most of those dots are 2 seater cars. Thus the reason they get better gas mileage is because they are smaller cars!!</p>
-<p>Class is a particular kind of variable, in this case a nominal or categorical variable. r refers to them as characters. These are basically categories, so we can’t do any math on them. You can’t make a formula out of compact x midsize or minivan/pickup.</p>
+<p><img src="Intro_ggplot_files/figure-html/unnamed-chunk-6-1.png" width="672" /> Notice how most of those dots are 2 seater cars. Thus, the reason they get better gas mileage is because they are smaller cars!!</p>
+<p>Class is a particular kind of variable, in this case a <em>nominal</em> or <em>categorical</em> variable. r refers to them as characters. These are basically categories, so we can’t do any math on them. You can’t make a formula out of compact x midsize or minivan/pickup.</p>
 <p>Let’s do one more graph, but add a little color</p>
 <pre class="r"><code>ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy), color = &quot;blue&quot;)</code></pre>
@@ -409,12 +431,12 @@ $(document).ready(function () {
 ##  9 0.22  Fair      E     VS2      65.1    61   337  3.87  3.78  2.49
 ## 10 0.23  Very Good H     VS1      59.4    61   338  4     4.05  2.39
 ## # … with 53,930 more rows</code></pre>
-<p>You can check out more info about it with a ? mark in front of it.</p>
-<pre class="r"><code>?diamonds</code></pre>
-<p>So the basics of the formula is going to be the same, but this time we are using “geom_bar” as our geometrical shape to create a bar graph.</p>
+<p>So the basics of the formula are going to be the same, but this time we are using “geom_bar” as our geometrical shape to create a bar graph.</p>
 <pre class="r"><code>ggplot(data = diamonds) + 
   geom_bar(mapping = aes(x = cut))</code></pre>
-<p><img src="Intro_ggplot_files/figure-html/unnamed-chunk-10-1.png" width="672" /> 3.7 in R for Data Science does a good job explaining what the code is doing here.</p>
+<p><img src="Intro_ggplot_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>If you look in section 3.7 in <em>R for Data Science</em> it explains what R is doing with the data</p>
+<p>[]<a href="https://d33wubrfki0l68.cloudfront.net/70a3b18a1128c785d8676a48c005ee9b6a23cc00/7283c/images/visualization-stat-bar.png" class="uri">https://d33wubrfki0l68.cloudfront.net/70a3b18a1128c785d8676a48c005ee9b6a23cc00/7283c/images/visualization-stat-bar.png</a></p>
 <p>Here’s another example from scratch</p>
 <pre class="r"><code>Example &lt;- tribble(
   ~group, ~number, 
@@ -425,6 +447,7 @@ $(document).ready(function () {
 <pre class="r"><code>ggplot(data = Example) +
   geom_bar(mapping = aes(x = group, y = number), stat = &quot;identity&quot;)</code></pre>
 <p>So this is the basic format to use for any bar graph.</p>
+</div>
 
 
 
