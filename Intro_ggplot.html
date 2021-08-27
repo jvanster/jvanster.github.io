@@ -408,12 +408,14 @@ $(document).ready(function () {
 <p>One way we can answer this question is by adding in an additional variable. In this case the class or type of car. Let’s add that in now as an additional variable to our graph.</p>
 <pre class="r"><code>ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy, color = class))</code></pre>
-<p><img src="Intro_ggplot_files/figure-html/unnamed-chunk-6-1.png" width="672" /> Notice how most of those dots are 2 seater cars. Thus, the reason they get better gas mileage is because they are smaller cars!!</p>
+<p><img src="Intro_ggplot_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>Notice how most of those dots are 2 seater cars. Thus, the reason they get better gas mileage is because they are smaller cars!!</p>
 <p>Class is a particular kind of variable, in this case a <em>nominal</em> or <em>categorical</em> variable. r refers to them as characters. These are basically categories, so we can’t do any math on them. You can’t make a formula out of compact x midsize or minivan/pickup.</p>
 <p>Let’s do one more graph, but add a little color</p>
 <pre class="r"><code>ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy), color = &quot;blue&quot;)</code></pre>
-<p><img src="Intro_ggplot_files/figure-html/unnamed-chunk-7-1.png" width="672" /> Notice how when the word “color” is outside the x and y mappings it changes the color of our points. You can try several different colors for the points</p>
+<p><img src="Intro_ggplot_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Notice how when the word “color” is outside the x and y mappings it changes the color of our points. You can try several different colors for the points</p>
 <p>Let’s learn one more graph, which is especially important for categorical variables, the bar graph.</p>
 <p>First, download the “diamonds” data set</p>
 <pre class="r"><code>diamonds</code></pre>
@@ -436,17 +438,37 @@ $(document).ready(function () {
   geom_bar(mapping = aes(x = cut))</code></pre>
 <p><img src="Intro_ggplot_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>If you look in section 3.7 in <em>R for Data Science</em> it explains what R is doing with the data</p>
-<p>[]<a href="https://d33wubrfki0l68.cloudfront.net/70a3b18a1128c785d8676a48c005ee9b6a23cc00/7283c/images/visualization-stat-bar.png" class="uri">https://d33wubrfki0l68.cloudfront.net/70a3b18a1128c785d8676a48c005ee9b6a23cc00/7283c/images/visualization-stat-bar.png</a></p>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/70a3b18a1128c785d8676a48c005ee9b6a23cc00/7283c/images/visualization-stat-bar.png" /></p>
+<p>So R looks at the data set and automatically uses the <em>count</em> statistic to simply count the number of occurrences for that variable. So this only works for categorical variables.</p>
+<p>Let’s inspect the <em>cut</em> variable to see if this is true. Remember that the <em>str</em> command allows us to investigate the types of variables in the dataset</p>
+<pre class="r"><code>str(diamonds)</code></pre>
+<pre><code>## tibble [53,940 × 10] (S3: tbl_df/tbl/data.frame)
+##  $ carat  : num [1:53940] 0.23 0.21 0.23 0.29 0.31 0.24 0.24 0.26 0.22 0.23 ...
+##  $ cut    : Ord.factor w/ 5 levels &quot;Fair&quot;&lt;&quot;Good&quot;&lt;..: 5 4 2 4 2 3 3 3 1 3 ...
+##  $ color  : Ord.factor w/ 7 levels &quot;D&quot;&lt;&quot;E&quot;&lt;&quot;F&quot;&lt;&quot;G&quot;&lt;..: 2 2 2 6 7 7 6 5 2 5 ...
+##  $ clarity: Ord.factor w/ 8 levels &quot;I1&quot;&lt;&quot;SI2&quot;&lt;&quot;SI1&quot;&lt;..: 2 3 5 4 2 6 7 3 4 5 ...
+##  $ depth  : num [1:53940] 61.5 59.8 56.9 62.4 63.3 62.8 62.3 61.9 65.1 59.4 ...
+##  $ table  : num [1:53940] 55 61 65 58 58 57 57 55 61 61 ...
+##  $ price  : int [1:53940] 326 326 327 334 335 336 336 337 337 338 ...
+##  $ x      : num [1:53940] 3.95 3.89 4.05 4.2 4.34 3.94 3.95 4.07 3.87 4 ...
+##  $ y      : num [1:53940] 3.98 3.84 4.07 4.23 4.35 3.96 3.98 4.11 3.78 4.05 ...
+##  $ z      : num [1:53940] 2.43 2.31 2.31 2.63 2.75 2.48 2.47 2.53 2.49 2.39 ...</code></pre>
+<p>Each of the variables are preceded by the <em>$</em> sign. So we can see that <em>cut</em> is the second variable. Notice that it says cut is an ord. factor with 5 levels. This tells us that this variable is an <strong>ordinal</strong> variable because it is ordered based on the type of cut from fair (lowest type of cut) to ideal (the best type of cut)</p>
 <p>Here’s another example from scratch</p>
 <pre class="r"><code>Example &lt;- tribble(
   ~group, ~number, 
   &quot;Group 1&quot;, 30, 
   &quot;Group 2&quot;, 50
 )</code></pre>
-<p>When we use a y variable for our bar chart we have to use a different stat for the bar chart, in this case, the stat is “identity” so it looks like this.</p>
+<p>Notice that our variable <em>group</em> is a categorical variable, but on it’s own the stat <em>count</em> won’t really tell us much (Group 1 = 1, Group 2 =1). So notice what happens when we use the code like our last example.</p>
+<pre class="r"><code>ggplot(data = Example) + 
+  geom_bar(mapping = aes(x = group))</code></pre>
+<p><img src="Intro_ggplot_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>Doesn’t really tell us much does it? So in this case the count has to be supplied by a second variable, <em>y</em>. When we use a <em>y</em> variable for our bar chart we have to use a different stat for the bar chart, in this case, the stat is <em>“identity”</em> so the code looks like this.</p>
 <pre class="r"><code>ggplot(data = Example) +
   geom_bar(mapping = aes(x = group, y = number), stat = &quot;identity&quot;)</code></pre>
-<p>So this is the basic format to use for any bar graph.</p>
+<p><img src="Intro_ggplot_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>Now it’s easy to see the difference in count between Group 1 and Group 2</p>
 </div>
 
 
