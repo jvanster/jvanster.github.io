@@ -17,7 +17,7 @@
 <script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -33,6 +33,10 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -279,6 +283,9 @@ $(document).ready(function () {
     <li>
       <a href="Bar_Graphs_CI.html">Bar Graphs with 95% CIs</a>
     </li>
+    <li>
+      <a href="Histograms.html">Histograms</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -329,6 +336,10 @@ $(document).ready(function () {
 </div>
 
 
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
 <p>One of the first tests we can use to look at the relationship between two variables is <strong>correlation</strong>. Correlation usually requires two continuous numerical variables of some kind.</p>
 <p>The basic method for comparison between the two variables is <strong>variance</strong>, which we learned when looking at descriptive statisitics. Remember that variance is a measurement of data dispersion or spread. More specifically it refers to the average amount that data varies from the mean. So what correlation ultimately analyses is whether 2 variables <em>vary</em> in a similar way. Remember here’s the formula for variance. <span class="math display">\[
 variance(s^2)=\frac{\Sigma(x-\bar x)^2}{N-1}
@@ -343,6 +354,15 @@ r = \frac {cov_{xy}}{s_{x}s_{y}}=\frac{\Sigma(x-\bar x)(y-\bar y)}{(N-1)s_{x}s_{
 <p>Correlation only describes relationships between variables not <em>causal</em> relationships between variables. It’s not possible to decipher which variable is doing the causal work or which variable is the independent variable and which is the dependent variable. However, correlation can still provide helpful information about variables and we can still use them to test certain types of hypotheses.</p>
 <p>To explore correlation futher, let’s look at a particular dataset. Open the dataset labeled album_sakes.csv. Use the <em>Import Dataset</em> command in the upper righthand window and let’s look at the data set.</p>
 <pre class="r"><code>head(Album_Sales)</code></pre>
+<pre><code>## # A tibble: 6 x 4
+##   Adverts Sales Airplay Image
+##     &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+## 1    10.3   330      43    10
+## 2   986.    120      28     7
+## 3  1446.    360      35     7
+## 4  1188.    270      33     7
+## 5   575.    220      44     5
+## 6   569.    170      19     5</code></pre>
 <p>This is a dataset for a record company looking at various variables related to album sales.</p>
 <ol style="list-style-type: decimal">
 <li>Adverts - Money spent on advertising</li>
@@ -352,35 +372,53 @@ r = \frac {cov_{xy}}{s_{x}s_{y}}=\frac{\Sigma(x-\bar x)(y-\bar y)}{(N-1)s_{x}s_{
 </ol>
 <p>Next let’s look at the types of variables we have</p>
 <pre class="r"><code>str(Album_Sales)</code></pre>
+<pre><code>## tibble [200 × 4] (S3: tbl_df/tbl/data.frame)
+##  $ Adverts: num [1:200] 10.3 985.7 1445.6 1188.2 574.5 ...
+##   ..- attr(*, &quot;label&quot;)= chr &quot;Advertsing budget (thousands)&quot;
+##   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F8.2&quot;
+##  $ Sales  : num [1:200] 330 120 360 270 220 170 70 210 200 300 ...
+##   ..- attr(*, &quot;label&quot;)= chr &quot;Album sales (thousands)&quot;
+##   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F8.0&quot;
+##  $ Airplay: num [1:200] 43 28 35 33 44 19 20 22 21 40 ...
+##   ..- attr(*, &quot;label&quot;)= chr &quot;No. of plays on radio&quot;
+##   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F8.0&quot;
+##  $ Image  : num [1:200] 10 7 7 7 5 5 1 9 7 7 ...
+##   ..- attr(*, &quot;label&quot;)= chr &quot;Band image rating (0-10)&quot;
+##   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F8.0&quot;</code></pre>
 <p>Notice that each of the variables are continuous, either numeric (num) or integer (int), so this is a great dataset for doing correlations.</p>
 <p>How would you expect attractiveness of the band to be related to album sales? Unless you’ve been living under a rock or don’t know anything about rock `n roll, attractiveness is a huge part of album sales. Whether your Dua Lipa or BTS, looks matter if your in the entertainment industry. So we should expect that as an artists looks increase, their album sales should increase as well.</p>
 <p>Let’s use a graph to first look at this data using a ggplot we learned earlier called a scatterplot. We’ll do a basic one first.</p>
-<pre class="r"><code>ggplot(Album_Sales, mapping = aes(x = Attract, y = Sales)) +
-         geom_point()</code></pre>
-<p>So notice that dots lower on the attractiveness scale tend to be associated with less sales, whereas when you look at the dots higher on the attractiveness scales their are more dots that are higher on the sales scale.</p>
+<pre class="r"><code>ggplot(Album_Sales, mapping = aes
+       (x = Image, y = Sales)) + geom_point()</code></pre>
+<p><img src="Correlation_files/figure-html/unnamed-chunk-3-1.png" width="672" /> So notice that dots lower on the attractiveness scale tend to be associated with less sales, whereas when you look at the dots higher on the attractiveness scales their are more dots that are higher on the sales scale.</p>
 <p>Another tool to help us analyze this relationshisp is a <em>regression line</em>. This is a line drawn on the graph that is closest to as many dots or points as possible. You add it like this.</p>
-<pre class="r"><code>ggplot(Album_Sales, mapping = aes(x = Attract, y = Sales)) +
-         geom_point() +
+<pre class="r"><code>ggplot(Album_Sales, mapping = aes
+       (x = Image, y = Sales)) + geom_point() +
         geom_smooth(method = &#39;lm&#39;)</code></pre>
-<p>A regression line is simply using a line to describe the relationship betwen the two variables. As the line increases in slope or steepness, that indicates a stronger relationship. If the line moves from the lower left to the upper right that indidcates a positive correlation whereas if the line moves from the upper left hand corner to the bottom right that indicates a negative correlation. The more the line “flattens” or decreases in slope the less correlation there is between the two variables.</p>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="Correlation_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>A regression line is simply using a line to describe the relationship between the two variables. As the line increases in slope or steepness, that indicates a stronger relationship. If the line moves from the lower left to the upper right that indicates a positive correlation whereas if the line moves from the upper left hand corner to the bottom right that indicates a negative correlation. The more the line “flattens” or decreases in slope the less correlation there is between the two variables.</p>
 <p>Let’s look at a second variable using the graph to judge which one is more correlated. Use advertising rather than attractiveness this time.</p>
-<pre class="r"><code>ggplot(Album_Sales, mapping = aes(x = Adverts, y = Sales)) +
-         geom_point()</code></pre>
-<p>Notice how most of the dots are gathered in the middle of the graph and moving from lower left to upper right. Notice also that no points are in the bottom right hand corner. So lower sales does not appear to be related to higher amount of advertising. Let’s see the location of the regression line.</p>
-<pre class="r"><code>ggplot(Album_Sales, mapping = aes(x = Adverts, y = Sales)) +
-         geom_point() +
-        geom_smooth(method = &#39;lm&#39;)</code></pre>
-<p>Notice that the regression line seems slightly steeper on the adverts graph vs. the attract graph. But we can’t be totally sure. So let’s go ahead and use our Pearson’s r correlation coefficient to help us. The formula is really simple, it is just “cor” followed by the two variables you are analyzing.</p>
-<pre class="r"><code>cor(Album_Sales$Sales, Album_Sales$Attract)</code></pre>
+<pre class="r"><code>ggplot(Album_Sales, mapping = aes(x = Adverts, 
+        y =   Sales)) + geom_point()</code></pre>
+<p><img src="Correlation_files/figure-html/unnamed-chunk-5-1.png" width="672" /> Notice how most of the dots are gathered in the middle of the graph and moving from lower left to upper right. Notice also that no points are in the bottom right hand corner. So lower sales does not appear to be related to higher amount of advertising. Let’s see the location of the regression line.</p>
+<pre class="r"><code>ggplot(Album_Sales, mapping = aes(x = Adverts, 
+      y = Sales)) + geom_point() +
+      geom_smooth(method = &#39;lm&#39;)</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="Correlation_files/figure-html/unnamed-chunk-6-1.png" width="672" /> Notice that the regression line seems slightly steeper on the adverts graph vs. the Image graph. But we can’t be totally sure. So let’s go ahead and use our Pearson’s r correlation coefficient to help us. The formula is really simple, it is just “cor” followed by the two variables you are analyzing.</p>
+<pre class="r"><code>cor(Album_Sales$Sales, Album_Sales$Image)</code></pre>
+<pre><code>## [1] 0.3261111</code></pre>
 <p>Ok, so the correlation between Sales and Attractiveness is .33, now let’s look at Sales and Advertising.</p>
 <pre class="r"><code>cor(Album_Sales$Sales, Album_Sales$Adverts)</code></pre>
-<p>Notice how the corrleation has increased (meaning moved closer to + 1) from .33 to .58. This would seem to justify our hunch that their was a stronger correlation between Sales and Advertising than between Sales and Attractiveness (Looks aren’t everything apparently), based on the regression line for each graph.</p>
+<pre><code>## [1] 0.5784877</code></pre>
+<p>Notice how the corrleation has increased (meaning moved closer to + 1) from .33 to .58. This would seem to justify our hunch that their was a stronger correlation between Sales and Advertising than between Sales and Image (Looks aren’t everything apparently), based on the regression line for each graph.</p>
 <div id="how-to-use-correlations-to-test-hypotheses" class="section level1">
 <h1>How to use correlations to test hypotheses</h1>
 <p>To more formally use correlation to test a hypothesis, let’s look at another variable in the Album Sales dataset, <em>airplay</em>. This is how often a song gets played on the radio (FYI, the <em>radio</em> is an ancient device that old people used to listen to random music played using mysterious spooky radio waves). So your hypothesis would look something like:</p>
 <p>There is a correlation between the airplay an album receives and the sales for the album.</p>
 <p>The null hypothesis would simply negate the primary hypothesis:</p>
-<p>There is no correlation between the airplay an album recieves and the sales for the album.</p>
+<p>There is no correlation between the airplay an album receives and the sales for the album.</p>
 <p>To test the hypothesis we use the “cor.test” command and then specify each of the variables we are analyzing, so it looks like this:</p>
 <pre class="r"><code>cor.test(Album_Sales$Sales, Album_Sales$Airplay)</code></pre>
 <pre><code>## 
@@ -394,13 +432,15 @@ r = \frac {cov_{xy}}{s_{x}s_{y}}=\frac{\Sigma(x-\bar x)(y-\bar y)}{(N-1)s_{x}s_{
 ## sample estimates:
 ##       cor 
 ## 0.5989188</code></pre>
-<p>Then write the results using the output including the correlation coefficient, 95% cofidence internal, and the p value.</p>
+<p>Then write the results using the output including the correlation coefficient, 95% confidence internal, and the <em>p</em> value.</p>
 <p>Results There was a significant correlation between the airply an album received and the sales for the album, r = .60, 95% CI [.50, .68], p &lt; .001.</p>
-<p>Let’s unpack these results a bit. The correlation is pretty high at .60. Remember that the closer a correlational coefficient is to +/- 1 the stronger it is. We’ve also listed the confidence interval, which means that we are 95% confident that the correlation coefficient is between .50 and .68. The big problem that may show up here is if the range includes 0, which would mean that it’s possible that the correlation is zero, thus nullifying our primary hypothesis. The closer this range is the more accurate our correlation estimate and the closer to 1, the stronger the correlation. Finally, our p value is very low, so this shows us that the finding is significant.</p>
+<p>Let’s unpack these results a bit. The correlation is pretty high at .60. Remember that the closer a correlational coefficient is to either +/- 1 the stronger the correlation. We’ve also listed the confidence interval, which means that we are 95% confident that the correlation coefficient is between .50 and .68. The big problem that may show up here is if the CI range includes 0, which would mean that it’s possible that the correlation is zero, thus nullifying our primary hypothesis. The closer this range is the more accurate our correlation estimate and the closer to 1, the stronger the correlation. Finally, our p value is very low, so this shows us that the finding is significant.</p>
 <p>Finally, we want to include a scatterplot graph with the regression line to show the relationship we found.</p>
 <pre class="r"><code>ggplot(Album_Sales, mapping = aes(x = Airplay, y = Sales)) +
          geom_point() +
         geom_smooth(method = &#39;lm&#39;)</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="Correlation_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 </div>
 
 

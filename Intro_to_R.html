@@ -283,6 +283,9 @@ $(document).ready(function () {
     <li>
       <a href="Bar_Graphs_CI.html">Bar Graphs with 95% CIs</a>
     </li>
+    <li>
+      <a href="Histograms.html">Histograms</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -402,15 +405,18 @@ Sequence</code></pre>
 <p>Notice that it automatically makes a table of the counts of each iris type</p>
 <p>Anytime we want to look at a specific variable from a dataset, we use the $ sign. Notice when you type in the dataset name followed by the $ you’ll see a little pop-up with all the variables. Just scroll through and select the one you want.</p>
 <pre class="r"><code>iris$Sepal.Width</code></pre>
-<pre><code>##   [1] 3.5 3.0 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 3.7 3.4 3.0 3.0 4.0 4.4 3.9 3.5
-##  [19] 3.8 3.8 3.4 3.7 3.6 3.3 3.4 3.0 3.4 3.5 3.4 3.2 3.1 3.4 4.1 4.2 3.1 3.2
-##  [37] 3.5 3.6 3.0 3.4 3.5 2.3 3.2 3.5 3.8 3.0 3.8 3.2 3.7 3.3 3.2 3.2 3.1 2.3
-##  [55] 2.8 2.8 3.3 2.4 2.9 2.7 2.0 3.0 2.2 2.9 2.9 3.1 3.0 2.7 2.2 2.5 3.2 2.8
-##  [73] 2.5 2.8 2.9 3.0 2.8 3.0 2.9 2.6 2.4 2.4 2.7 2.7 3.0 3.4 3.1 2.3 3.0 2.5
-##  [91] 2.6 3.0 2.6 2.3 2.7 3.0 2.9 2.9 2.5 2.8 3.3 2.7 3.0 2.9 3.0 3.0 2.5 2.9
-## [109] 2.5 3.6 3.2 2.7 3.0 2.5 2.8 3.2 3.0 3.8 2.6 2.2 3.2 2.8 2.8 2.7 3.3 3.2
-## [127] 2.8 3.0 2.8 3.0 2.8 3.8 2.8 2.8 2.6 3.0 3.4 3.1 3.0 3.1 3.1 3.1 2.7 3.2
-## [145] 3.3 3.0 2.5 3.0 3.4 3.0</code></pre>
+<pre><code>##   [1] 3.5 3.0 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 3.7 3.4 3.0
+##  [14] 3.0 4.0 4.4 3.9 3.5 3.8 3.8 3.4 3.7 3.6 3.3 3.4 3.0
+##  [27] 3.4 3.5 3.4 3.2 3.1 3.4 4.1 4.2 3.1 3.2 3.5 3.6 3.0
+##  [40] 3.4 3.5 2.3 3.2 3.5 3.8 3.0 3.8 3.2 3.7 3.3 3.2 3.2
+##  [53] 3.1 2.3 2.8 2.8 3.3 2.4 2.9 2.7 2.0 3.0 2.2 2.9 2.9
+##  [66] 3.1 3.0 2.7 2.2 2.5 3.2 2.8 2.5 2.8 2.9 3.0 2.8 3.0
+##  [79] 2.9 2.6 2.4 2.4 2.7 2.7 3.0 3.4 3.1 2.3 3.0 2.5 2.6
+##  [92] 3.0 2.6 2.3 2.7 3.0 2.9 2.9 2.5 2.8 3.3 2.7 3.0 2.9
+## [105] 3.0 3.0 2.5 2.9 2.5 3.6 3.2 2.7 3.0 2.5 2.8 3.2 3.0
+## [118] 3.8 2.6 2.2 3.2 2.8 2.8 2.7 3.3 3.2 2.8 3.0 2.8 3.0
+## [131] 2.8 3.8 2.8 2.8 2.6 3.0 3.4 3.1 3.0 3.1 3.1 3.1 2.7
+## [144] 3.2 3.3 3.0 2.5 3.0 3.4 3.0</code></pre>
 <div id="dataframes" class="section level3">
 <h3>Dataframes</h3>
 <p>Many times we work with datasets using dataframes, which creates an object very similar to a spreadsheet. Notice that when we create a dataframe and add variables to it, the letter <strong>c</strong> is used before the parentheses, which basically tells R that what follows should be added to the object/variable before it.</p>

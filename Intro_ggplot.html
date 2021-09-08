@@ -283,6 +283,9 @@ $(document).ready(function () {
     <li>
       <a href="Bar_Graphs_CI.html">Bar Graphs with 95% CIs</a>
     </li>
+    <li>
+      <a href="Histograms.html">Histograms</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -352,19 +355,20 @@ $(document).ready(function () {
 <p>We’ll start off by using a dataset called “mpg” It should have loaded with the tidyverse package. Just type it in to find it</p>
 <pre class="r"><code>mpg</code></pre>
 <pre><code>## # A tibble: 234 x 11
-##    manufacturer model    displ  year   cyl trans   drv     cty   hwy fl    class
-##    &lt;chr&gt;        &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
-##  1 audi         a4         1.8  1999     4 auto(l… f        18    29 p     comp…
-##  2 audi         a4         1.8  1999     4 manual… f        21    29 p     comp…
-##  3 audi         a4         2    2008     4 manual… f        20    31 p     comp…
-##  4 audi         a4         2    2008     4 auto(a… f        21    30 p     comp…
-##  5 audi         a4         2.8  1999     6 auto(l… f        16    26 p     comp…
-##  6 audi         a4         2.8  1999     6 manual… f        18    26 p     comp…
-##  7 audi         a4         3.1  2008     6 auto(a… f        18    27 p     comp…
-##  8 audi         a4 quat…   1.8  1999     4 manual… 4        18    26 p     comp…
-##  9 audi         a4 quat…   1.8  1999     4 auto(l… 4        16    25 p     comp…
-## 10 audi         a4 quat…   2    2008     4 manual… 4        20    28 p     comp…
-## # … with 224 more rows</code></pre>
+##    manufacturer model displ  year   cyl trans drv     cty
+##    &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt;
+##  1 audi         a4      1.8  1999     4 auto… f        18
+##  2 audi         a4      1.8  1999     4 manu… f        21
+##  3 audi         a4      2    2008     4 manu… f        20
+##  4 audi         a4      2    2008     4 auto… f        21
+##  5 audi         a4      2.8  1999     6 auto… f        16
+##  6 audi         a4      2.8  1999     6 manu… f        18
+##  7 audi         a4      3.1  2008     6 auto… f        18
+##  8 audi         a4 q…   1.8  1999     4 manu… 4        18
+##  9 audi         a4 q…   1.8  1999     4 auto… 4        16
+## 10 audi         a4 q…   2    2008     4 manu… 4        20
+## # … with 224 more rows, and 3 more variables: hwy &lt;int&gt;,
+## #   fl &lt;chr&gt;, class &lt;chr&gt;</code></pre>
 <p>It shows the dataset as a “tibble”, which just means table in the tidyverse</p>
 <p>You can also view it as a regular dataset</p>
 <pre class="r"><code>View(mpg)</code></pre>
@@ -420,19 +424,19 @@ $(document).ready(function () {
 <p>First, download the “diamonds” data set</p>
 <pre class="r"><code>diamonds</code></pre>
 <pre><code>## # A tibble: 53,940 x 10
-##    carat cut       color clarity depth table price     x     y     z
-##    &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 0.23  Ideal     E     SI2      61.5    55   326  3.95  3.98  2.43
-##  2 0.21  Premium   E     SI1      59.8    61   326  3.89  3.84  2.31
-##  3 0.23  Good      E     VS1      56.9    65   327  4.05  4.07  2.31
-##  4 0.290 Premium   I     VS2      62.4    58   334  4.2   4.23  2.63
-##  5 0.31  Good      J     SI2      63.3    58   335  4.34  4.35  2.75
-##  6 0.24  Very Good J     VVS2     62.8    57   336  3.94  3.96  2.48
-##  7 0.24  Very Good I     VVS1     62.3    57   336  3.95  3.98  2.47
-##  8 0.26  Very Good H     SI1      61.9    55   337  4.07  4.11  2.53
-##  9 0.22  Fair      E     VS2      65.1    61   337  3.87  3.78  2.49
-## 10 0.23  Very Good H     VS1      59.4    61   338  4     4.05  2.39
-## # … with 53,930 more rows</code></pre>
+##    carat cut   color clarity depth table price     x     y
+##    &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 0.23  Ideal E     SI2      61.5    55   326  3.95  3.98
+##  2 0.21  Prem… E     SI1      59.8    61   326  3.89  3.84
+##  3 0.23  Good  E     VS1      56.9    65   327  4.05  4.07
+##  4 0.290 Prem… I     VS2      62.4    58   334  4.2   4.23
+##  5 0.31  Good  J     SI2      63.3    58   335  4.34  4.35
+##  6 0.24  Very… J     VVS2     62.8    57   336  3.94  3.96
+##  7 0.24  Very… I     VVS1     62.3    57   336  3.95  3.98
+##  8 0.26  Very… H     SI1      61.9    55   337  4.07  4.11
+##  9 0.22  Fair  E     VS2      65.1    61   337  3.87  3.78
+## 10 0.23  Very… H     VS1      59.4    61   338  4     4.05
+## # … with 53,930 more rows, and 1 more variable: z &lt;dbl&gt;</code></pre>
 <p>So the basics of the formula are going to be the same, but this time we are using “geom_bar” as our geometrical shape to create a bar graph.</p>
 <pre class="r"><code>ggplot(data = diamonds) + 
   geom_bar(mapping = aes(x = cut))</code></pre>
