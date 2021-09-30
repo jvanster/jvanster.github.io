@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="James Van Slyke" />
+
+
+<title>Z Scores and the z test</title>
+
+<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Using R Studio for Statistics</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Basics
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Why_R.html">Why Use R &amp; R Studio?</a>
+    </li>
+    <li>
+      <a href="Intro_to_R.html">Intro to R</a>
+    </li>
+    <li>
+      <a href="Building_databases.html">Building Databases</a>
+    </li>
+    <li>
+      <a href="Descriptive_Statistics.html">Descriptive Statistics</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Graphs
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Intro_ggplot.html">Intro to ggplot</a>
+    </li>
+    <li>
+      <a href="Bar_Graphs_CI.html">Bar Graphs with 95% CIs</a>
+    </li>
+    <li>
+      <a href="Histograms.html">Histograms</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Statistical Tests
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Z_Test.html">One Sample z test</a>
+    </li>
+    <li>
+      <a href="Independent_t-test.html">Independent t-test</a>
+    </li>
+    <li>
+      <a href="Paired_samples_t-test.html">Paired Samples t-test</a>
+    </li>
+    <li>
+      <a href="One_Way_ANOVA.html">One-Way ANOVA</a>
+    </li>
+    <li>
+      <a href="Two_Way_ANOVA.html">Two-Way ANOVA</a>
+    </li>
+    <li>
+      <a href="Chi_Square.html">Chi Square</a>
+    </li>
+    <li>
+      <a href="Regression.html">Regression</a>
+    </li>
+    <li>
+      <a href="Correlation.html">Correlation</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Z Scores and the z test</h1>
+<h4 class="author">James Van Slyke</h4>
+
+</div>
+
+
+<div id="distributions-of-scores-that-are-normally-shaped-have-particular-properties." class="section level3">
+<h3>Distributions of scores that are normally shaped have particular properties.</h3>
+<ol style="list-style-type: decimal">
+<li>The distribution of scores is symmetrical about the mean, which indicates that if you were to fold the distribution in half both sides or tails of the distribution would match.</li>
+<li>The mean, median and mode are all equal</li>
+<li>The distribution will have two inflection points indicating one standard deviation above and below the mean.</li>
+</ol>
+<p>Remember that in a normal curve most of the data is close to the mean or scores with the highest frequency are closest to the mean. As you move to the tails of the normal distribution there is a lower frequency of scores, less of the data set is contained in the tails of the distribution. Another way to think of this is that more extreme scores or less probable scores are contained in the tails of the distribution.</p>
+</div>
+<div id="the-proportion-or-percentage-of-data-in-a-normal-curve-is-dispersed-differently-through-the-curve" class="section level3">
+<h3>The proportion or percentage of data in a normal curve is dispersed differently through the curve</h3>
+<ol style="list-style-type: decimal">
+<li>34.13% of the data are between the mean and one standard deviation above it or below it.</li>
+<li>13.59% of the data is between one and two standard deviations</li>
+<li>2.15% of the data is between two and three standard deviations</li>
+</ol>
+<p>So when a data point or score is further on either of the tails of the distribution, the data point is less likely or more extreme.</p>
+<p>One of the ways we are able to understand the probability or distribution of scores in a normal curve is through the use of <em>z scores</em>. A z score is score that designates how many standard deviations a particular score is above or below the mean.</p>
+<p>Here is the formula <span class="math display">\[
+z = \frac{x - \bar x}{s}
+\]</span> z scores can be positive or negative depending on whether the score in question is above or below the mean. Thus, the higher the magnitude of the score (meaning independent of whether it’s positive or negative) the further the score is away from the mean.</p>
+</div>
+<div id="populations-and-samples" class="section level3">
+<h3>Populations and Samples</h3>
+<p>So far, we’ve primarily dealt with <em>descriptive statistics</em>, which are used to describe the basics of a dataset (think central tendency and variability). However, most of psychological science is running experiments and testing hypotheses. When psychologists run an experiment, they use a <em>sample</em>, which is a smaller subgroup of the population (the larger group) they are trying to explain.</p>
+<p>For example, if a psychologist is interested in gender differences, the populations would be either all females or all males (That’s a large group of people!). So to run an experiment, psychologists instead use a sample (smaller subgroup) of males and a sample of females to compare them based on some particular variable.</p>
+<p>The process of using a sample to infer characteristics about a population is called <em>inferential statistics</em>. Most of the statistics used to analyze experiments are inferential statistics of one kind or another.</p>
+<p>The first test we’ll learn in inferential statistics is the <em>z test</em>. It’s not used very often in statistics generally, but it lays out a lot of the conceptual issues involved in statistical tests.</p>
+<div id="example-problem" class="section level4">
+<h4>Example Problem</h4>
+<p>Suppose you work for a gasoline company and you’ve developed a new additive that you believe increase gas mileage. Your supervisor would like to add it to their gasoline, but feels that it’s important to run a test first to see if the additive really increases gas mileage. So you collect a sample of 75 cars that are all using the gasoline additive. You discover that the mean gas mileage for your sample is 26.5 miles per gallon. <span class="math display">\[ \bar x = 26.5 \]</span></p>
+<p>Looking back as some old records you find that over the years your company’s gasoline mileage has averaged about 24.7 miles per gallon. On the face of it, it looks like your additive has increased the gasoline mileage, <em>but is the difference statistically significant?</em></p>
+</div>
+</div>
+<div id="hypotheses" class="section level3">
+<h3>Hypotheses</h3>
+<p>A good experiment begins with a good hypothesis, which clearly specifies the variables in an experiment. There are two types of variables in most experiments:</p>
+<p>1. Independent Variable (IV)</p>
+<p>2. Dependent Variable (DV)</p>
+<blockquote>
+<p>The independent variable is the variable that is manipulated in some way and is thought to be the cause in the experiment, while the dependent variable is measured to assess whether the independent variable produces any changes in it, so it is thought to be the effect in an experiment.</p>
+</blockquote>
+<p>The hypothesis specifies the relationship between the IV and the DV. In statistics, their are two types of hypothesis, the null hypothesis and the alternative hypothesis. The null hypothesis negates or contradicts the expected relationship between the IV and DV if the IV has a real effect. The alternative hypothesis specifies the relationship between the IV and DV as the experimenter expects it to be, the IV causing a change in the DV.</p>
+<p>In experimental methodology, the <em>null</em> hypothesis is directly tested and if it can be shown to be <em>not</em> supported (based on the statistical analysis), it then supports its counterpart, the alternative hypothesis.</p>
+<p>Here are the two hypotheses for the gasoline additive example</p>
+<blockquote>
+<p>Null hypothesis - “The gasoline additive will <em>not</em> increase the mileage of the gasoline”</p>
+</blockquote>
+<blockquote>
+<p>Alternative Hypothesis - “The gasoline additive will increase the mileage of the gasoline”</p>
+</blockquote>
+<p>Notice that the hypotheses are basically exactly the same, except that the null hypothesis <em>negates</em> the relationship between the IV and DV. A good hypothesis will include both the IV and DV and something to specify the expected outcome of the experiment. In this case the word “increases” shows the relationship between the two.</p>
+<p>This is an example of a <em>directional</em> hypothesis because it’s specifying the direction of the expected effect of the IV. A nondirectional hypothesis does not specify the direction it just states that the IV will have an <em>effect</em> on the DV. Here’s how gasoline mileage hypotheses would look like as <em>non</em>directional hypotheses.</p>
+<blockquote>
+<p>Null hypothesis - “The gasoline additive will <em>not</em> effect the mileage of the gasoline”</p>
+</blockquote>
+<blockquote>
+<p>Alternative Hypothesis - “The gasoline additive will effect the mileage of the gasoline”</p>
+</blockquote>
+<p>Notice that the only real difference is that the word “increase” was swapped with the word “effect”. Whether the hypothesis is directional or nondirectional is usually determined by the experimenter or the context of the experiment.</p>
+</div>
+<div id="computing-the-z-test-using-r" class="section level3">
+<h3>Computing the z test using R</h3>
+<p><strong>Gasoline mileage example</strong></p>
+<p>First find the value of z</p>
+<p><em>z formula</em></p>
+<p><span class="math display">\[
+z \;test = \frac{x - \mu}{\frac{\sigma}{\sqrt{n}}}
+\]</span></p>
+<p>The formula written out is: (mean of the sample - mean of the population)/standard error of the mean). The standard error of the mean is the standard deviation of the population divided by the square root of the number in the sample.</p>
+<p>In R you can run the formula like this:</p>
+<pre class="r"><code>z_score_gasoline &lt;- (26.5-24.7)/(4.8/sqrt(75))
+z_score_gasoline</code></pre>
+<pre><code>## [1] 3.247595</code></pre>
+<p><em>Define region for rejection of the Null Hypothesis</em></p>
+<p>This values is known as alpha, alpha = .05 or 5%</p>
+<p><em>What is the probability associated with the z score?</em></p>
+<p>We use “pnorm” command to find probability associated with a particular z score. The “abs” stands for the absolute value because whether the z score is positive or negative is irrelevant for the analysis.</p>
+<p>Here’s how it is coded in R Studio:</p>
+<pre class="r"><code>pnorm(abs(z_score_gasoline))</code></pre>
+<pre><code>## [1] 0.9994181</code></pre>
+<p>This gives us the probability associated with that z score, which in this case is 99.94%. Remember that in this instance, we are analyzing the probably that this sample mean came from the original population. To accomplish this we analyze the tail of the distribution, so we want the probabilty from the z score and higher, which will be our <em>p</em> value, so we subtract from 1 probaility assoicated with the z score.</p>
+<pre class="r"><code>1-pnorm(abs(z_score_gasoline))</code></pre>
+<pre><code>## [1] 0.0005819235</code></pre>
+<p>Finally we compare the <em>p</em> value to alpha. If the p value is less than alpha (.05), then we can reject the Null hypothesis.</p>
+<blockquote>
+<p>.0006 &lt; .05</p>
+</blockquote>
+<p>Since our p value is less than .05 we reject the null and can accept the alternative hypothesis.</p>
+<p><em>What if we have a nondirectional test?</em></p>
+<p>To account for both tails of the distribution, simply multiply by 2</p>
+<pre class="r"><code>(1-pnorm(abs(z_score_gasoline)))*2</code></pre>
+<pre><code>## [1] 0.001163847</code></pre>
+<p>In addition to the findings from the z test, it’s always important to include an effect size as well. Effect sizes help us to analyze whether the results are meaningful or not and allows us to compare across different types of statistical tests.</p>
+<p>For mean differences use <em>Cohen’s d</em> <span class="math display">\[
+Cohen&#39;s\;d = \frac{\bar x - \mu}{\sigma}
+\]</span> So the formula is: (mean of the sample - mean of the population)/standard deviation of the population</p>
+<p>In R Studio</p>
+<pre class="r"><code>Cohens_d &lt;- (26.5-24.7)/4.8
+Cohens_d</code></pre>
+<pre><code>## [1] 0.375</code></pre>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
