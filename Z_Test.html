@@ -33,6 +33,10 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -335,8 +339,16 @@ $(document).ready(function () {
 </div>
 
 
-<div id="distributions-of-scores-that-are-normally-shaped-have-particular-properties." class="section level3">
-<h3>Distributions of scores that are normally shaped have particular properties.</h3>
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
+<div id="properties-of-the-normal-curve" class="section level3">
+<h3>Properties of the Normal Curve</h3>
+<div class="figure">
+<img src="https://www.simplypsychology.org/normal-distribution.jpg?ezimgfmt=rs:555x353/rscb26/ng:webp/ngcb26" alt="" />
+<p class="caption">Normal Curve - <a href="https://www.simplypsychology.org/normal-distribution.html" class="uri">https://www.simplypsychology.org/normal-distribution.html</a></p>
+</div>
 <ol style="list-style-type: decimal">
 <li>The distribution of scores is symmetrical about the mean, which indicates that if you were to fold the distribution in half both sides or tails of the distribution would match.</li>
 <li>The mean, median and mode are all equal</li>
@@ -346,16 +358,25 @@ $(document).ready(function () {
 </div>
 <div id="the-proportion-or-percentage-of-data-in-a-normal-curve-is-dispersed-differently-through-the-curve" class="section level3">
 <h3>The proportion or percentage of data in a normal curve is dispersed differently through the curve</h3>
+<div class="figure">
+<img src="https://miro.medium.com/max/1400/1*IdGgdrY_n_9_YfkaCh-dag.png" alt="" />
+<p class="caption">Distribution of scores in a normal curve</p>
+</div>
+<p>Image credit - <a href="https://towardsdatascience.com/understanding-the-68-95-99-7-rule-for-a-normal-distribution-b7b7cbf760c2" class="uri">https://towardsdatascience.com/understanding-the-68-95-99-7-rule-for-a-normal-distribution-b7b7cbf760c2</a></p>
 <ol style="list-style-type: decimal">
 <li>34.13% of the data are between the mean and one standard deviation above it or below it.</li>
 <li>13.59% of the data is between one and two standard deviations</li>
 <li>2.15% of the data is between two and three standard deviations</li>
 </ol>
 <p>So when a data point or score is further on either of the tails of the distribution, the data point is less likely or more extreme.</p>
+<div id="z-scores" class="section level4">
+<h4>Z Scores</h4>
 <p>One of the ways we are able to understand the probability or distribution of scores in a normal curve is through the use of <em>z scores</em>. A z score is score that designates how many standard deviations a particular score is above or below the mean.</p>
 <p>Here is the formula <span class="math display">\[
 z = \frac{x - \bar x}{s}
 \]</span> z scores can be positive or negative depending on whether the score in question is above or below the mean. Thus, the higher the magnitude of the score (meaning independent of whether it’s positive or negative) the further the score is away from the mean.</p>
+<p><img src="https://cdn.scribbr.com/wp-content/uploads/2020/10/standard-normal-distribution.png" alt="Z scores" /> Image from <a href="https://www.scribbr.com/statistics/standard-normal-distribution/" class="uri">https://www.scribbr.com/statistics/standard-normal-distribution/</a></p>
+</div>
 </div>
 <div id="populations-and-samples" class="section level3">
 <h3>Populations and Samples</h3>
@@ -366,7 +387,7 @@ z = \frac{x - \bar x}{s}
 <div id="example-problem" class="section level4">
 <h4>Example Problem</h4>
 <p>Suppose you work for a gasoline company and you’ve developed a new additive that you believe increase gas mileage. Your supervisor would like to add it to their gasoline, but feels that it’s important to run a test first to see if the additive really increases gas mileage. So you collect a sample of 75 cars that are all using the gasoline additive. You discover that the mean gas mileage for your sample is 26.5 miles per gallon. <span class="math display">\[ \bar x = 26.5 \]</span></p>
-<p>Looking back as some old records you find that over the years your company’s gasoline mileage has averaged about 24.7 miles per gallon. On the face of it, it looks like your additive has increased the gasoline mileage, <em>but is the difference statistically significant?</em></p>
+<p>Looking back as some old records you find that over the years your company’s gasoline mileage has averaged about <em>24.7 miles per gallon</em>. On the face of it, it looks like your additive has increased the gasoline mileage, <em>but is the difference statistically significant?</em></p>
 </div>
 </div>
 <div id="hypotheses" class="section level3">
@@ -377,8 +398,8 @@ z = \frac{x - \bar x}{s}
 <blockquote>
 <p>The independent variable is the variable that is manipulated in some way and is thought to be the cause in the experiment, while the dependent variable is measured to assess whether the independent variable produces any changes in it, so it is thought to be the effect in an experiment.</p>
 </blockquote>
-<p>The hypothesis specifies the relationship between the IV and the DV. In statistics, their are two types of hypothesis, the null hypothesis and the alternative hypothesis. The null hypothesis negates or contradicts the expected relationship between the IV and DV if the IV has a real effect. The alternative hypothesis specifies the relationship between the IV and DV as the experimenter expects it to be, the IV causing a change in the DV.</p>
-<p>In experimental methodology, the <em>null</em> hypothesis is directly tested and if it can be shown to be <em>not</em> supported (based on the statistical analysis), it then supports its counterpart, the alternative hypothesis.</p>
+<p>The hypothesis specifies the relationship between the IV and the DV. In statistics, there are two types of hypotheses, the null hypothesis and the alternative hypothesis. The null hypothesis negates or contradicts the expected relationship between the IV and DV if the IV has a real effect. The alternative hypothesis specifies the relationship between the IV and DV as the experimenter expects it to be, the IV causing a change in the DV.</p>
+<p>In experimental methodology, the <em>null</em> hypothesis is directly tested and if it can be shown to be <em>unsupported</em> (based on the statistical analysis), it then supports its counterpart, the alternative hypothesis.</p>
 <p>Here are the two hypotheses for the gasoline additive example</p>
 <blockquote>
 <p>Null hypothesis - “The gasoline additive will <em>not</em> increase the mileage of the gasoline”</p>
@@ -387,7 +408,7 @@ z = \frac{x - \bar x}{s}
 <p>Alternative Hypothesis - “The gasoline additive will increase the mileage of the gasoline”</p>
 </blockquote>
 <p>Notice that the hypotheses are basically exactly the same, except that the null hypothesis <em>negates</em> the relationship between the IV and DV. A good hypothesis will include both the IV and DV and something to specify the expected outcome of the experiment. In this case the word “increases” shows the relationship between the two.</p>
-<p>This is an example of a <em>directional</em> hypothesis because it’s specifying the direction of the expected effect of the IV. A nondirectional hypothesis does not specify the direction it just states that the IV will have an <em>effect</em> on the DV. Here’s how gasoline mileage hypotheses would look like as <em>non</em>directional hypotheses.</p>
+<p>This is an example of a <em>directional</em> hypothesis because it’s specifying the direction of the expected effect of the IV. A nondirectional hypothesis does not specify the direction it just states that the IV will have an <em>effect</em> on the DV. Here’s how gasoline mileage hypotheses would look like as <em>non</em>directional hypothesis.</p>
 <blockquote>
 <p>Null hypothesis - “The gasoline additive will <em>not</em> effect the mileage of the gasoline”</p>
 </blockquote>
@@ -395,6 +416,46 @@ z = \frac{x - \bar x}{s}
 <p>Alternative Hypothesis - “The gasoline additive will effect the mileage of the gasoline”</p>
 </blockquote>
 <p>Notice that the only real difference is that the word “increase” was swapped with the word “effect”. Whether the hypothesis is directional or nondirectional is usually determined by the experimenter or the context of the experiment.</p>
+<div class="figure">
+<img src="https://miro.medium.com/max/2000/1*SsmEKrsKn03e3cxdoqOcNA.jpeg" alt="" />
+<p class="caption">Nondirectional vs. Directional tests</p>
+</div>
+<p>Image from <a href="https://towardsdatascience.com/hypothesis-testing-z-scores-337fb06e26ab" class="uri">https://towardsdatascience.com/hypothesis-testing-z-scores-337fb06e26ab</a></p>
+<p>Directional tests are one-tailed (evaluate only one tail of the distribution) because they are investigating a specific direction of effect for the IV (e.g. increasing) while nondirectional tests are two-tailed (evaluate both tails of the distribution) because they are not specifying the direction of effect for IV.</p>
+<p>Basic scientific methodology requires an experimental and a control group. The experimental group receives the IV while the control group does not. If a difference between the groups can be detected then that difference may be attributable to the IV. If there is no difference between the groups the IV does not have an effect.</p>
+<p>Another way to state this is that the null hypothesis assumes that there is no difference between the control and experimental groups, while the alternative hypothesis assumes that there will be a difference between the groups.</p>
+<blockquote>
+<p>Null hypothesis - experimental group = control group</p>
+</blockquote>
+<blockquote>
+<p>Alternative Hypothesis - experimental group <span class="math inline">\(\neq\)</span> control group</p>
+</blockquote>
+<p>For the z test, the collected sample is the experimental group, while the population stands in for the control group. For the gasoline additive example, the sample of cars tested with the additive added to the gasoline is the experimental group because the IV (gasoline additive) was added to that group, while the population is the control group because it consists of older records of the average gas mileage without the additive.</p>
+<div id="the-sampling-distribution-of-the-mean" class="section level4">
+<h4>The Sampling Distribution of the Mean</h4>
+<p>For the z test, the sample mean <span class="math inline">\(\bar x\)</span> is compared to the population mean <span class="math inline">\(\mu\)</span> to see if there is a difference between the two values that could be attributable to the IV. The null hypothesis assumes that the population mean and sample mean are equal, while the alternative hypothesis assumes that they are different.</p>
+<blockquote>
+<p>Null hypothesis - <span class="math inline">\(\mu = \bar x\)</span></p>
+</blockquote>
+<blockquote>
+<p>Alternative hypothesis - <span class="math inline">\(\mu \neq \bar x\)</span></p>
+</blockquote>
+<p>In our example we already know that the two means are different, the sample mean is 26.5, while the population mean is 24.7. The problem is that we don’t know if the difference is statistically significant or just the result of <em>measurement error</em>.</p>
+<p>For example, imagine that you weigh yourself every day for a whole week. Most likely there will be fluctuations in your weight during the week. It will be slightly higher one day and slightly lower another day with an average or mean that stays more consistent. So an analysis is needed to make sure that the differences we observe in our two groups (experimental and control groups or in this case population mean and sample mean) is not just the result of random differences between the mean values (measurement error). The null hypothesis assumes that our findings are simply the result of random chance, while the alternative assumes that the differences are attributable to the work of the independent variable.</p>
+<p>Probability is used to ascertain the likelihood that our results are due to the work of the IV. If it can be shown that the sample we’ve collected (in this case the sample with the additive added to the gasoline) could reasonably be assumed to have come from the comparison population (old records of gasoline without the additive), then the Null hypothesis must be true and the means are essentially the same <span class="math inline">\(\mu = \bar x\)</span>.</p>
+<p>If, however, we can demonstrate that it is unreasonable to assume that our collected sample with the independent variable (gasoline additive) did not come from the comparison population (gasoline without the additive) then we can instead reject the null and lend support to the alternative hypothesis.</p>
+<p>In order to accomplish this we use the <em>sampling distribution of the mean (SDM)</em>, which essentially provides a distribution of potential sample means drawn from a population. Imagine that you had a large population and you began selecting samples from it and each sample had an n = 75. For each sample you calculated the mean and that collection of sample means (let’s say you collected 1000 samples) became it’s own distribution or collection of scores. This new distribution of scores is the SDM. It’s a distribution of sample means drawn from a particular population.</p>
+<p>Based on the mysterious intricacies of statistics, we know certain properties of the SDM based on the <em>central limit theorem</em>. Those are:</p>
+<p>1. <span class="math inline">\(\mu = \mu_{\bar x}\)</span></p>
+<p>2. <span class="math inline">\(\sigma_{\bar x} = \frac{\sigma}{\sqrt{n}}\)</span></p>
+<p>3. The SDM will be <em>more narrow</em> than the population</p>
+<p>First, the mean of the SDM <span class="math inline">\(\mu_{\bar x}\)</span> will be equal to the mean of the population <span class="math inline">\(\mu\)</span>. Second, the standard deviation of the SDM <span class="math inline">\(\sigma_{\bar x}\)</span> will be equal to the population standard deviation <span class="math inline">\(\sigma\)</span> divided by the square root of n (the number of scores collected in each sample). This leads to the third property. Since the SDM is constructed of sample means a certain amount of variation has been removed causing the shape of the curve to be more narrow than the population.</p>
+<p>The SDM functions as a probability curve or distribution of potential sample means drawn from a population. Based on what we know about normal curves, most of the potential sample means would be between the mean and one standard deviation (34.13% on either side of the mean) above or below the mean. Then a smaller percentage between 1 and 2 standard deviations and even smaller between 2 and 3. Thus the samples with the lowest probability of coming from the population would be on the tails of the distribution.</p>
+<p>The scientific standard for determining the probability of a sample coming from a population is determined by alpha. <span class="math display">\[
+\alpha = .05
+\]</span> Thus the standard for determining the probability of a sample coming from a population is 5% or in order for statistical results to be considered significant it must be demonstrated that there is only a 5% chance or less that the sample came from the original population.</p>
+<p>In order to analyze the probability associated with a particular sample mean, z scores are used to locate the sample mean on the SDM and calculate the probability that it came from the comparison population.</p>
+</div>
 </div>
 <div id="computing-the-z-test-using-r" class="section level3">
 <h3>Computing the z test using R</h3>
@@ -416,7 +477,7 @@ z_score_gasoline</code></pre>
 <p>Here’s how it is coded in R Studio:</p>
 <pre class="r"><code>pnorm(abs(z_score_gasoline))</code></pre>
 <pre><code>## [1] 0.9994181</code></pre>
-<p>This gives us the probability associated with that z score, which in this case is 99.94%. Remember that in this instance, we are analyzing the probably that this sample mean came from the original population. To accomplish this we analyze the tail of the distribution, so we want the probabilty from the z score and higher, which will be our <em>p</em> value, so we subtract from 1 probaility assoicated with the z score.</p>
+<p>This gives us the probability associated with that z score, which in this case is 99.94%. Remember that in this instance, we are analyzing the probably that this sample mean came from the original population. To accomplish this we analyze the tail of the distribution, so we want the probability from the z score and higher, which will be our <em>p</em> value, so we subtract 1 from the probability associated with the z score.</p>
 <pre class="r"><code>1-pnorm(abs(z_score_gasoline))</code></pre>
 <pre><code>## [1] 0.0005819235</code></pre>
 <p>Finally we compare the <em>p</em> value to alpha. If the p value is less than alpha (.05), then we can reject the Null hypothesis.</p>
@@ -428,6 +489,17 @@ z_score_gasoline</code></pre>
 <p>To account for both tails of the distribution, simply multiply by 2</p>
 <pre class="r"><code>(1-pnorm(abs(z_score_gasoline)))*2</code></pre>
 <pre><code>## [1] 0.001163847</code></pre>
+<p>A second way to investigate whether a sample came from a particular population is to use a confidence interval (CI). Confidence intervals describe the range of possible population means from which a sample could be drawn. The confidence interval used most often is the 95% confidence interval, which, in this case, would state that 95% of population means would be contained in the identified range. Here is the formula for the 95% CI for a z test.</p>
+<p>lower boundary of CI - <span class="math inline">\(\bar x - 1.96*\sigma_{\bar x}\)</span> upper boundary of CI - <span class="math inline">\(\bar x + 1.96*\sigma_{\bar x}\)</span></p>
+<p>So here is how the calculation is performed in R Studio</p>
+<pre class="r"><code>Lower &lt;- 26.5 - (4.8/sqrt(75))
+Lower</code></pre>
+<pre><code>## [1] 25.94574</code></pre>
+<pre class="r"><code>Upper &lt;- 26.5 + (4.8/sqrt(75))
+Upper</code></pre>
+<pre><code>## [1] 27.05426</code></pre>
+<p>We write confidence intervals like this: 26.5, 95% CI [25.95, 27.05].</p>
+<p>Notice that the original population mean used for comparison to the sample was 24.7, which is outside the range provided for the 95% CI, further confirming our conclusion to reject the null.</p>
 <p>In addition to the findings from the z test, it’s always important to include an effect size as well. Effect sizes help us to analyze whether the results are meaningful or not and allows us to compare across different types of statistical tests.</p>
 <p>For mean differences use <em>Cohen’s d</em> <span class="math display">\[
 Cohen&#39;s\;d = \frac{\bar x - \mu}{\sigma}
@@ -436,6 +508,10 @@ Cohen&#39;s\;d = \frac{\bar x - \mu}{\sigma}
 <pre class="r"><code>Cohens_d &lt;- (26.5-24.7)/4.8
 Cohens_d</code></pre>
 <pre><code>## [1] 0.375</code></pre>
+<p>The full conclusion should be stated as:</p>
+<blockquote>
+<p>The sample mean <em>M</em> = 26.5, <em>95% CI</em> [25.95, 27.05], was significantly different [mean difference = 1.8] from the population mean <em>M</em> = 24.7, based on a <em>z</em> = 3.25; <em>p</em> = 0.0006, <em>d</em> = .38. Reject the null, the gasoline additive does increase gas mileage.</p>
+</blockquote>
 </div>
 
 

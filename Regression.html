@@ -377,15 +377,15 @@ album\;sales = 50 + (100 \times 5)
 ## -152.949  -43.796   -0.393   37.040  211.866 
 ## 
 ## Coefficients:
-##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 1.341e+02  7.537e+00  17.799   &lt;2e-16 ***
-## Adverts     9.612e-02  9.632e-03   9.979   &lt;2e-16 ***
+##               Estimate Std. Error t value            Pr(&gt;|t|)    
+## (Intercept) 134.139938   7.536575  17.799 &lt;0.0000000000000002 ***
+## Adverts       0.096124   0.009632   9.979 &lt;0.0000000000000002 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 65.99 on 198 degrees of freedom
 ## Multiple R-squared:  0.3346, Adjusted R-squared:  0.3313 
-## F-statistic: 99.59 on 1 and 198 DF,  p-value: &lt; 2.2e-16</code></pre>
+## F-statistic: 99.59 on 1 and 198 DF,  p-value: &lt; 0.00000000000000022</code></pre>
 <p>Remember that the variable of interest, the predictor variable, was advertising. If we worked at this record company we would be interested if mondy spendt on advertising would help in increasing record sales. The first thing to notice is the F statistic, which analyzes whether the regression model is signficant or not. Notice that this number is 99.59 with a p value well below .05, so that tells us our regression model is a good one.</p>
 <p>Where did this statistics analysis come from though? To answer this question we need to look at little bit closer at how to analyze the fit of a line.</p>
 <p>From the discussion of correlation, you may remember that a regression line is a line that is used to fit the data as well as possible, but as with all statistics there is a certain amount of error. The regression line does not cross all the points on a scatterdot, but tries to be as close to as many points as possible. The difference between the line and a particular point is known as a <em>residual</em>. A residual is similar to a deviation, but it is the distance or error between the line and a particular point. The smaller the residual the better the line is a preditor for that particular point or score. The larger the residual the less predictive the regression line is for that score.</p>

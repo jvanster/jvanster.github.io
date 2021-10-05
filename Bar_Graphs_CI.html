@@ -352,6 +352,13 @@ $(document).ready(function () {
 <pre class="r"><code>library(tidyverse)</code></pre>
 <p>Check out the data set</p>
 <pre class="r"><code>head(Salaries)</code></pre>
+<pre><code>##        rank discipline yrs.since.phd yrs.service  sex salary
+## 1      Prof          B            19          18 Male 139750
+## 2      Prof          B            20          16 Male 173200
+## 3  AsstProf          B             4           3 Male  79750
+## 4      Prof          B            45          39 Male 115000
+## 5      Prof          B            40          41 Male 141500
+## 6 AssocProf          B             6           6 Male  97000</code></pre>
 <p>Find summary statistics for the data set using dplyr</p>
 <p>In this case you’re going to find several descriptive statistics that you will be using in your graph.</p>
 <p>You’ll find mean, standard deviation, standard error, and the 95% Confidence interval</p>
@@ -366,7 +373,7 @@ DesData &lt;- Salaries %&gt;%
 <p>Check out the code here. First notice this symbol <em>%&gt;%</em></p>
 <p>You can think of this symbol like a pipe or funnel</p>
 <p>So we start with our dataset <em>Salaries</em> and then we pipe it or funnel it by a particular variable <em>group_by(rank)</em></p>
-<p>This variable will almost always be a factor or categorical variable</p>
+<p>This variable will almost always be a factor or categorical variable.</p>
 <p>Then we use the <em>summarize</em> command to let R know what kinds of descriptive statistics we want</p>
 <ol style="list-style-type: decimal">
 <li>n = number of cases</li>
@@ -376,13 +383,14 @@ DesData &lt;- Salaries %&gt;%
 <li>ci = confidence internval</li>
 </ol>
 </div>
-<div id="use-data-to-fill-out-chart" class="section level1">
-<h1>Use Data to fill out chart</h1>
+<div id="use-data-to-fill-out-chart" class="section level3">
+<h3>Use Data to fill out chart</h3>
 <p>Let’s start with a simple bar chart of the means</p>
 <pre class="r"><code>ggplot(DesData, 
        aes(x = rank, 
            y = mean)) +
   geom_bar(stat = &quot;identity&quot;)</code></pre>
+<p><img src="Bar_Graphs_CI_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
 <p>Notice <em>geom_bar</em> is the geom we need for the bar chart</p>
 <p>We have to use a special stat as well, <em>identity</em></p>
 <p>Next, we’ll add in error bars to bar chart, which is the <em>geom_errorbar</em></p>
@@ -392,6 +400,7 @@ DesData &lt;- Salaries %&gt;%
   geom_bar(stat = &quot;identity&quot;) +
   geom_errorbar(aes(ymin=mean-se,
                     ymax=mean+se))</code></pre>
+<p><img src="Bar_Graphs_CI_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
 <p>We can also change length of error bars</p>
 <pre class="r"><code>ggplot(DesData, 
        aes(x = rank, 
@@ -399,6 +408,7 @@ DesData &lt;- Salaries %&gt;%
   geom_bar(stat = &quot;identity&quot;) +
   geom_errorbar(aes(ymin=mean-se,
                     ymax=mean+se), width=.8)</code></pre>
+<p><img src="Bar_Graphs_CI_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
 <p>Then let’s add in all the bells and whistles</p>
 <ol style="list-style-type: decimal">
 <li>First let’s add correct column labels for the rank variable</li>
@@ -408,6 +418,14 @@ DesData &lt;- Salaries %&gt;%
 </ol>
 <p>You’ll also need to add the library <em>scales</em> to get the proper symbol for dollars</p>
 <pre class="r"><code>library(scales)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;scales&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     discard</code></pre>
+<pre><code>## The following object is masked from &#39;package:readr&#39;:
+## 
+##     col_factor</code></pre>
 <p>Then you can do the graph, we’ll use the Standard Error for the Confidence Interval this time.</p>
 <pre class="r"><code>ggplot(DesData, 
        aes(x = factor(rank,
@@ -425,6 +443,7 @@ DesData &lt;- Salaries %&gt;%
        subtitle = &quot;9-month academic salary for 2008-2009&quot;,
        x = &quot;&quot;,
        y = &quot;&quot;)</code></pre>
+<p><img src="Bar_Graphs_CI_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
 <p>Using 95% Confidence Intervals</p>
 <pre class="r"><code>ggplot(DesData, 
        aes(x = factor(rank,

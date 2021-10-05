@@ -357,12 +357,13 @@ $(document).ready(function () {
 z = \frac{x - \mu}{\frac{\sigma}{\sqrt{n}}}
 \]</span> So for the t test, we use a verion of the z test but compare the following: <span class="math display">\[
 t = \frac{(observed \;difference\;between\;means) - (expected\; difference\; between\;means)}{estimate\; of\; the\; \;standard\; error\; of\; the\; differnce\; \\between\; two\; sample\; means}
-\]</span> Remember that the null hypothesis assumes that the expected difference between the means is equal to zero. So the numerator will simply be the difference between the two sample means <span class="math inline">\(x_{1}-x_{2}\)</span>. The z test uses the standard deviation from the sample as an estimate of the error divided by the square root of n. The t distruiotn is slightly different. Instead, it uses the standard deviation from the <strong>sample</strong> as an estimate fo the standard error. However we need estimates from both sample 1 and sample 2 so the equation looks like this: <span class="math display">\[
+\]</span> Remember that the null hypothesis assumes that the expected difference between the means is equal to zero. So the numerator will simply be the difference between the two sample means <span class="math inline">\(x_{1}-x_{2}\)</span>. The z test uses the standard deviation from the sample as an estimate of the error divided by the square root of n. The t distruiotn is slightly different. Instead, it uses the standard deviation from the <em>sample</em> as an estimate of the standard error. However we need estimates from both sample 1 and sample 2 so the equation looks like this: <span class="math display">\[
 \sqrt{\frac{s^{2}_{1}}{n_{1}}+\frac{s^{2}_{2}}{n_{2}} }
 \]</span> This becomes the denominator of the independent t test formula, so we put it all together like this: <span class="math display">\[
 t = \frac{x_{1}-x_{2}}{\sqrt{\frac{s^{2}_{1}}{n_{1}}+\frac{s^{2}_{2}}{n_{2}} }}
 \]</span></p>
-<p>##Independent t-test example</p>
+<div id="independent-t-test-example" class="section level2">
+<h2>Independent t-test example</h2>
 <ol style="list-style-type: decimal">
 <li>First Step, upload dataset from SPSS</li>
 <li>Get data set named “Invisibility” from SPSS datasets</li>
@@ -408,7 +409,8 @@ Invis_Descriptives</code></pre>
            y = mean)) +
   geom_bar(stat = &quot;identity&quot;)</code></pre>
 <pre><code>## Don&#39;t know how to automatically pick scale for object of type haven_labelled/vctrs_vctr/double. Defaulting to continuous.</code></pre>
-<p><img src="Independent_t-test_files/figure-html/unnamed-chunk-4-1.png" width="672" /> Next let’s add error bars</p>
+<p><img src="Independent_t-test_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>Next let’s add error bars</p>
 <pre class="r"><code>ggplot(Invis_Descriptives, 
        aes(x = Cloak, 
            y = mean)) +
@@ -416,7 +418,8 @@ Invis_Descriptives</code></pre>
   geom_errorbar(aes(ymin=mean-ci,
                     ymax=mean+ci))</code></pre>
 <pre><code>## Don&#39;t know how to automatically pick scale for object of type haven_labelled/vctrs_vctr/double. Defaulting to continuous.</code></pre>
-<p><img src="Independent_t-test_files/figure-html/unnamed-chunk-5-1.png" width="672" /> We can add in labels to improve the look of our chart. We’ve added labels to our factor variable and labels for the title and x and y variables.</p>
+<p><img src="Independent_t-test_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>We can add in labels to improve the look of our chart. We’ve added labels to our factor variable and labels for the title and x and y variables.</p>
 <pre class="r"><code>ggplot(Invis_Descriptives, 
        aes(x = factor(Cloak, labels=c(&quot;No Cloak&quot;, &quot;Cloak&quot;)),
            y = mean)) +
@@ -425,7 +428,8 @@ Invis_Descriptives</code></pre>
                     ymax=mean+ci)) +
   labs(title = &quot;Mean Number of Mischievious Acts with or without Cloak&quot;, 
        y=&quot;Mean Number of Mischievious Acts&quot;, x=&quot;Were They Wearing a Cloak?&quot;)</code></pre>
-<p><img src="Independent_t-test_files/figure-html/unnamed-chunk-6-1.png" width="672" /> Next let’s add some color to our chart</p>
+<p><img src="Independent_t-test_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>Next let’s add some color to our chart</p>
 <pre class="r"><code>ggplot(Invis_Descriptives, 
        aes(x = factor(Cloak, labels=c(&quot;No Cloak&quot;, &quot;Cloak&quot;)),
            y = mean)) +
@@ -435,7 +439,8 @@ Invis_Descriptives</code></pre>
                     ymax=mean+ci), width=.3, size=1) +
   labs(title = &quot;Mean Number of Mischievious Acts with or without Cloak&quot;, 
        y=&quot;Mean Number of Mischievious Acts&quot;, x=&quot;Were They Wearing a Cloak?&quot;)</code></pre>
-<p><img src="Independent_t-test_files/figure-html/unnamed-chunk-7-1.png" width="672" /> Based on the graph, it looks like there is a difference between the groups Let’s run a t test to make sure</p>
+<p><img src="Independent_t-test_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Based on the graph, it looks like there is a difference between the groups Let’s run a t test to make sure</p>
 <pre class="r"><code>t.test(Mischief ~ Cloak, data = Invisibility)</code></pre>
 <pre><code>## 
 ##  Welch Two Sample t-test
@@ -452,14 +457,19 @@ Invis_Descriptives</code></pre>
 <pre class="r"><code>Cohens_d &lt;- (5.00-3.75)/1.91
 Cohens_d</code></pre>
 <pre><code>## [1] 0.6544503</code></pre>
-<p>Write out conclusion</p>
-<p><em>On average, participants given a cloak of invisibility engaged in more acts of mischief (M = 5, SE = 0.48), than those not given a cloak (M = 3.75, SE = 0.55). This difference, 1.25, 95% CI[-2.76, 0.26], was not significant t(21.54) = −1.71, p = 0.101; however, it did represent a medium-sized effect d = 0.65.</em></p>
+<div id="results" class="section level4">
+<h4>Results</h4>
+<blockquote>
+<p>On average, participants given a cloak of invisibility engaged in more acts of mischief (M = 5, SE = 0.48), than those not given a cloak (M = 3.75, SE = 0.55). This difference, 1.25, 95% CI[-2.76, 0.26], was not significant t(21.54) = −1.71, p = 0.101. However, it did represent a medium-sized effect d = 0.65.*</p>
+</blockquote>
 <p>Steps to writing results</p>
 <ol style="list-style-type: decimal">
 <li>Write out the means and include standard error</li>
 <li>Write out the difference between the means (Subtract the sample means) and the confidence intervals for the difference</li>
 <li>t(df)= t score, p value, Cohen’s d</li>
 </ol>
+</div>
+</div>
 
 
 
