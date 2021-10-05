@@ -490,15 +490,16 @@ z_score_gasoline</code></pre>
 <pre class="r"><code>(1-pnorm(abs(z_score_gasoline)))*2</code></pre>
 <pre><code>## [1] 0.001163847</code></pre>
 <p>A second way to investigate whether a sample came from a particular population is to use a confidence interval (CI). Confidence intervals describe the range of possible population means from which a sample could be drawn. The confidence interval used most often is the 95% confidence interval, which, in this case, would state that 95% of population means would be contained in the identified range. Here is the formula for the 95% CI for a z test.</p>
-<p>lower boundary of CI - <span class="math inline">\(\bar x - 1.96*\sigma_{\bar x}\)</span> upper boundary of CI - <span class="math inline">\(\bar x + 1.96*\sigma_{\bar x}\)</span></p>
+<p>lower boundary of CI - <span class="math inline">\(\bar x - 1.96\)</span> x <span class="math inline">\(\sigma_{\bar x}\)</span></p>
+<p>upper boundary of CI - <span class="math inline">\(\bar x + 1.96\)</span> x <span class="math inline">\(\sigma_{\bar x}\)</span></p>
 <p>So here is how the calculation is performed in R Studio</p>
-<pre class="r"><code>Lower &lt;- 26.5 - (4.8/sqrt(75))
+<pre class="r"><code>Lower &lt;- 26.5 - 1.96*(4.8/sqrt(75))
 Lower</code></pre>
-<pre><code>## [1] 25.94574</code></pre>
-<pre class="r"><code>Upper &lt;- 26.5 + (4.8/sqrt(75))
+<pre><code>## [1] 25.41366</code></pre>
+<pre class="r"><code>Upper &lt;- 26.5 + 1.96*(4.8/sqrt(75))
 Upper</code></pre>
-<pre><code>## [1] 27.05426</code></pre>
-<p>We write confidence intervals like this: 26.5, 95% CI [25.95, 27.05].</p>
+<pre><code>## [1] 27.58634</code></pre>
+<p>We write confidence intervals like this: 26.5, 95% CI [25.41, 27.59].</p>
 <p>Notice that the original population mean used for comparison to the sample was 24.7, which is outside the range provided for the 95% CI, further confirming our conclusion to reject the null.</p>
 <p>In addition to the findings from the z test, it’s always important to include an effect size as well. Effect sizes help us to analyze whether the results are meaningful or not and allows us to compare across different types of statistical tests.</p>
 <p>For mean differences use <em>Cohen’s d</em> <span class="math display">\[
@@ -510,7 +511,7 @@ Cohens_d</code></pre>
 <pre><code>## [1] 0.375</code></pre>
 <p>The full conclusion should be stated as:</p>
 <blockquote>
-<p>The sample mean <em>M</em> = 26.5, <em>95% CI</em> [25.95, 27.05], was significantly different [mean difference = 1.8] from the population mean <em>M</em> = 24.7, based on a <em>z</em> = 3.25; <em>p</em> = 0.0006, <em>d</em> = .38. Reject the null, the gasoline additive does increase gas mileage.</p>
+<p>The sample mean <em>M</em> = 26.5, <em>95% CI</em> [25.41, 27.59], was significantly different [mean difference = 1.8] from the population mean <em>M</em> = 24.7, based on a <em>z</em> = 3.25; <em>p</em> = 0.0006, <em>d</em> = .38. Reject the null, the gasoline additive does increase gas mileage.</p>
 </blockquote>
 </div>
 
