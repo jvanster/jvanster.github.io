@@ -346,7 +346,18 @@ $(document).ready(function () {
 <p>Resources to consult Chapter 10 from Field, A. (2017). Discovering Statistics Using IBM SPSS Statistics (5th Edition). SAGE Publications, Ltd. (UK).</p>
 <p>Section from <a href="https://learningstatisticswithr.com/book/ttest.html#studentttest">Learning Statistics with R</a></p>
 <p>The independent t test is used when analyzing the difference in means between two separate groups. Typically, this is used to analyze the difference between the control group (group who did not receive the independent variable) and the experimental group (group who did receive the independent variable).</p>
-<p>The null hypothesis assumes that the mean difference between the two groups is equal to zero. If the samples came from the same population, their means would be roughly the same and if they came from the same population their characteristics would be the same as well. Thus, the null hypothesis assumes no real differences based on the presence of the independent variable.</p>
+<blockquote>
+<p>Null Hypothesis - Experimental Group = Control Group</p>
+</blockquote>
+<blockquote>
+<p>Alternative Hypothesis - Experimental Group <span class="math inline">\(\neq\)</span> Control Group</p>
+</blockquote>
+<p>The null hypothesis assumes that the mean difference between the two groups is equal to zero. If the samples came from the same population, their means would be roughly the same and if they came from the same population their characteristics would be the same as well. Thus, the null hypothesis assumes no real differences based on the presence of the independent variable, while the alternative hypothesis assumes that the two means are different. <span class="math display">\[
+Null = \bar x_{1} = \bar x_{2}
+\]</span></p>
+<p><span class="math display">\[
+Alternative = \bar x_{1} \neq \bar x_{2}
+\]</span></p>
 <p>This type of design is sometimes referred as a <em>between-groups</em> or <em>independent</em> design. It requires a categorical (nominal) predictor or independent variable that will specify the two groups (experimental and control) and a continuous dependent variable that specifies the outcome.</p>
 <p>There are two possible reasons why two samples have different means.</p>
 <ol style="list-style-type: decimal">
@@ -355,13 +366,14 @@ $(document).ready(function () {
 </ol>
 <p>The t test is related to the z test, except that we are analyzing t scores rather than z scores. Remember the formula for a z score. <span class="math display">\[
 z = \frac{x - \mu}{\frac{\sigma}{\sqrt{n}}}
-\]</span> So for the t test, we use a verion of the z test but compare the following: <span class="math display">\[
+\]</span> So for the t test, we use a version of the z test but compare the following: <span class="math display">\[
 t = \frac{(observed \;difference\;between\;means) - (expected\; difference\; between\;means)}{estimate\; of\; the\; \;standard\; error\; of\; the\; differnce\; \\between\; two\; sample\; means}
-\]</span> Remember that the null hypothesis assumes that the expected difference between the means is equal to zero. So the numerator will simply be the difference between the two sample means <span class="math inline">\(x_{1}-x_{2}\)</span>. The z test uses the standard deviation from the sample as an estimate of the error divided by the square root of n. The t distruiotn is slightly different. Instead, it uses the standard deviation from the <em>sample</em> as an estimate of the standard error. However we need estimates from both sample 1 and sample 2 so the equation looks like this: <span class="math display">\[
+\]</span> Remember that the null hypothesis assumes that the expected difference between the means is equal to zero. So the numerator will simply be the difference between the two sample means <span class="math inline">\(x_{1}-x_{2}\)</span>. The z test uses the standard deviation from the sample as an estimate of the error divided by the square root of n. The t distribution is slightly different. Instead, it uses the standard deviation from the <em>sample</em> as an estimate of the standard error. However we need estimates from both sample 1 and sample 2 so the equation looks like this: <span class="math display">\[
 \sqrt{\frac{s^{2}_{1}}{n_{1}}+\frac{s^{2}_{2}}{n_{2}} }
 \]</span> This becomes the denominator of the independent t test formula, so we put it all together like this: <span class="math display">\[
 t = \frac{x_{1}-x_{2}}{\sqrt{\frac{s^{2}_{1}}{n_{1}}+\frac{s^{2}_{2}}{n_{2}} }}
 \]</span></p>
+<p>Overall, for the independent t-test, if the mean difference between the two samples is significantly greater than the error in the two samples, there is a real difference between the two samples.</p>
 <div id="independent-t-test-example" class="section level2">
 <h2>Independent t-test example</h2>
 <ol style="list-style-type: decimal">
