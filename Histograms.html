@@ -14,10 +14,10 @@
 
 <title>Histograms</title>
 
-<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -266,6 +266,12 @@ $(document).ready(function () {
       <a href="Building_databases.html">Building Databases</a>
     </li>
     <li>
+      <a href="More_with_databases.html">More with Databases</a>
+    </li>
+    <li>
+      <a href="Working_with_R_Markdown.html">Working with R Markdown</a>
+    </li>
+    <li>
       <a href="Descriptive_Statistics.html">Descriptive Statistics</a>
     </li>
   </ul>
@@ -345,76 +351,153 @@ $(document).ready(function () {
 </script>
 <div id="histograms" class="section level2">
 <h2>Histograms</h2>
-<p>Based on section 7.3 from <a href="https://r4ds.had.co.nz/exploratory-data-analysis.html?q=histogram#variation">R for Data Science</a></p>
-<p>Remember that a <em>continous</em> variable is a numerical measure of something that can take on a variety of different values at different levels of precision. One of the best tools for investigating a continuous variable like <strong>interval</strong> or <strong>ratio</strong> is to use a <em>histogram</em>. A histogram shows the variability that exists within a particular variable.</p>
-<p>Let’s examine the “carat” variable from the <em>diamonds</em> dataset. Carat refers to the weight of a diamond. Here is how to make a histogram.</p>
+<p>Based on section 7.3 from <a
+href="https://r4ds.had.co.nz/exploratory-data-analysis.html?q=histogram#variation">R
+for Data Science</a></p>
+<p>Remember that a <em>continous</em> variable is a numerical measure of
+something that can take on a variety of different values at different
+levels of precision. One of the best tools for investigating a
+continuous variable like <strong>interval</strong> or
+<strong>ratio</strong> is to use a <em>histogram</em>. A histogram shows
+the variability that exists within a particular variable.</p>
+<p>Let’s examine the “carat” variable from the <em>diamonds</em>
+dataset. Carat refers to the weight of a diamond. Here is how to make a
+histogram.</p>
 <pre class="r"><code>ggplot(data = diamonds) +
   geom_histogram(mapping = aes(x = carat), binwidth = 0.5)</code></pre>
 <p><img src="Histograms_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
-<p>As a refresher, let’s talk through the code. <em>ggplot</em> gives us the primary command, followed by the data set we want to use in parentheses (). Then we use a new geom called <em>geom_histogram</em> with a mapping of the variable we are investigating, carat (mapping = aes(x=carat)). Finally we use <em>binwidth</em> to define how many intervals to divide the x axis.</p>
-<p>Each of the bars represents the count or number of occurrences of a particular number on the carat scale. So at first glance, it looks like most of the diamonds have a carat of about .25 to maybe .75.</p>
-<p>We can adjust the binwidth to give us more information about in the graph. Let’s make the binwidth smaller(0.5 to 0.1) to see a little bit more detail.</p>
+<p>As a refresher, let’s talk through the code. <em>ggplot</em> gives us
+the primary command, followed by the data set we want to use in
+parentheses (). Then we use a new geom called <em>geom_histogram</em>
+with a mapping of the variable we are investigating, carat (mapping =
+aes(x=carat)). Finally we use <em>binwidth</em> to define how many
+intervals to divide the x axis.</p>
+<p>Each of the bars represents the count or number of occurrences of a
+particular number on the carat scale. So at first glance, it looks like
+most of the diamonds have a carat of about .25 to maybe .75.</p>
+<p>We can adjust the binwidth to give us more information about in the
+graph. Let’s make the binwidth smaller(0.5 to 0.1) to see a little bit
+more detail.</p>
 <pre class="r"><code>ggplot(data = diamonds) +
   geom_histogram(mapping = aes(x = carat), binwidth = 0.1)</code></pre>
 <p><img src="Histograms_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<p>Notice that now we can see that actually .25 is the most frequently occurring carat with over 10,000 entries. Our range on the x axis is really large (0 to 5 carats), but notice that most of the carats are much lower on the scale. Carats above 2.5 carats seem to be <em>outliers</em>, which means that they don’t fit as well in the dataset or have more extreme properties compared to the reset of the dataset, thus they are more unusual. This shouldn’t be that surprising, diamonds that weigh more would tend to be larger, cost more, and thus be more rare.</p>
-<p>Another adjustment we can make to see more detail is to adjust the dataset to just focus on a particular range of carats. Tidyverse allows us to create a different dataset based on a rule using what’s call the pipe %&gt;%</p>
+<p>Notice that now we can see that actually .25 is the most frequently
+occurring carat with over 10,000 entries. Our range on the x axis is
+really large (0 to 5 carats), but notice that most of the carats are
+much lower on the scale. Carats above 2.5 carats seem to be
+<em>outliers</em>, which means that they don’t fit as well in the
+dataset or have more extreme properties compared to the reset of the
+dataset, thus they are more unusual. This shouldn’t be that surprising,
+diamonds that weigh more would tend to be larger, cost more, and thus be
+more rare.</p>
+<p>Another adjustment we can make to see more detail is to adjust the
+dataset to just focus on a particular range of carats. Tidyverse allows
+us to create a different dataset based on a rule using what’s call the
+pipe %&gt;%</p>
 <pre class="r"><code>%&gt;%</code></pre>
-<p>This is a special symbol the tidyverse uses to “pipe” or “filter” the dataset based on rules that are specified in the code. Let’s take a look at the code.</p>
+<p>This is a special symbol the tidyverse uses to “pipe” or “filter” the
+dataset based on rules that are specified in the code. Let’s take a look
+at the code.</p>
 <pre class="r"><code>smaller &lt;- diamonds %&gt;% 
   filter(carat &lt; 3)</code></pre>
-<p>We’re creating a new object call “smaller” by taking the diamonds dataset and piping it (%&gt;%) through a filter command, which takes the variable “carat” and only chooses those observations that are less than 3 carats (carat &lt; 3). So now we can just look at the diamonds with a carat of less than 3 and create a histogram to show us that variable.</p>
+<p>We’re creating a new object call “smaller” by taking the diamonds
+dataset and piping it (%&gt;%) through a filter command, which takes the
+variable “carat” and only chooses those observations that are less than
+3 carats (carat &lt; 3). So now we can just look at the diamonds with a
+carat of less than 3 and create a histogram to show us that
+variable.</p>
 <pre class="r"><code>ggplot(data = smaller, mapping = aes(x = carat)) +
   geom_histogram(binwidth = 0.1)</code></pre>
 <p><img src="Histograms_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<p>Now we can see the variability that exists in the range of carat values. Notice that .25 is still the most frequently occuring carat, followed by 1.00 and .75.</p>
-<p>We can also take a variable like carat and overlay it with a second categorical variable. But rather than using a histogram we can use a simple line graph. In this case <em>geom_freqpoloy</em> creates a line graph based on a 2nd categorical variable. In this case we’ll overlay the carat variable with <em>cut</em>.</p>
+<p>Now we can see the variability that exists in the range of carat
+values. Notice that .25 is still the most frequently occuring carat,
+followed by 1.00 and .75.</p>
+<p>We can also take a variable like carat and overlay it with a second
+categorical variable. But rather than using a histogram we can use a
+simple line graph. In this case <em>geom_freqpoloy</em> creates a line
+graph based on a 2nd categorical variable. In this case we’ll overlay
+the carat variable with <em>cut</em>.</p>
 <pre class="r"><code>ggplot(data = smaller, mapping = aes(x = carat, color = cut)) +
   geom_freqpoly(binwidth = 0.1)</code></pre>
 <p><img src="Histograms_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-<p>Notice that most of the ideal diamonds are about .25 carats with premium having the second largest count at about .25 and 1 carats.</p>
+<p>Notice that most of the ideal diamonds are about .25 carats with
+premium having the second largest count at about .25 and 1 carats.</p>
 </div>
 <div id="normal-curve" class="section level2">
 <h2>Normal Curve</h2>
-<p>One of the more important histograms is called the <strong>normal curve</strong>. The normal curve has a particular shape in that it is symmetrical in relationship to the mean. A distribution (collection of scores) of a particular variable that is normally shaped will tend to have most of the scores in the middle of the distribution or fairly close to the mean.</p>
-<p>To demonstrate this, let’s create a variable that is normally distributed and part of a dataset that has a second categorical variable. To do this, we can use the <em>rnorm</em> command to create this type of variable and include it with a categorical variable using the <em>rep</em> command.</p>
+<p>One of the more important histograms is called the <strong>normal
+curve</strong>. The normal curve has a particular shape in that it is
+symmetrical in relationship to the mean. A distribution (collection of
+scores) of a particular variable that is normally shaped will tend to
+have most of the scores in the middle of the distribution or fairly
+close to the mean.</p>
+<p>To demonstrate this, let’s create a variable that is normally
+distributed and part of a dataset that has a second categorical
+variable. To do this, we can use the <em>rnorm</em> command to create
+this type of variable and include it with a categorical variable using
+the <em>rep</em> command.</p>
 <pre class="r"><code>Practice &lt;- data.frame(Condition = 
             c(rep(c(&quot;A&quot;, &quot;B&quot;), each=250)), 
             Dist = rnorm(500, mean = 0, sd = 1))</code></pre>
-<p>To get a quick look at the shape we can use the <em>hist</em> command, which is a simplified version of the histogram.</p>
+<p>To get a quick look at the shape we can use the <em>hist</em>
+command, which is a simplified version of the histogram.</p>
 <pre class="r"><code>hist(Practice$Dist)</code></pre>
 <p><img src="Histograms_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
-<p>Notice that the bulk of the frequency of the scores are in the middle of the graph. This means they are closest to the mean, which for this data set is 0. Histograms also often include a curved line to show the shape of the distribution. For histograms this is based on what’s called density, which is based on the percentage or proportion of scores rather than the count. So we’ll change our histogram slightly and include the line.</p>
+<p>Notice that the bulk of the frequency of the scores are in the middle
+of the graph. This means they are closest to the mean, which for this
+data set is 0. Histograms also often include a curved line to show the
+shape of the distribution. For histograms this is based on what’s called
+density, which is based on the percentage or proportion of scores rather
+than the count. So we’ll change our histogram slightly and include the
+line.</p>
 <pre class="r"><code>hist(Practice$Dist, probability = TRUE)
 lines(density(Practice$Dist))</code></pre>
 <p><img src="Histograms_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
-<p>So the greatest density or percentage of scores lies close to the mean and the lowest density is on the <strong>tails</strong> of the distribution. The tails are where the distribution tapers off to the left and the right.</p>
+<p>So the greatest density or percentage of scores lies close to the
+mean and the lowest density is on the <strong>tails</strong> of the
+distribution. The tails are where the distribution tapers off to the
+left and the right.</p>
 </div>
 <div id="skew-and-kurtosis" class="section level2">
 <h2>Skew and Kurtosis</h2>
-<p>Datasets may also be <strong>skewed</strong>, which means that the bulk of the scores is either more toward the higher end or lower end of the graph.</p>
-<p><img src="https://learningstatisticswithr.com/book/lsr_files/figure-html/skewness-1.png" /></p>
-<p>Skew is basically a measure of asymmetry in comparisong to the symmetry present in a normal curve. Negatively skewed histograms have a greater frequency of scores that tend to be larger and more extreme smaller scores at the left tail of the distribution. Positive skew is the exact opposite. Greater frequency of scores that tend to be smaller and more extreme scores at the right tail of the distribution.</p>
-<p><em>Kurtosis</em> is a measure of the “pointiness” of a data set. The more kurtosis the closer the scores are to the mean and less kurtosis the more spread out the data set.</p>
-<p><img src="https://learningstatisticswithr.com/book/lsr_files/figure-html/kurtosis-1.png" /></p>
+<p>Datasets may also be <strong>skewed</strong>, which means that the
+bulk of the scores is either more toward the higher end or lower end of
+the graph.</p>
+<p><img
+src="https://learningstatisticswithr.com/book/lsr_files/figure-html/skewness-1.png" /></p>
+<p>Skew is basically a measure of asymmetry in comparisong to the
+symmetry present in a normal curve. Negatively skewed histograms have a
+greater frequency of scores that tend to be larger and more extreme
+smaller scores at the left tail of the distribution. Positive skew is
+the exact opposite. Greater frequency of scores that tend to be smaller
+and more extreme scores at the right tail of the distribution.</p>
+<p><em>Kurtosis</em> is a measure of the “pointiness” of a data set. The
+more kurtosis the closer the scores are to the mean and less kurtosis
+the more spread out the data set.</p>
+<p><img
+src="https://learningstatisticswithr.com/book/lsr_files/figure-html/kurtosis-1.png" /></p>
 <p>There are a few different types of kurtosis.</p>
 <ul>
 <li>Platykurtic - Flat, spread out</li>
 <li>Mesokurtic - Even distribution, kurtosis close to 0</li>
 <li>Leptokurtic - Too “pointy”, bunched around the mean</li>
 </ul>
-<p>We can also add density curves to our ggplots as well as analyze a categorical variable. First we can outline the bars in our histogram to show more detail.</p>
+<p>We can also add density curves to our ggplots as well as analyze a
+categorical variable. First we can outline the bars in our histogram to
+show more detail.</p>
 <pre class="r"><code>ggplot(Practice, aes(x=Dist)) +
     geom_histogram(binwidth=.4, colour=&quot;black&quot;, fill=&quot;white&quot;)</code></pre>
 <p><img src="Histograms_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
-<p>Then we can also add in the normal curve by using density rather than count for the histogram.</p>
+<p>Then we can also add in the normal curve by using density rather than
+count for the histogram.</p>
 <pre class="r"><code>ggplot(Practice, aes(x=Dist)) + 
     geom_histogram(aes(y=..density..),
                    binwidth=.4,
                    colour=&quot;black&quot;, fill=&quot;white&quot;) +
     geom_density()</code></pre>
 <p><img src="Histograms_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
-<p>It’s also possible to overlay two histograms based on a categorical variable, which divides the variable based on category.</p>
+<p>It’s also possible to overlay two histograms based on a categorical
+variable, which divides the variable based on category.</p>
 <pre class="r"><code>ggplot(Practice, aes(x=Dist, fill=Condition)) +
     geom_histogram(binwidth=.4, alpha=.5, position=&quot;identity&quot;)</code></pre>
 <p><img src="Histograms_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>

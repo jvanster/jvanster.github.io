@@ -14,10 +14,10 @@
 
 <title>Two-Way ANOVA Example</title>
 
-<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -266,6 +266,12 @@ $(document).ready(function () {
       <a href="Building_databases.html">Building Databases</a>
     </li>
     <li>
+      <a href="More_with_databases.html">More with Databases</a>
+    </li>
+    <li>
+      <a href="Working_with_R_Markdown.html">Working with R Markdown</a>
+    </li>
+    <li>
       <a href="Descriptive_Statistics.html">Descriptive Statistics</a>
     </li>
   </ul>
@@ -343,17 +349,21 @@ $(document).ready(function () {
   addClassKlippyTo("pre.r, pre.markdown");
   addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
 </script>
-<p>Testing the effects of Alcohol and Gender on the “beer googles effect”</p>
+<p>Testing the effects of Alcohol and Gender on the “beer googles
+effect”</p>
 <p>Two Independent Variables (Main Effects)</p>
 <ul>
 <li>IV 1 = Alcohol 3 Levels (None, 2 Pints, 4 Pints)</li>
 <li>IV 2 = Gender 2 Levels (Male and Female)</li>
-<li>DV = Attractiveness of the partner selected at the end of the evening</li>
+<li>DV = Attractiveness of the partner selected at the end of the
+evening</li>
 </ul>
 <p>Hypotheses</p>
 <ul>
-<li>H1 Alcohol has an effect on the attractiveness level of the selected partner</li>
-<li>H2 Gender has an effect on the attractiveness level of the partner.</li>
+<li>H1 Alcohol has an effect on the attractiveness level of the selected
+partner</li>
+<li>H2 Gender has an effect on the attractiveness level of the
+partner.</li>
 <li>H3 There is an interaction effect between Alcohol and Gender</li>
 </ul>
 <p>Get the dataset and import it</p>
@@ -363,8 +373,8 @@ View(goggles)</code></pre>
 <p>Check out Gender variable</p>
 <pre class="r"><code>goggles$Gender</code></pre>
 <pre><code>## &lt;labelled&lt;double&gt;[48]&gt;: Gender
-##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0
-## [36] 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0
+## [33] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 ## 
 ## Labels:
 ##  value  label
@@ -373,8 +383,8 @@ View(goggles)</code></pre>
 <p>Check out Alcohol variable</p>
 <pre class="r"><code>goggles$Alcohol</code></pre>
 <pre><code>## &lt;labelled&lt;double&gt;[48]&gt;: Alcohol Consumption
-##  [1] 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 1 1 1 1 1 1 1 1 2 2 2
-## [36] 2 2 2 2 2 3 3 3 3 3 3 3 3
+##  [1] 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 1 1 1 1 1 1 1 1
+## [33] 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3
 ## 
 ## Labels:
 ##  value   label
@@ -383,24 +393,28 @@ View(goggles)</code></pre>
 ##      3 4 Pints</code></pre>
 <p>Check out Attractiveness variable</p>
 <pre class="r"><code>goggles$Attractiveness</code></pre>
-<pre><code>##  [1] 65 70 60 60 60 55 60 55 70 65 60 70 65 60 60 50 55 65 70 55 55 60 50
-## [24] 50 50 55 80 65 70 75 75 65 45 60 85 65 70 70 80 60 30 30 30 55 35 20
-## [47] 45 40
+<pre><code>##  [1] 65 70 60 60 60 55 60 55 70 65 60 70 65 60 60 50 55 65 70 55 55
+## [22] 60 50 50 50 55 80 65 70 75 75 65 45 60 85 65 70 70 80 60 30 30
+## [43] 30 55 35 20 45 40
 ## attr(,&quot;label&quot;)
 ## [1] &quot;Attractiveness of Date&quot;
 ## attr(,&quot;format.spss&quot;)
 ## [1] &quot;F8.0&quot;
 ## attr(,&quot;display_width&quot;)
 ## [1] 13</code></pre>
-<p>Alcohol and Gender variables are factors. When they get imported from SPSS they don’t function as well because the focus is on the numbers, not the labels or words.We can use tidyverse and the mutate function to fix this.</p>
+<p>Alcohol and Gender variables are factors. When they get imported from
+SPSS they don’t function as well because the focus is on the numbers,
+not the labels or words.We can use tidyverse and the mutate function to
+fix this.</p>
 <pre class="r"><code>goggles &lt;- goggles %&gt;% 
   mutate(Gender = factor(Gender, levels = c(0,1), 
          labels = c(&quot;Male&quot;, &quot;Female&quot;)))</code></pre>
-<p>We can do the same thing with the Alcohol variable. Make sure you know the levels or numbering of the variable</p>
+<p>We can do the same thing with the Alcohol variable. Make sure you
+know the levels or numbering of the variable</p>
 <pre class="r"><code>goggles$Alcohol</code></pre>
 <pre><code>## &lt;labelled&lt;double&gt;[48]&gt;: Alcohol Consumption
-##  [1] 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 1 1 1 1 1 1 1 1 2 2 2
-## [36] 2 2 2 2 2 3 3 3 3 3 3 3 3
+##  [1] 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 1 1 1 1 1 1 1 1
+## [33] 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3
 ## 
 ## Labels:
 ##  value   label
@@ -411,7 +425,11 @@ View(goggles)</code></pre>
 <pre class="r"><code>goggles &lt;- goggles %&gt;% 
   mutate(Alcohol = factor(Alcohol, levels = c(1,2,3), 
             labels = c(&quot;None&quot;, &quot;2 Pints&quot;, &quot;4 Pints&quot;)))</code></pre>
-<p>Now we can move to the Two-Way ANOVA analysis. “m3” is the new object to save results so the formula will have this structure # m3 &lt;- aov (this is the computation you are using, like t.test) Then the rest of your formula should look like this (Dependent variable ~ Varible 1 + Variable 2 + Variable 1*Variable 2, data = [your dataset])</p>
+<p>Now we can move to the Two-Way ANOVA analysis. “m3” is the new object
+to save results so the formula will have this structure # m3 &lt;- aov
+(this is the computation you are using, like t.test) Then the rest of
+your formula should look like this (Dependent variable ~ Varible 1 +
+Variable 2 + Variable 1*Variable 2, data = [your dataset])</p>
 <pre class="r"><code>m3 &lt;- aov(Attractiveness ~ Gender + Alcohol + 
            Gender*Alcohol, data = goggles)</code></pre>
 <p>Key Findings from our output<br />
@@ -435,8 +453,8 @@ First let’s look at each variable individually</p>
   geom_errorbar(aes(ymin  =mean - ci, 
                     ymax = mean + ci), 
                 width = .1)</code></pre>
-<pre><code>## geom_path: Each group consists of only one observation. Do you need to
-## adjust the group aesthetic?</code></pre>
+<pre><code>## geom_path: Each group consists of only one observation. Do you
+## need to adjust the group aesthetic?</code></pre>
 <p><img src="Two_Way_ANOVA_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>Graph the Gender variable individually</p>
 <pre class="r"><code>GogglesGender &lt;- goggles %&gt;%
@@ -455,11 +473,12 @@ First let’s look at each variable individually</p>
                     ymax = mean + ci), 
                 width = .1) +
   ylim(0,70)</code></pre>
-<pre><code>## geom_path: Each group consists of only one observation. Do you need to
-## adjust the group aesthetic?</code></pre>
+<pre><code>## geom_path: Each group consists of only one observation. Do you
+## need to adjust the group aesthetic?</code></pre>
 <p><img src="Two_Way_ANOVA_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <p>Finally, we can graph relationships for both variables.<br />
-First find your descriptive statistics, but this time based on two independent variables</p>
+First find your descriptive statistics, but this time based on two
+independent variables</p>
 <pre class="r"><code>GogglesDescriptives &lt;- goggles %&gt;%
   group_by(Alcohol, Gender) %&gt;%
   summarize(n = n(),
@@ -467,7 +486,8 @@ First find your descriptive statistics, but this time based on two independent v
             sd = sd(Attractiveness),
             se = sd/sqrt(n),
             ci = qt(0.975, df = n - 1) * sd / sqrt(n))</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;Alcohol&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;Alcohol&#39;. You can override
+## using the `.groups` argument.</code></pre>
 <p>Check it</p>
 <pre class="r"><code>GogglesDescriptives</code></pre>
 <pre><code>## # A tibble: 6 × 7
@@ -530,7 +550,8 @@ ggplot(GogglesDescriptives,
        y = &quot;Mean Level of Attractiveness&quot;,
        color = &quot;Gender&quot;)</code></pre>
 <p><img src="Two_Way_ANOVA_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
-<p>Use Tukey to look at specific differences in the groups you are interested in</p>
+<p>Use Tukey to look at specific differences in the groups you are
+interested in</p>
 <pre class="r"><code>TukeyHSD(m3)</code></pre>
 <pre><code>##   Tukey multiple comparisons of means
 ##     95% family-wise confidence level
@@ -548,44 +569,74 @@ ggplot(GogglesDescriptives,
 ## 4 Pints-2 Pints -18.1250 -25.952143 -10.297857 0.0000040
 ## 
 ## $`Gender:Alcohol`
-##                                  diff        lwr        upr     p adj
-## Female:None-Male:None          -6.250 -19.851381   7.351381 0.7432243
-## Male:2 Pints-Male:None          0.000 -13.601381  13.601381 1.0000000
-## Female:2 Pints-Male:None       -4.375 -17.976381   9.226381 0.9277939
-## Male:4 Pints-Male:None        -31.250 -44.851381 -17.648619 0.0000003
-## Female:4 Pints-Male:None       -9.375 -22.976381   4.226381 0.3286654
-## Male:2 Pints-Female:None        6.250  -7.351381  19.851381 0.7432243
-## Female:2 Pints-Female:None      1.875 -11.726381  15.476381 0.9983764
-## Male:4 Pints-Female:None      -25.000 -38.601381 -11.398619 0.0000306
-## Female:4 Pints-Female:None     -3.125 -16.726381  10.476381 0.9825753
-## Female:2 Pints-Male:2 Pints    -4.375 -17.976381   9.226381 0.9277939
-## Male:4 Pints-Male:2 Pints     -31.250 -44.851381 -17.648619 0.0000003
-## Female:4 Pints-Male:2 Pints    -9.375 -22.976381   4.226381 0.3286654
-## Male:4 Pints-Female:2 Pints   -26.875 -40.476381 -13.273619 0.0000080
-## Female:4 Pints-Female:2 Pints  -5.000 -18.601381   8.601381 0.8796489
-## Female:4 Pints-Male:4 Pints    21.875   8.273619  35.476381 0.0002776</code></pre>
-<p>For us, the most important difference is that males are more likely to choose a less attractive person at 4 pints of alcohol than females</p>
+##                                  diff        lwr        upr
+## Female:None-Male:None          -6.250 -19.851381   7.351381
+## Male:2 Pints-Male:None          0.000 -13.601381  13.601381
+## Female:2 Pints-Male:None       -4.375 -17.976381   9.226381
+## Male:4 Pints-Male:None        -31.250 -44.851381 -17.648619
+## Female:4 Pints-Male:None       -9.375 -22.976381   4.226381
+## Male:2 Pints-Female:None        6.250  -7.351381  19.851381
+## Female:2 Pints-Female:None      1.875 -11.726381  15.476381
+## Male:4 Pints-Female:None      -25.000 -38.601381 -11.398619
+## Female:4 Pints-Female:None     -3.125 -16.726381  10.476381
+## Female:2 Pints-Male:2 Pints    -4.375 -17.976381   9.226381
+## Male:4 Pints-Male:2 Pints     -31.250 -44.851381 -17.648619
+## Female:4 Pints-Male:2 Pints    -9.375 -22.976381   4.226381
+## Male:4 Pints-Female:2 Pints   -26.875 -40.476381 -13.273619
+## Female:4 Pints-Female:2 Pints  -5.000 -18.601381   8.601381
+## Female:4 Pints-Male:4 Pints    21.875   8.273619  35.476381
+##                                   p adj
+## Female:None-Male:None         0.7432243
+## Male:2 Pints-Male:None        1.0000000
+## Female:2 Pints-Male:None      0.9277939
+## Male:4 Pints-Male:None        0.0000003
+## Female:4 Pints-Male:None      0.3286654
+## Male:2 Pints-Female:None      0.7432243
+## Female:2 Pints-Female:None    0.9983764
+## Male:4 Pints-Female:None      0.0000306
+## Female:4 Pints-Female:None    0.9825753
+## Female:2 Pints-Male:2 Pints   0.9277939
+## Male:4 Pints-Male:2 Pints     0.0000003
+## Female:4 Pints-Male:2 Pints   0.3286654
+## Male:4 Pints-Female:2 Pints   0.0000080
+## Female:4 Pints-Female:2 Pints 0.8796489
+## Female:4 Pints-Male:4 Pints   0.0002776</code></pre>
+<p>For us, the most important difference is that males are more likely
+to choose a less attractive person at 4 pints of alcohol than
+females</p>
 <div id="results-section" class="section level4">
 <h4>Results Section</h4>
 <div id="first-write-out-the-main-effects" class="section level5">
 <h5>First write out the main effects</h5>
 <blockquote>
-<p>There was a significant main effect of the amount of alcohol consumed on the attractiveness of the date that was selected, F(2, 42) = 20.07, p &lt; .001.</p>
+<p>There was a significant main effect of the amount of alcohol consumed
+on the attractiveness of the date that was selected, F(2, 42) = 20.07, p
+&lt; .001.</p>
 </blockquote>
 <blockquote>
-<p>There was not a significant main effect of gender on the attractiveness of the date that was selected, F(1, 42) = 2.03, p = .161.</p>
+<p>There was not a significant main effect of gender on the
+attractiveness of the date that was selected, F(1, 42) = 2.03, p =
+.161.</p>
 </blockquote>
 </div>
-<div id="second-write-out-the-interaction-effect" class="section level5">
+<div id="second-write-out-the-interaction-effect"
+class="section level5">
 <h5>Second, write out the interaction effect</h5>
 <blockquote>
-<p>There was a significant interaction effect between amount of alcohol consumed and gender on the attractiveness of the date that was selected F(2, 42) = 11.91, p &lt; .001.</p>
+<p>There was a significant interaction effect between amount of alcohol
+consumed and gender on the attractiveness of the date that was selected
+F(2, 42) = 11.91, p &lt; .001.</p>
 </blockquote>
 </div>
-<div id="third-write-out-any-relevant-tukey-findings" class="section level5">
+<div id="third-write-out-any-relevant-tukey-findings"
+class="section level5">
 <h5>Third, write out any relevant Tukey findings</h5>
 <blockquote>
-<p>TukeyHSD post hoc tests revealed that at the largest amount of alcohol consumption (4 pints) Males were significantly more likely to choose a less attractive date (M=35.6, SE=3.83) in comparison to females (M=57.5, SE=57.5). This difference, 21.86, 95% CI[-23.90, -6.10] was significant with an adjusted p = .0003.</p>
+<p>TukeyHSD post hoc tests revealed that at the largest amount of
+alcohol consumption (4 pints) Males were significantly more likely to
+choose a less attractive date (M=35.6, SE=3.83) in comparison to females
+(M=57.5, SE=57.5). This difference, 21.86, 95% CI[-23.90, -6.10] was
+significant with an adjusted p = .0003.</p>
 </blockquote>
 </div>
 </div>

@@ -14,10 +14,10 @@
 
 <title>Why_R</title>
 
-<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -262,6 +262,12 @@ $(document).ready(function () {
       <a href="Building_databases.html">Building Databases</a>
     </li>
     <li>
+      <a href="More_with_databases.html">More with Databases</a>
+    </li>
+    <li>
+      <a href="Working_with_R_Markdown.html">Working with R Markdown</a>
+    </li>
+    <li>
       <a href="Descriptive_Statistics.html">Descriptive Statistics</a>
     </li>
   </ul>
@@ -337,25 +343,81 @@ $(document).ready(function () {
 
 <div id="why-r-r-studio" class="section level3">
 <h3>Why R &amp; R Studio?</h3>
-<p>Many persons are curious about the shift to using R rather than SPSS or one of the other basic computer programs. A great overview is offered here:</p>
+<p>Many persons are curious about the shift to using R rather than SPSS
+or one of the other basic computer programs. A great overview is offered
+here:</p>
 <p><a href="https://lindeloev.net/spss-is-dying/">SPSS is dying</a></p>
 <p>Here are the reasons I think it’s important to move to R Studio.</p>
 <ol style="list-style-type: decimal">
 <li><p>It’s free.</p>
-<p>You can put it on your home computer for free. You can use it on Windows and Macs and even inexpensive educational computers like Raspberry pi</p>
+<p>You can put it on your home computer for free. You can use it on
+Windows and Macs and even inexpensive educational computers like
+Raspberry pi</p>
 <p><a href="https://www.raspberrypi.org/">Raspberry pi</a></p>
-<p>If you learn SPSS, most likely your company won’t have it and your educational organization may or may not have it. If you learn R and R Studio you can take it into any work setting and use it. This is especially helpful for nonprofits who often can’t afford statistical software.</p></li>
+<p>If you learn SPSS, most likely your company won’t have it and your
+educational organization may or may not have it. If you learn R and R
+Studio you can take it into any work setting and use it. This is
+especially helpful for nonprofits who often can’t afford statistical
+software.</p></li>
 <li><p>There’s this new thing called a <strong>‘com-pu-tor’</strong></p>
-<p>Computers are ubiquitous, you probably carried one with you into class in your pocket. A contemporary iPhone is <a href="https://www.idropnews.com/news/your-iphone-is-120-million-times-more-powerful-than-the-computer-that-sent-men-to-the-moon/112146/">120 million times more powerful than the computers that sent humans to the moon</a> However, not everyone is as familiar with the various types of code that makes modern computers, iPhones, apps, Instagram, etc. run. Learning R gives you a very rudimentary understanding of how to code. More importantly, it teaches you how to <em>manipulate code</em>. No one ever writes code on their own from scratch, but parts are taken and then transformed to work for your specific needs. The introduction to r and code in this class allows you to do basic statistics, make professional looking graphs, and even make websites (This website was created using R Studio and a package called R Markdown).</p></li>
+<p>Computers are ubiquitous, you probably carried one with you into
+class in your pocket. A contemporary iPhone is <a
+href="https://www.idropnews.com/news/your-iphone-is-120-million-times-more-powerful-than-the-computer-that-sent-men-to-the-moon/112146/">120
+million times more powerful than the computers that sent humans to the
+moon</a> However, not everyone is as familiar with the various types of
+code that makes modern computers, iPhones, apps, Instagram, etc. run.
+Learning R gives you a very rudimentary understanding of how to code.
+More importantly, it teaches you how to <em>manipulate code</em>. No one
+ever writes code on their own from scratch, but parts are taken and then
+transformed to work for your specific needs. The introduction to r and
+code in this class allows you to do basic statistics, make professional
+looking graphs, and even make websites (This website was created using R
+Studio and a package called R Markdown).</p></li>
 <li><p>Simplifying replication</p>
-<p>A big story in the last couple of years is the problem with replication in the social sciences, some calling it a <a href="https://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.0020124">replication crisis.</a> Replication is also requiring access to the code you used, not just the output shared in the research article. Mistakes have been found with scientific research findings because of the computations performed and how the data was processed, which haven’t been a normal part of research reports in the past. R Studio makes this easier because as you learn to code, you can also share the code you used to give a complete picture of the data analysis process from start to finish. Many journals are beginning to require that authors include their data as well as their code in the submission of research manuscripts.</p></li>
+<p>A big story in the last couple of years is the problem with
+replication in the social sciences, some calling it a <a
+href="https://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.0020124">replication
+crisis.</a> Replication is also requiring access to the code you used,
+not just the output shared in the research article. Mistakes have been
+found with scientific research findings because of the computations
+performed and how the data was processed, which haven’t been a normal
+part of research reports in the past. R Studio makes this easier because
+as you learn to code, you can also share the code you used to give a
+complete picture of the data analysis process from start to finish. Many
+journals are beginning to require that authors include their data as
+well as their code in the submission of research manuscripts.</p></li>
 <li><p>Collaboration</p>
-<p>Websites like <a href="https://github.com/">GitHub</a> are making it more and more easier to collaborate on various projects together. Github enables users to monitor how data is manipulated and changed over time. R Studio helps to facilitate this collaboration. More and more websites and companies are making their data free and open source (just like R is) so that persons can learn from each other or look at the data for themselves and check the sources. For example, here’s a <a href="https://github.com/Covid19R/covid19nytimes">site</a> that actively pulls data from The NY Times data repository on Covid-19 to be used in R.</p></li>
+<p>Websites like <a href="https://github.com/">GitHub</a> are making it
+more and more easier to collaborate on various projects together. Github
+enables users to monitor how data is manipulated and changed over time.
+R Studio helps to facilitate this collaboration. More and more websites
+and companies are making their data free and open source (just like R
+is) so that persons can learn from each other or look at the data for
+themselves and check the sources. For example, here’s a <a
+href="https://github.com/Covid19R/covid19nytimes">site</a> that actively
+pulls data from The NY Times data repository on Covid-19 to be used in
+R.</p></li>
 <li><p>Self-Teaching</p>
-<p>Most of the resources you need to learn R and R Studio are free. I taught myself R Studio through using free open source books, websites, and YouTube videos. Any time I had a question, I just googled it! I could usually find the answer with a little work. R also includes different packages that allow you to do different types of tasks (we use <em>tidyverse</em> for our class and <em>ggplot</em>) These are free as well and have tons of online help for free training. If you start with a little bit of R Studio, you can literally go anywhere in the world of data science and analysis.</p></li>
+<p>Most of the resources you need to learn R and R Studio are free. I
+taught myself R Studio through using free open source books, websites,
+and YouTube videos. Any time I had a question, I just googled it! I
+could usually find the answer with a little work. R also includes
+different packages that allow you to do different types of tasks (we use
+<em>tidyverse</em> for our class and <em>ggplot</em>) These are free as
+well and have tons of online help for free training. If you start with a
+little bit of R Studio, you can literally go anywhere in the world of
+data science and analysis.</p></li>
 <li><p>Social Justice</p>
-<p><a href="https://www.rstudio.com/black-lives-matter/">R Studio has committed to donate time and resources to various social justice groups such as Black Lives Matter and the ACLU</a></p>
-<p>As a company, R Studio is committed to providing open-source free software for data science (they also have an enterprise wing that provides data services for a fee). They are also a Certified B Corporation, which means that their open source mission is <a href="https://www.rstudio.com/about/what-makes-rstudio-different/">written into their charter and stakeholders must uphold that mission int heir decision-making</a></p></li>
+<p><a href="https://www.rstudio.com/black-lives-matter/">R Studio has
+committed to donate time and resources to various social justice groups
+such as Black Lives Matter and the ACLU</a></p>
+<p>As a company, R Studio is committed to providing open-source free
+software for data science (they also have an enterprise wing that
+provides data services for a fee). They are also a Certified B
+Corporation, which means that their open source mission is <a
+href="https://www.rstudio.com/about/what-makes-rstudio-different/">written
+into their charter and stakeholders must uphold that mission int heir
+decision-making</a></p></li>
 </ol>
 </div>
 

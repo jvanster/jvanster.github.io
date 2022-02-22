@@ -14,10 +14,10 @@
 
 <title>One-Way ANOVA</title>
 
-<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -266,6 +266,12 @@ $(document).ready(function () {
       <a href="Building_databases.html">Building Databases</a>
     </li>
     <li>
+      <a href="More_with_databases.html">More with Databases</a>
+    </li>
+    <li>
+      <a href="Working_with_R_Markdown.html">Working with R Markdown</a>
+    </li>
+    <li>
       <a href="Descriptive_Statistics.html">Descriptive Statistics</a>
     </li>
   </ul>
@@ -344,15 +350,67 @@ $(document).ready(function () {
   addClassKlippyTo("pre.r, pre.markdown");
   addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
 </script>
+<pre><code>## Registered S3 method overwritten by &#39;psych&#39;:
+##   method         from  
+##   plot.residuals rmutil</code></pre>
+<pre><code>## 
+## Attaching package: &#39;psych&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:scales&#39;:
+## 
+##     alpha, rescale</code></pre>
+<pre><code>## The following objects are masked from &#39;package:ggplot2&#39;:
+## 
+##     %+%, alpha</code></pre>
 <p>One-Way ANOVA Example</p>
-<p>Practice dataset: How does preschool affect language development? Three groups that differ by how many hours they spent in preschool per week</p>
-<p>Variables IV = Preschool DV = Language Development Language development was measured based on a language development test score</p>
-<p>Null Hypothesis: Attendance at preschool has no effect on language development</p>
+<p>Practice dataset: How does preschool affect language development?</p>
+<p>Three groups that differ by how many hours they spent in preschool
+per week</p>
+<p>Variables</p>
+<ul>
+<li><p>IV = Preschool</p></li>
+<li><p>DV = Language Development</p></li>
+</ul>
+<p>Language development was measured based on a language development
+test score</p>
+<p>Null Hypothesis: Attendance at preschool has no effect on language
+development</p>
 <p>View Dataset</p>
 <pre class="r"><code>View(ch15ds1)</code></pre>
 <p>View in R Console</p>
 <pre class="r"><code>ch15ds1</code></pre>
-<p>Let’s look at a bar graph of the data first Step 1 - create table of descriptive statistics</p>
+<pre><code>##       Group Language.Score
+## 1   5 Hours             87
+## 2   5 Hours             86
+## 3   5 Hours             76
+## 4   5 Hours             56
+## 5   5 Hours             78
+## 6   5 Hours             98
+## 7   5 Hours             77
+## 8   5 Hours             66
+## 9   5 Hours             75
+## 10  5 Hours             67
+## 11 10 Hours             87
+## 12 10 Hours             85
+## 13 10 Hours             99
+## 14 10 Hours             85
+## 15 10 Hours             79
+## 16 10 Hours             81
+## 17 10 Hours             82
+## 18 10 Hours             78
+## 19 10 Hours             85
+## 20 10 Hours             91
+## 21 20 Hours             89
+## 22 20 Hours             91
+## 23 20 Hours             96
+## 24 20 Hours             87
+## 25 20 Hours             89
+## 26 20 Hours             90
+## 27 20 Hours             89
+## 28 20 Hours             96
+## 29 20 Hours             96
+## 30 20 Hours             93</code></pre>
+<p>Let’s look at a bar graph of the data first</p>
+<p>Step 1 - create table of Descriptive Statistics</p>
 <pre class="r"><code>library(dplyr)
 Preschool_Descriptives &lt;- ch15ds1 %&gt;%
   group_by(Group) %&gt;%
@@ -363,6 +421,12 @@ Preschool_Descriptives &lt;- ch15ds1 %&gt;%
             ci = qt(0.975, df = n - 1) * sd / sqrt(n))</code></pre>
 <p>Check it out</p>
 <pre class="r"><code>Preschool_Descriptives</code></pre>
+<pre><code>## # A tibble: 3 × 6
+##   Group        n  mean    sd    se    ci
+##   &lt;chr&gt;    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 10 Hours    10  85.2  6.20  1.96  4.43
+## 2 20 Hours    10  91.6  3.41  1.08  2.44
+## 3 5 Hours     10  76.6 12.0   3.78  8.56</code></pre>
 <p>Now graph it based on the descriptive statistics</p>
 <pre class="r"><code>ggplot(Preschool_Descriptives, 
        aes(x = Group, 
@@ -370,21 +434,75 @@ Preschool_Descriptives &lt;- ch15ds1 %&gt;%
   geom_bar(stat = &quot;identity&quot;) +
   geom_errorbar(aes(ymin=mean-ci,
                     ymax=mean+ci))</code></pre>
-<p>Run your ANOVA First install Psych package</p>
+<p><img src="One_Way_ANOVA_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Run your ANOVA</p>
+<p>First install Psych package</p>
 <pre class="r"><code>library(psych)</code></pre>
-<p>Check out the variables Psych package uses a different command for this “describeBy” Must specify DV and groups</p>
+<p>Check out the variables.</p>
+<p>Psych package uses a different command for this “describeBy”</p>
+<p>Must specify DV and groups</p>
 <pre class="r"><code>describeBy(ch15ds1$Language.Score, group = ch15ds1$Group)</code></pre>
-<p>Run your ANOVA! Something new, must save results in an object rather than the results being there automatically</p>
+<pre><code>## 
+##  Descriptive statistics by group 
+## group: 10 Hours
+##    vars  n mean  sd median trimmed  mad min max range skew kurtosis
+## X1    1 10 85.2 6.2     85   84.38 5.19  78  99    21 0.89    -0.15
+##      se
+## X1 1.96
+## --------------------------------------------------- 
+## group: 20 Hours
+##    vars  n mean   sd median trimmed  mad min max range skew
+## X1    1 10 91.6 3.41   90.5   91.62 2.97  87  96     9 0.26
+##    kurtosis   se
+## X1    -1.72 1.08
+## --------------------------------------------------- 
+## group: 5 Hours
+##    vars  n mean    sd median trimmed   mad min max range skew
+## X1    1 10 76.6 11.96   76.5    76.5 14.08  56  98    42 0.05
+##    kurtosis   se
+## X1     -0.9 3.78</code></pre>
+<p>Run your ANOVA! Something new, must save results in an object rather
+than the results being there automatically</p>
 <pre class="r"><code>m1 &lt;- aov(Language.Score~Group, data = ch15ds1)</code></pre>
 <p>To get ANOVA table must use “summary” function</p>
 <pre class="r"><code>summary(m1)</code></pre>
-<p>Figure out the effect size - Eta squared The formula is SSbetween/SSTotal or SSbetween/SSbetween+SSResidual</p>
+<pre><code>##             Df Sum Sq Mean Sq F value  Pr(&gt;F)   
+## Group        2   1133   566.5   8.799 0.00114 **
+## Residuals   27   1738    64.4                   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Figure out the effect size - Eta squared The formula is
+SSbetween/SSTotal or SSbetween/SSbetween+SSResidual</p>
 <pre class="r"><code>1133/(1133+1738)</code></pre>
+<pre><code>## [1] 0.394636</code></pre>
 <p>Write out conclusion</p>
-<p>Number of hours in Preschool had a significant effect on language development, F(2, 27) = 8.799, p = 0.00114, 𝜂2 = 0.39.</p>
-<p>Where is the difference? Need to use post hoc tests TukeyHSD will tell us where the differences are between the individual groups. Run TukeyHSD on saved ANOVA results</p>
+<blockquote>
+<p>Number of hours in Preschool had a significant effect on language
+development, F(2, 27) = 8.799, p = 0.00114, 𝜂2 = 0.39.</p>
+</blockquote>
+<p>Where is the difference? Need to use post hoc tests</p>
+<p>TukeyHSD will tell us where the differences are between the
+individual groups.</p>
+<p>Run TukeyHSD on saved ANOVA results</p>
 <pre class="r"><code>TukeyHSD(m1)</code></pre>
-<p>Finally, write out the whole conclusion TukeyHSD post hoc tests revealed that 20 hours a week of preschool (M=91.6, SE=1.96) resulted in significantly higher levels of language development in comparison to 5 hours (M=76.6, SE=3.78). This difference, -15 95% CI[-23.90, -6.10] was significant with an adjusted p = .0008.</p>
+<pre><code>##   Tukey multiple comparisons of means
+##     95% family-wise confidence level
+## 
+## Fit: aov(formula = Language.Score ~ Group, data = ch15ds1)
+## 
+## $Group
+##                    diff        lwr        upr     p adj
+## 20 Hours-10 Hours   6.4  -2.497288 15.2972884 0.1941234
+## 5 Hours-10 Hours   -8.6 -17.497288  0.2972884 0.0596448
+## 5 Hours-20 Hours  -15.0 -23.897288 -6.1027116 0.0007780</code></pre>
+<p>Finally, write out the whole conclusion.</p>
+<blockquote>
+<p>TukeyHSD post hoc tests revealed that 20 hours a week of preschool
+(M=91.6, SE=1.96) resulted in significantly higher levels of language
+development in comparison to 5 hours (M=76.6, SE=3.78). This difference,
+-15 95% CI[-23.90, -6.10] was significant with an adjusted p =
+.0008.</p>
+</blockquote>
 <p>Improve the graph</p>
 <pre class="r"><code>ggplot(Preschool_Descriptives, 
        aes(x = Group, 
@@ -393,6 +511,7 @@ Preschool_Descriptives &lt;- ch15ds1 %&gt;%
   geom_errorbar(aes(ymin=mean-ci,
                     ymax=mean+ci)) +
   scale_x_discrete(limits=c(&quot;5 Hours&quot;, &quot;10 Hours&quot;, &quot;20 Hours&quot;))</code></pre>
+<p><img src="One_Way_ANOVA_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <p>Make it look real nice Clark</p>
 <pre class="r"><code>ggplot(Preschool_Descriptives, 
        aes(x = Group,
@@ -404,6 +523,7 @@ Preschool_Descriptives &lt;- ch15ds1 %&gt;%
   labs(title = &quot;Does Preschool Effect Language Development?&quot;, 
        y=&quot;Mean Score on Language Test&quot;, x=&quot;Number of Hours Spent in Preschool&quot;) +
   scale_x_discrete(limits=c(&quot;5 Hours&quot;, &quot;10 Hours&quot;, &quot;20 Hours&quot;))</code></pre>
+<p><img src="One_Way_ANOVA_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 
 
 

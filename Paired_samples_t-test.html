@@ -14,10 +14,10 @@
 
 <title>Paired samples t-test</title>
 
-<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -266,6 +266,12 @@ $(document).ready(function () {
       <a href="Building_databases.html">Building Databases</a>
     </li>
     <li>
+      <a href="More_with_databases.html">More with Databases</a>
+    </li>
+    <li>
+      <a href="Working_with_R_Markdown.html">Working with R Markdown</a>
+    </li>
+    <li>
       <a href="Descriptive_Statistics.html">Descriptive Statistics</a>
     </li>
   </ul>
@@ -345,53 +351,121 @@ $(document).ready(function () {
   addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
 </script>
 <p>####Paired samples t-test</p>
-<p>*Make sure to read the description of the independent t test before moving to the paired t-test</p>
-<p>Here’s two books that would be good to reference for this discussion. - Chapter 10 from Field, A. (2017). <em>Discovering Statistics Using IBM SPSS Statistics</em> (5th Edition). SAGE Publications, Ltd. (UK). - Chapter 13 &amp; 14 from Pagano, R. (2010). <em>Understanding Statistics in the Behavioral Sciences</em> (9th Edition). Wadsworth.</p>
-<p>The paired samples t-test is very similar to the independent t-test and the basic assumptions regarding the the two groups are the same.</p>
+<p>*Make sure to read the description of the independent t test before
+moving to the paired t-test</p>
+<p>Here’s two books that would be good to reference for this discussion.
+- Chapter 10 from Field, A. (2017). <em>Discovering Statistics Using IBM
+SPSS Statistics</em> (5th Edition). SAGE Publications, Ltd. (UK). -
+Chapter 13 &amp; 14 from Pagano, R. (2010). <em>Understanding Statistics
+in the Behavioral Sciences</em> (9th Edition). Wadsworth.</p>
+<p>The paired samples t-test is very similar to the independent t-test
+and the basic assumptions regarding the the two groups are the same.</p>
 <blockquote>
 <p>Null Hypothesis - Experimental Group = Control Group</p>
 </blockquote>
 <blockquote>
-<p>Alternative Hypothesis - Experimental Group <span class="math inline">\(\neq\)</span> Control Group</p>
+<p>Alternative Hypothesis - Experimental Group <span
+class="math inline">\(\neq\)</span> Control Group</p>
 </blockquote>
-<p>The difference in the paired samples t-test is that a single group goes through both the experimental and control conditions. The control condition is sometime referred to as the <em>baseline</em>, it’s the measurement of a dependent variable without the presence of the independent variable.</p>
-<p>For example, assume you are testing the effectiveness of a new drug on treating depression. You measure the current level of a sample of persons who are currently experiencing depression (baseline) then allow them to take the new drug for a month and then measure their depression a second time. So the assumptions of our two hypotheses would look something like this:</p>
+<p>The difference in the paired samples t-test is that a single group
+goes through both the experimental and control conditions. The control
+condition is sometime referred to as the <em>baseline</em>, it’s the
+measurement of a dependent variable without the presence of the
+independent variable.</p>
+<p>For example, assume you are testing the effectiveness of a new drug
+on treating depression. You measure the current level of a sample of
+persons who are currently experiencing depression (baseline) then allow
+them to take the new drug for a month and then measure their depression
+a second time. So the assumptions of our two hypotheses would look
+something like this:</p>
 <blockquote>
 <p>Null Hypothesis - Before taking the drug = After taking the drug</p>
 </blockquote>
 <blockquote>
-<p>Alternative Hypothesis - Before taking the drug <span class="math inline">\(\neq\)</span> After taking the drug</p>
+<p>Alternative Hypothesis - Before taking the drug <span
+class="math inline">\(\neq\)</span> After taking the drug</p>
 </blockquote>
 <p>The equation is similar to the equation for the z test.</p>
 <p><span class="math display">\[
 z = \frac{x - \mu}{\frac{\sigma}{\sqrt{n}}}
 \]</span></p>
-<p>Remember that the z test really boils down to the difference between the population mean and the sample mean divided by the standard error.</p>
-<p>Let’s look at the formula and then we can break down the elements.</p>
+<p>Remember that the z test really boils down to the difference between
+the population mean and the sample mean divided by the standard
+error.</p>
+<p>Let’s look at the formula and then we can break down the
+elements.</p>
 <p><span class="math display">\[
 t = \frac{\bar D - \mu_{D}}{\frac{s_{D}}{\sqrt{n}}}
-\]</span> The first element is the mean of the difference scores <span class="math inline">\(\bar D\)</span>. The t test calculates the difference between each subject before and then after the introduction of the independent variable. For our example, it would be the difference in their level of depression before and after taking the new drug. AFter all the differences are calculated the mean difference is found <span class="math inline">\(\bar D\)</span>. Obviously, if the independent variable has an effect, this number should have some amount of magnitude.</p>
-<p>The second element to look at is the mean of the population for difference scores assuming the null hypothesis is true <span class="math inline">\(\mu_{D}\)</span>. Remember that the Null hypothesis assumes no difference between the sample means, so it assumes that this sample of differences scores comes from a population with zero different or has a mean value of 0.</p>
+\]</span> The first element is the mean of the difference scores <span
+class="math inline">\(\bar D\)</span>. The t test calculates the
+difference between each subject before and then after the introduction
+of the independent variable. For our example, it would be the difference
+in their level of depression before and after taking the new drug. AFter
+all the differences are calculated the mean difference is found <span
+class="math inline">\(\bar D\)</span>. Obviously, if the independent
+variable has an effect, this number should have some amount of
+magnitude.</p>
+<p>The second element to look at is the mean of the population for
+difference scores assuming the null hypothesis is true <span
+class="math inline">\(\mu_{D}\)</span>. Remember that the Null
+hypothesis assumes no difference between the sample means, so it assumes
+that this sample of differences scores comes from a population with zero
+different or has a mean value of 0.</p>
 <p><span class="math display">\[
 \mu_{D}=0
 \]</span></p>
-<p>Since this value is zero, it basically falls out of the equation, but it does remind us of the basis for this kind of t test. The comparison in the formula is between a sample and a population as we saw in the z test. However, in this cases it’s a sample of difference scores compared to a population of difference scores with an assumed mean of zero as noted in the equation above, so the hypotheses have these assumptions.</p>
+<p>Since this value is zero, it basically falls out of the equation, but
+it does remind us of the basis for this kind of t test. The comparison
+in the formula is between a sample and a population as we saw in the z
+test. However, in this cases it’s a sample of difference scores compared
+to a population of difference scores with an assumed mean of zero as
+noted in the equation above, so the hypotheses have these
+assumptions.</p>
 <blockquote>
-<p>Null Hypothesis - The sample can reasonably be said to have come from a popultion of differnce scores with a mean of zero. Any difference between the means is the result of measurement error</p>
+<p>Null Hypothesis - The sample can reasonably be said to have come from
+a popultion of differnce scores with a mean of zero. Any difference
+between the means is the result of measurement error</p>
 </blockquote>
 <blockquote>
-<p>Alternative Hypothesis - The sample <em>can not</em> reasonably be said to have come from a population of difference scores with a mean of zero because the difference is too great and not the result of measurement error.</p>
+<p>Alternative Hypothesis - The sample <em>can not</em> reasonably be
+said to have come from a population of difference scores with a mean of
+zero because the difference is too great and not the result of
+measurement error.</p>
 </blockquote>
-<p>As before with the z test, we need some kind of value to compare to the mean difference. In this case, as with the z test, the comparison is to the error. More specifically to the measurement error that could reasonably be expected based on random variation. This value is known as the standard error of the differences. This standard error is an indicator of the size of potential differences in sample means based on sampling variation.</p>
+<p>As before with the z test, we need some kind of value to compare to
+the mean difference. In this case, as with the z test, the comparison is
+to the error. More specifically to the measurement error that could
+reasonably be expected based on random variation. This value is known as
+the standard error of the differences. This standard error is an
+indicator of the size of potential differences in sample means based on
+sampling variation.</p>
 <p>Here’s the formula/symbols <span class="math display">\[
 \frac{s_{D}}{\sqrt{n}}
 \]</span></p>
-<p>If you look closely, this formula looks remarkably similar to the standard error of the mean (because it is!) but notice how the standard deviation from the population <span class="math inline">\(\sigma\)</span> has been replaced with the standard deviation from the sample <span class="math inline">\(s\)</span>. What is unique about the standard error of the differences is that it uses the standard deviation from the sample as an <em>estimate</em> of the standard deviation from the population.</p>
-<p>Once the t score is found using the formula, it is compared to the t distribution, which is very similar to the z distribution.</p>
+<p>If you look closely, this formula looks remarkably similar to the
+standard error of the mean (because it is!) but notice how the standard
+deviation from the population <span
+class="math inline">\(\sigma\)</span> has been replaced with the
+standard deviation from the sample <span
+class="math inline">\(s\)</span>. What is unique about the standard
+error of the differences is that it uses the standard deviation from the
+sample as an <em>estimate</em> of the standard deviation from the
+population.</p>
+<p>Once the t score is found using the formula, it is compared to the t
+distribution, which is very similar to the z distribution.</p>
 <blockquote>
-<p>The sampling distribution of t is a probability distribution of t values that would occur if all possible different samples of a fixed size N were drawn from the null hypothesis population (Pagano, p. 320)</p>
+<p>The sampling distribution of t is a probability distribution of t
+values that would occur if all possible different samples of a fixed
+size N were drawn from the null hypothesis population (Pagano,
+p. 320)</p>
 </blockquote>
-<p>The t distribution varies based on the degrees of freedom, which is directly related to N. Just the the z distribution, the t distribution has a mean of zero and as t values get larger, they are situated on the tails of the distribution as either positive or negative numbers. Just like with z scores, the larger the t score the less likely the sample of obtained difference scores can reasonably be assumed to have come from a population of differnce scores with a mean of zero.</p>
+<p>The t distribution varies based on the degrees of freedom, which is
+directly related to N. Just the the z distribution, the t distribution
+has a mean of zero and as t values get larger, they are situated on the
+tails of the distribution as either positive or negative numbers. Just
+like with z scores, the larger the t score the less likely the sample of
+obtained difference scores can reasonably be assumed to have come from a
+population of differnce scores with a mean of zero.</p>
 <p>For the example import the following dataset.</p>
 <pre class="r"><code>ch14ds1 &lt;- read.csv(&quot;~/Documents/Website Trial/ch14ds1.csv&quot;)</code></pre>
 <p>Check out dataset</p>
@@ -424,7 +498,8 @@ t = \frac{\bar D - \mu_{D}}{\frac{s_{D}}{\sqrt{n}}}
 ## 23       6        9
 ## 24       7        8
 ## 25       8       12</code></pre>
-<p>Notice that this is a fairly straightforward pre vs. posttest dataset.</p>
+<p>Notice that this is a fairly straightforward pre vs. posttest
+dataset.</p>
 <p>Use the summary command to look at the descriptive statistics</p>
 <pre class="r"><code>summary(ch14ds1)</code></pre>
 <pre><code>##     Pretest        Posttest    
@@ -434,10 +509,16 @@ t = \frac{\bar D - \mu_{D}}{\frac{s_{D}}{\sqrt{n}}}
 ##  Mean   :6.32   Mean   : 7.52  
 ##  3rd Qu.:8.00   3rd Qu.: 9.00  
 ##  Max.   :9.00   Max.   :12.00</code></pre>
-<p>The means between the two groups are different and we can calculate the difference.</p>
+<p>The means between the two groups are different and we can calculate
+the difference.</p>
 <pre class="r"><code>7.52-6.32</code></pre>
 <pre><code>## [1] 1.2</code></pre>
-<p>Of course, we need to determine whether this difference is significant or not. So let’s use r to run the paired samples t test. Notice that the code is fairly straightforward. Start with the <em>t.test</em> command and then list the two variables that are being analyzed, followed by lettting R know you want to perform a paired test <em>paired = TRUE</em>.</p>
+<p>Of course, we need to determine whether this difference is
+significant or not. So let’s use r to run the paired samples t test.
+Notice that the code is fairly straightforward. Start with the
+<em>t.test</em> command and then list the two variables that are being
+analyzed, followed by lettting R know you want to perform a paired test
+<em>paired = TRUE</em>.</p>
 <pre class="r"><code>t.test(ch14ds1$Posttest, ch14ds1$Pretest, paired = TRUE)</code></pre>
 <pre><code>## 
 ##  Paired t-test
@@ -450,14 +531,18 @@ t = \frac{\bar D - \mu_{D}}{\frac{s_{D}}{\sqrt{n}}}
 ## sample estimates:
 ## mean of the differences 
 ##                     1.2</code></pre>
-<p>Based on the results, there does appear to be a significant difference between the pre and post tests.</p>
-<p>List the effect size as well using Cohen’s d - Subtract the means from each other and divide by the standard deviation of the control group</p>
+<p>Based on the results, there does appear to be a significant
+difference between the pre and post tests.</p>
+<p>List the effect size as well using Cohen’s d - Subtract the means
+from each other and divide by the standard deviation of the control
+group</p>
 <pre class="r"><code>Cohens_d &lt;- (7.52-6.32)/1.73
 Cohens_d</code></pre>
 <pre><code>## [1] 0.6936416</code></pre>
 <div id="bar-graph" class="section level4">
 <h4>Bar Graph</h4>
-<p>This time let’s use a ggplot to make a better looking bar graph. Check out the format of the data</p>
+<p>This time let’s use a ggplot to make a better looking bar graph.
+Check out the format of the data</p>
 <pre class="r"><code>ch14ds1</code></pre>
 <pre><code>##    Pretest Posttest
 ## 1        3        7
@@ -485,8 +570,15 @@ Cohens_d</code></pre>
 ## 23       6        9
 ## 24       7        8
 ## 25       8       12</code></pre>
-<p>The data is set up for a paired t test, so it includes 2 numeric variables. This is a problem because a single factor variable is missing that would be used to describe our two bars (i.e. pre and post test).</p>
-<p>Thus, we need to create a second dataset or dataframe that has a factor variable (“Group”) and numeric (“Test”) variable. A new object is created called “TestData”. The factor variable is created from scratch using the “rep” repeat function and then adding together the Pre and Post Test scores into a single numeric variable.</p>
+<p>The data is set up for a paired t test, so it includes 2 numeric
+variables. This is a problem because a single factor variable is missing
+that would be used to describe our two bars (i.e. pre and post
+test).</p>
+<p>Thus, we need to create a second dataset or dataframe that has a
+factor variable (“Group”) and numeric (“Test”) variable. A new object is
+created called “TestData”. The factor variable is created from scratch
+using the “rep” repeat function and then adding together the Pre and
+Post Test scores into a single numeric variable.</p>
 <pre class="r"><code>TestData &lt;- data.frame(
             group= rep(c(&quot;Pretest&quot;, &quot;Posttest&quot;), each=25),
             Test = c(ch14ds1$Pretest, ch14ds1$Posttest)
@@ -513,7 +605,8 @@ Test_Descriptives &lt;- TestData %&gt;%
            y = mean)) +
   geom_bar(stat = &quot;identity&quot;)</code></pre>
 <p><img src="Paired_samples_t-test_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
-<p>Then let’s add in some error bars with the <em>geom_errorbar</em> function.</p>
+<p>Then let’s add in some error bars with the <em>geom_errorbar</em>
+function.</p>
 <pre class="r"><code>ggplot(Test_Descriptives, 
        aes(x = group, 
            y = mean)) +
@@ -544,9 +637,13 @@ Test_Descriptives &lt;- TestData %&gt;%
        y=&quot;Mean Score&quot;, x=&quot;Tests&quot;) +
   scale_x_discrete(limits=c(&quot;Pretest&quot;, &quot;Posttest&quot;))</code></pre>
 <p><img src="Paired_samples_t-test_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
-<p>Finally, we can write out the results, which is essentially the same format as the independent t test.</p>
+<p>Finally, we can write out the results, which is essentially the same
+format as the independent t test.</p>
 <blockquote>
-<p>On average, scores on the posttest were larger (M = 7.52, SE = .37) than the scores on the pretest (M = 6.32, SE = .35). This difference, 1.2, 95% CI[.19, 2.21], was significant t(24) = 2.45, p = 0.02. The results represented an effect size of d = 0.69.*</p>
+<p>On average, scores on the posttest were larger (M = 7.52, SE = .37)
+than the scores on the pretest (M = 6.32, SE = .35). This difference,
+1.2, 95% CI[.19, 2.21], was significant t(24) = 2.45, p = 0.02. The
+results represented an effect size of d = 0.69.*</p>
 </blockquote>
 </div>
 

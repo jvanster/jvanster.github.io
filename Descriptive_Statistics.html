@@ -14,10 +14,10 @@
 
 <title>Descriptive Statistics</title>
 
-<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -266,6 +266,12 @@ $(document).ready(function () {
       <a href="Building_databases.html">Building Databases</a>
     </li>
     <li>
+      <a href="More_with_databases.html">More with Databases</a>
+    </li>
+    <li>
+      <a href="Working_with_R_Markdown.html">Working with R Markdown</a>
+    </li>
+    <li>
       <a href="Descriptive_Statistics.html">Descriptive Statistics</a>
     </li>
   </ul>
@@ -345,15 +351,30 @@ $(document).ready(function () {
 </script>
 <div id="opening-datasets" class="section level2">
 <h2>Opening datasets</h2>
-<p>Sometimes pre-existing datasets are imported into R Studio. There are several different types of datasets that can be imported. The ones used most frequently in this course are from Excel and SPSS. Types of computer files are indicated by what follows the period (“.”) in the file name. For example file.docx is a type of word file.</p>
+<p>Sometimes pre-existing datasets are imported into R Studio. There are
+several different types of datasets that can be imported. The ones used
+most frequently in this course are from Excel and SPSS. Types of
+computer files are indicated by what follows the period (“.”) in the
+file name. For example file.docx is a type of word file.</p>
 <p>Here’s a list of common file types we’ll use.</p>
 <ul>
 <li>Excel = .xlsx</li>
 <li>SPSS = .sav</li>
 <li>Comma Seperated Values = .csv</li>
 </ul>
-<p>One files we’ll be using today is the <em>Album Sales</em> file. On the moodle page for the course at the very top underneath the link for zoom sessions, you’ll see a folder with SPSS Data Sets. When you click on the folder you’ll see a list of datasets. Click on the one that says, “Album Sales.sav” and download it to your computer.</p>
-<p>Once the file is downloaded go to the upper right pane in R Studio. Under the environment tab you’ll see a button that says “Import Dataset”. Click on the button and you’ll get several different options. Go to the one that says “From SPSS” and click on it. At the top of the window you’ll need to find the file you are importing to open it. Click on the Browse buttom to find the file. Once you find it click open and it will give you a preview of the file in the window. Then all you need to do is click import.</p>
+<p>One files we’ll be using today is the <em>Album Sales</em> file. On
+the moodle page for the course at the very top underneath the link for
+zoom sessions, you’ll see a folder with SPSS Data Sets. When you click
+on the folder you’ll see a list of datasets. Click on the one that says,
+“Album Sales.sav” and download it to your computer.</p>
+<p>Once the file is downloaded go to the upper right pane in R Studio.
+Under the environment tab you’ll see a button that says “Import
+Dataset”. Click on the button and you’ll get several different options.
+Go to the one that says “From SPSS” and click on it. At the top of the
+window you’ll need to find the file you are importing to open it. Click
+on the Browse buttom to find the file. Once you find it click open and
+it will give you a preview of the file in the window. Then all you need
+to do is click import.</p>
 <p>Here is the code for importing the file</p>
 <pre class="r"><code>library(haven)
 Album_Sales &lt;- read_sav(&quot;Album Sales.sav&quot;)
@@ -361,26 +382,59 @@ View(Album_Sales)</code></pre>
 </div>
 <div id="descriptive-statistics" class="section level2">
 <h2>Descriptive Statistics</h2>
-<p>Descriptive statisitics are just what the name implies, they are used to <em>describe</em> a dataset. This is different from <em>inferential</em> statistics, which are used to <em>infer</em> population paramenters based on a sample.</p>
-<p>One of the most common descriptive statistics is <em>central tendency</em>, which is simply finding a way to get a basic overview of a dataset as a whole. The easiest way to do this is to find the average or the <em>mean</em>. The formula for the mean is very straightforward. It’s simply the sum of all the scores divied by the number of scores. <span class="math display">\[
+<p>Descriptive statisitics are just what the name implies, they are used
+to <em>describe</em> a dataset. This is different from
+<em>inferential</em> statistics, which are used to <em>infer</em>
+population paramenters based on a sample.</p>
+<p>One of the most common descriptive statistics is <em>central
+tendency</em>, which is simply finding a way to get a basic overview of
+a dataset as a whole. The easiest way to do this is to find the average
+or the <em>mean</em>. The formula for the mean is very straightforward.
+It’s simply the sum of all the scores divied by the number of scores.
+<span class="math display">\[
 \frac{\Sigma X}{N}
-\]</span> The captial Greek letter Sigma in the numerator stands for sum and X stands in for all the values in a dataset with the N standing for the number of values in the dataset. In R Studio, we simply use the mean command to find the mean for a particular variable</p>
+\]</span> The captial Greek letter Sigma in the numerator stands for sum
+and X stands in for all the values in a dataset with the N standing for
+the number of values in the dataset. In R Studio, we simply use the mean
+command to find the mean for a particular variable</p>
 <pre class="r"><code>mean(diamonds$carat)</code></pre>
 <pre><code>## [1] 0.7979397</code></pre>
-<p>There are two other measures of central tendency that are often used in statistics, <em>median</em> and <em>mode</em>. The median is simply the center score, so to find it, you simply rank order your values from lowest to highest and the middle score in that rank order. For even scores you take the two middle scores add them and divide them by two. For odd scores there is only one middle score. Here again, R gives us an easy way to find the median.</p>
+<p>There are two other measures of central tendency that are often used
+in statistics, <em>median</em> and <em>mode</em>. The median is simply
+the center score, so to find it, you simply rank order your values from
+lowest to highest and the middle score in that rank order. For even
+scores you take the two middle scores add them and divide them by two.
+For odd scores there is only one middle score. Here again, R gives us an
+easy way to find the median.</p>
 <pre class="r"><code>median(diamonds$carat)</code></pre>
 <pre><code>## [1] 0.7</code></pre>
-<p>The mode is the score or value with the highest frequency in your dataset. So whatever value occurs the most times is the mode. For some reason, mode is not part of the basic R package, so you need to install the “modeest” package if you need to find this descriptive statistic.</p>
+<p>The mode is the score or value with the highest frequency in your
+dataset. So whatever value occurs the most times is the mode. For some
+reason, mode is not part of the basic R package, so you need to install
+the “modeest” package if you need to find this descriptive
+statistic.</p>
 <pre class="r"><code>library(modeest)</code></pre>
 <p>Once the library is installed use the mfv command</p>
 <pre class="r"><code>mfv(diamonds$carat)</code></pre>
 <pre><code>## [1] 0.3</code></pre>
-<p>We tend to use the mean most often for central tendency, but it’s more effected by extreme scores. So if you have several low or high outliers, the median may be a more accurate representation of the data. More often then not, we’ll use the mean. The mode is a more straightforward measure. So if you were interested in the most popular song on an album based on downloads, you would find the mode. The most is often very helpful with categorical data.</p>
-<p>The second important aspect of descriptive statistics is variability or dispersion in a dataset. This typically represents how the rest of the dataset relates to the mean. For example: are the scores close to or widely dispersed from the mean?</p>
+<p>We tend to use the mean most often for central tendency, but it’s
+more effected by extreme scores. So if you have several low or high
+outliers, the median may be a more accurate representation of the data.
+More often then not, we’ll use the mean. The mode is a more
+straightforward measure. So if you were interested in the most popular
+song on an album based on downloads, you would find the mode. The most
+is often very helpful with categorical data.</p>
+<p>The second important aspect of descriptive statistics is variability
+or dispersion in a dataset. This typically represents how the rest of
+the dataset relates to the mean. For example: are the scores close to or
+widely dispersed from the mean?</p>
 </div>
 <div id="range" class="section level2">
 <h2>Range</h2>
-<p>The first measure of dispersion is range. This is simply subtracting the highest score from the lowest score. So the first thing you need to do is rank order your scores from lowest to highest. Pick out the highest and lowest scores and subtract them.</p>
+<p>The first measure of dispersion is range. This is simply subtracting
+the highest score from the lowest score. So the first thing you need to
+do is rank order your scores from lowest to highest. Pick out the
+highest and lowest scores and subtract them.</p>
 <p>So Let’s look at those album sales advertising data.</p>
 <pre class="r"><code>Album_Sales$Adverts</code></pre>
 <pre><code>##   [1]   10.256  985.685 1445.563 1188.193  574.513  568.954  471.814
@@ -416,7 +470,10 @@ View(Album_Sales)</code></pre>
 ## [1] &quot;Advertsing budget (thousands)&quot;
 ## attr(,&quot;format.spss&quot;)
 ## [1] &quot;F8.2&quot;</code></pre>
-<p>Notice how the variable isn’t currently ranked from lowest to highest. But we can use the “arrange” command from tidyverse to sort the dataset from lowest to highest by the Advertising variable and then pick out the numbers we need for the range</p>
+<p>Notice how the variable isn’t currently ranked from lowest to
+highest. But we can use the “arrange” command from tidyverse to sort the
+dataset from lowest to highest by the Advertising variable and then pick
+out the numbers we need for the range</p>
 <pre class="r"><code>View(arrange(Album_Sales, Adverts))</code></pre>
 <p>The we just simply pick out the lowest and highest numbers</p>
 <p>lowest = 9.104 highest = 2271.860</p>
@@ -427,31 +484,74 @@ View(Album_Sales)</code></pre>
 </div>
 <div id="standard-deviation" class="section level1">
 <h1>Standard Deviation</h1>
-<p>Often times were interested in the average spread or deviation from the mean. <em>Deviance</em> is the distance from any particular score from the mean. So to find the deviance you simply take the score and subtract it from the mean. <span class="math display">\[
+<p>Often times were interested in the average spread or deviation from
+the mean. <em>Deviance</em> is the distance from any particular score
+from the mean. So to find the deviance you simply take the score and
+subtract it from the mean. <span class="math display">\[
 deviance = x - \bar x
-\]</span> If we wanted to find out the total amount of deviance, we could simply add together the total deviance for each number in our dataset. So the equation would look like this: <span class="math display">\[
+\]</span> If we wanted to find out the total amount of deviance, we
+could simply add together the total deviance for each number in our
+dataset. So the equation would look like this: <span
+class="math display">\[
 total\;deviance = \Sigma(x-\bar x)
-\]</span> Unfortunately this equation causes some problems. If you remember, the mean is the average score, so it’s the score at around 50%. But that means that for any dataset about half the scores will be above the mean and half the scores will be below the mean. Or another way to think about it, half the scores will be negative and half the scores will be positive. So if we add up all these scores, the total deviation will be equal to 0. Zero doesn’t tell us much about the spread of the scores.</p>
-<p>The way to overcome this problem is by squaring each deviation score, which makes all the deviation values positive and thus produces a positive number. This number is called the sum of squared errors of the sum of squares (SS) with the following formula. <span class="math display">\[
+\]</span> Unfortunately this equation causes some problems. If you
+remember, the mean is the average score, so it’s the score at around
+50%. But that means that for any dataset about half the scores will be
+above the mean and half the scores will be below the mean. Or another
+way to think about it, half the scores will be negative and half the
+scores will be positive. So if we add up all these scores, the total
+deviation will be equal to 0. Zero doesn’t tell us much about the spread
+of the scores.</p>
+<p>The way to overcome this problem is by squaring each deviation score,
+which makes all the deviation values positive and thus produces a
+positive number. This number is called the sum of squared errors of the
+sum of squares (SS) with the following formula. <span
+class="math display">\[
 sum\;of\;squares (SS) = \Sigma(x-\bar x)^2
-\]</span> This number is still somewhat inflated, since its constructed based on squared values. One way to fix this issue to to find the average dispersion, which will be based on the number in our sample. Since the sample is an estimate of the population, we actually don’t use N, but N -1. This number is called the variance and has the following symbol and equation. <span class="math display">\[
+\]</span> This number is still somewhat inflated, since its constructed
+based on squared values. One way to fix this issue to to find the
+average dispersion, which will be based on the number in our sample.
+Since the sample is an estimate of the population, we actually don’t use
+N, but N -1. This number is called the variance and has the following
+symbol and equation. <span class="math display">\[
 variance(s^2) = \frac {SS}{N-1} = \frac {\Sigma(x-\bar x)^2}{N-1}
-\]</span> This number is closer to the original units of measurement, but to make it more accurate, the original squared values need to be taken back out of the measure. To do this, the square root of the variance is calculated.</p>
+\]</span> This number is closer to the original units of measurement,
+but to make it more accurate, the original squared values need to be
+taken back out of the measure. To do this, the square root of the
+variance is calculated.</p>
 <p><span class="math display">\[
 s = \sqrt {\frac {\Sigma (x- \bar x)^2}{N-1}}
-\]</span> To find the standard deviation using R Studio we use the <em>sd</em> command to find it.</p>
+\]</span> To find the standard deviation using R Studio we use the
+<em>sd</em> command to find it.</p>
 <pre class="r"><code>sd(Album_Sales$Adverts)</code></pre>
 <pre><code>## [1] 485.6552</code></pre>
-<p>Another helpful type of range is the <em>interquartile range</em>, which is the range of numbers from the 25th and 75th percentile. Percentiles are just dividing up a dataset based on where certain scores are based on percentages. For example, we can look at what score is at the 50th percentile. To do that we use the <strong>quantile</strong> command (a <em>quantile</em> is the same thing as a <em>percentile</em>). x is the variable we are analyzing, and .5 is the percentile (.5 = 50%; .35 = 35%)</p>
+<p>Another helpful type of range is the <em>interquartile range</em>,
+which is the range of numbers from the 25th and 75th percentile.
+Percentiles are just dividing up a dataset based on where certain scores
+are based on percentages. For example, we can look at what score is at
+the 50th percentile. To do that we use the <strong>quantile</strong>
+command (a <em>quantile</em> is the same thing as a
+<em>percentile</em>). x is the variable we are analyzing, and .5 is the
+percentile (.5 = 50%; .35 = 35%)</p>
 <pre class="r"><code>quantile(x = diamonds$carat, probs = .5)</code></pre>
 <pre><code>## 50% 
 ## 0.7</code></pre>
-<p>So the number at the 50th percentile is 0.7. Notice that this is the same as the median, described earlier. Remember that the median is the number from the dataset that is in the middle or center of the dataset. Because the mean is calculated, it may or may not be a number in the dataset. The mean is the number that describes the closest number to the average, but may or may not be a number contained in the dataset.</p>
-<p>So to find the interquartile range, we want our two quartiles or numbers at “quarters” of the dataset, so 25% and 75%. Think of a dollar, which is made up of 4 quarters. We already know that half a dolar is 50 cents, which would be the median, but the other two quartiles (quarters) would be 25 cents and 75 cents.</p>
+<p>So the number at the 50th percentile is 0.7. Notice that this is the
+same as the median, described earlier. Remember that the median is the
+number from the dataset that is in the middle or center of the dataset.
+Because the mean is calculated, it may or may not be a number in the
+dataset. The mean is the number that describes the closest number to the
+average, but may or may not be a number contained in the dataset.</p>
+<p>So to find the interquartile range, we want our two quartiles or
+numbers at “quarters” of the dataset, so 25% and 75%. Think of a dollar,
+which is made up of 4 quarters. We already know that half a dolar is 50
+cents, which would be the median, but the other two quartiles (quarters)
+would be 25 cents and 75 cents.</p>
 <pre class="r"><code>quantile(x = diamonds$carat, probs = c(.25, .75))</code></pre>
 <pre><code>##  25%  75% 
 ## 0.40 1.04</code></pre>
-<p>Finally, to get the interquartile ranks we simply subtract these two numbers.</p>
+<p>Finally, to get the interquartile ranks we simply subtract these two
+numbers.</p>
 <pre class="r"><code>1.04-.40</code></pre>
 <pre><code>## [1] 0.64</code></pre>
 <p>So the interquartile range is 0.64.</p>

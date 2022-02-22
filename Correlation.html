@@ -14,10 +14,10 @@
 
 <title>Correlation</title>
 
-<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -266,6 +266,12 @@ $(document).ready(function () {
       <a href="Building_databases.html">Building Databases</a>
     </li>
     <li>
+      <a href="More_with_databases.html">More with Databases</a>
+    </li>
+    <li>
+      <a href="Working_with_R_Markdown.html">Working with R Markdown</a>
+    </li>
+    <li>
       <a href="Descriptive_Statistics.html">Descriptive Statistics</a>
     </li>
   </ul>
@@ -343,22 +349,75 @@ $(document).ready(function () {
   addClassKlippyTo("pre.r, pre.markdown");
   addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
 </script>
-<p>One of the first tests we can use to look at the relationship between two variables is <strong>correlation</strong>. Correlation usually requires two continuous numerical variables of some kind.</p>
-<p>The basic method for comparison between the two variables is <strong>variance</strong>, which we learned when looking at descriptive statisitics. Remember that variance is a measurement of data dispersion or spread. More specifically it refers to the average amount that data varies from the mean. So what correlation ultimately analyses is whether 2 variables <em>vary</em> in a similar way. Remember here’s the formula for variance. <span class="math display">\[
+<p>One of the first tests we can use to look at the relationship between
+two variables is <strong>correlation</strong>. Correlation usually
+requires two continuous numerical variables of some kind.</p>
+<p>The basic method for comparison between the two variables is
+<strong>variance</strong>, which we learned when looking at descriptive
+statisitics. Remember that variance is a measurement of data dispersion
+or spread. More specifically it refers to the average amount that data
+varies from the mean. So what correlation ultimately analyses is whether
+2 variables <em>vary</em> in a similar way. Remember here’s the formula
+for variance. <span class="math display">\[
 variance(s^2)=\frac{\Sigma(x-\bar x)^2}{N-1}
 \]</span></p>
 <div id="covariance" class="section level4">
 <h4>Covariance</h4>
-<p>Since correlation is based on how two variables vary, naturally we are interested in <em>covariance</em>. Covariance is simply variance for two variables. Notice here in the formula that we’ve modified the orinigal variance formula and included our second variable <em>y</em>. So we’ve modified the exponent in the formula for x - the mean and incorporated y. <span class="math display">\[
+<p>Since correlation is based on how two variables vary, naturally we
+are interested in <em>covariance</em>. Covariance is simply variance for
+two variables. Notice here in the formula that we’ve modified the
+orinigal variance formula and included our second variable <em>y</em>.
+So we’ve modified the exponent in the formula for x - the mean and
+incorporated y. <span class="math display">\[
 covariance(x,y)=\frac{\Sigma(x-\bar x)(y-\bar y)}{N-1}
-\]</span> <em>x</em> stands for our first variable and <em>y</em> stands for our second variable, so we are analyzing variance over two variables rather than just one. How does one variable deviate from the mean in comparison to how another variable deviates from the mean? If they deviate (vary) from the mean in a similar way they will be expected to be highly correlated. When there are two variables we can multiply the deviation for one variable by the devation from the second variable. If both deviations are either positive or negative this will give us a positive value, which tells us that the deviations are in the same direction (positive correlation). If the deviations go in opposite directions (one positive and one negative) this will give us a negative value (negative corrleation). Multiplying deviations of one variable by a second variable gets us the <em>cross-product deviation</em>.</p>
-<p>At this point the covariance is dependent upon the types of units used to calculate the number. However, we want to <em>standardize</em> this number, which basically means that the number will be in units that are the same across different experiments and the tools they use to measure their variables.In this case to standardize our covariance we use a calculation discussed in descriptive statistics, the <em>standard deviation</em>. This gets us what’s known as <em>Pearson’s r</em>, which was named after the person who developed the calculation Karl Pearson with Florenece Nightingale David doing a lot of the harder mathematical calculations. So hear is the formual for Pearson’s r <span class="math display">\[
-r = \frac {cov_{xy}}{s_{x}s_{y}}=\frac{\Sigma(x-\bar x)(y-\bar y)}{(N-1)s_{x}s_{y}}
+\]</span> <em>x</em> stands for our first variable and <em>y</em> stands
+for our second variable, so we are analyzing variance over two variables
+rather than just one. How does one variable deviate from the mean in
+comparison to how another variable deviates from the mean? If they
+deviate (vary) from the mean in a similar way they will be expected to
+be highly correlated. When there are two variables we can multiply the
+deviation for one variable by the devation from the second variable. If
+both deviations are either positive or negative this will give us a
+positive value, which tells us that the deviations are in the same
+direction (positive correlation). If the deviations go in opposite
+directions (one positive and one negative) this will give us a negative
+value (negative corrleation). Multiplying deviations of one variable by
+a second variable gets us the <em>cross-product deviation</em>.</p>
+<p>At this point the covariance is dependent upon the types of units
+used to calculate the number. However, we want to <em>standardize</em>
+this number, which basically means that the number will be in units that
+are the same across different experiments and the tools they use to
+measure their variables.In this case to standardize our covariance we
+use a calculation discussed in descriptive statistics, the <em>standard
+deviation</em>. This gets us what’s known as <em>Pearson’s r</em>, which
+was named after the person who developed the calculation Karl Pearson
+with Florenece Nightingale David doing a lot of the harder mathematical
+calculations. So hear is the formual for Pearson’s r <span
+class="math display">\[
+r = \frac {cov_{xy}}{s_{x}s_{y}}=\frac{\Sigma(x-\bar x)(y-\bar
+y)}{(N-1)s_{x}s_{y}}
 \]</span></p>
-<p>Notice that the formula is primarily the covariance of x and y divided by the standard deviation of x and y, then this is elaborated is the longer version following the second equal sign where the standard deviation for x and y is added to our original formula for covariance.</p>
-<p>Pearon’s r or the correlational coefficient always varies between +1 and -1. As your r value moves closer to +1 that means that both variables are varying in the same direction either both increasing or both descreasing. When your r value is moving closer to -1 that indicates that both scores are varying in opposite directions or as one varible increases the other decreases.</p>
-<p>Correlation only describes relationships between variables not <em>causal</em> relationships between variables. It’s not possible to decipher which variable is doing the causal work or which variable is the independent variable and which is the dependent variable. However, correlation can still provide helpful information about variables and we can still use them to test certain types of hypotheses.</p>
-<p>To explore correlation futher, let’s look at a particular dataset. Open the dataset labeled album_sakes.csv. Use the <em>Import Dataset</em> command in the upper righthand window and let’s look at the data set.</p>
+<p>Notice that the formula is primarily the covariance of x and y
+divided by the standard deviation of x and y, then this is elaborated is
+the longer version following the second equal sign where the standard
+deviation for x and y is added to our original formula for
+covariance.</p>
+<p>Pearon’s r or the correlational coefficient always varies between +1
+and -1. As your r value moves closer to +1 that means that both
+variables are varying in the same direction either both increasing or
+both descreasing. When your r value is moving closer to -1 that
+indicates that both scores are varying in opposite directions or as one
+varible increases the other decreases.</p>
+<p>Correlation only describes relationships between variables not
+<em>causal</em> relationships between variables. It’s not possible to
+decipher which variable is doing the causal work or which variable is
+the independent variable and which is the dependent variable. However,
+correlation can still provide helpful information about variables and we
+can still use them to test certain types of hypotheses.</p>
+<p>To explore correlation futher, let’s look at a particular dataset.
+Open the dataset labeled album_sakes.csv. Use the <em>Import
+Dataset</em> command in the upper righthand window and let’s look at the
+data set.</p>
 <pre class="r"><code>head(Album_Sales)</code></pre>
 <pre><code>## # A tibble: 6 × 4
 ##   Adverts Sales Airplay Image
@@ -369,7 +428,8 @@ r = \frac {cov_{xy}}{s_{x}s_{y}}=\frac{\Sigma(x-\bar x)(y-\bar y)}{(N-1)s_{x}s_{
 ## 4  1188.    270      33     7
 ## 5   575.    220      44     5
 ## 6   569.    170      19     5</code></pre>
-<p>This is a dataset for a record company looking at various variables related to album sales.</p>
+<p>This is a dataset for a record company looking at various variables
+related to album sales.</p>
 <ol style="list-style-type: decimal">
 <li>Adverts - Money spent on advertising</li>
 <li>Sales - Sales for various albums</li>
@@ -391,49 +451,93 @@ r = \frac {cov_{xy}}{s_{x}s_{y}}=\frac{\Sigma(x-\bar x)(y-\bar y)}{(N-1)s_{x}s_{
 ##  $ Image  : num [1:200] 10 7 7 7 5 5 1 9 7 7 ...
 ##   ..- attr(*, &quot;label&quot;)= chr &quot;Band image rating (0-10)&quot;
 ##   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F8.0&quot;</code></pre>
-<p>Notice that each of the variables are continuous, either numeric (num) or integer (int), so this is a great dataset for doing correlations.</p>
-<p>How would you expect attractiveness of the band to be related to album sales? Unless you’ve been living under a rock or don’t know anything about rock `n roll, attractiveness is a huge part of album sales. Whether your Dua Lipa or BTS, looks matter if your in the entertainment industry. So we should expect that as an artists looks increase, their album sales should increase as well.</p>
-<p>Let’s use a graph to first look at this data using a ggplot we learned earlier called a scatterplot. We’ll do a basic one first.</p>
+<p>Notice that each of the variables are continuous, either numeric
+(num) or integer (int), so this is a great dataset for doing
+correlations.</p>
+<p>How would you expect attractiveness of the band to be related to
+album sales? Unless you’ve been living under a rock or don’t know
+anything about rock `n roll, attractiveness is a huge part of album
+sales. Whether your Dua Lipa or BTS, looks matter if your in the
+entertainment industry. So we should expect that as an artists looks
+increase, their album sales should increase as well.</p>
+<p>Let’s use a graph to first look at this data using a ggplot we
+learned earlier called a scatterplot. We’ll do a basic one first.</p>
 <pre class="r"><code>ggplot(Album_Sales, mapping = aes
        (x = Image, y = Sales)) + geom_point()</code></pre>
 <p><img src="Correlation_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>So notice that dots lower on the attractiveness scale tend to be associated with less sales, whereas when you look at the dots higher on the attractiveness scales their are more dots that are higher on the sales scale.</p>
-<p>Another tool to help us analyze this relationshisp is a <em>regression line</em>. This is a line drawn on the graph that is closest to as many dots or points as possible. You add it like this.</p>
+<p>So notice that dots lower on the attractiveness scale tend to be
+associated with less sales, whereas when you look at the dots higher on
+the attractiveness scales their are more dots that are higher on the
+sales scale.</p>
+<p>Another tool to help us analyze this relationshisp is a
+<em>regression line</em>. This is a line drawn on the graph that is
+closest to as many dots or points as possible. You add it like this.</p>
 <pre class="r"><code>ggplot(Album_Sales, mapping = aes
        (x = Image, y = Sales)) + geom_point() +
         geom_smooth(method = &#39;lm&#39;)</code></pre>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="Correlation_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>A regression line is simply using a line to describe the relationship between the two variables. As the line increases in slope or steepness, that indicates a stronger relationship. If the line moves from the lower left to the upper right that indicates a positive correlation whereas if the line moves from the upper left hand corner to the bottom right that indicates a negative correlation. The more the line “flattens” or decreases in slope the less correlation there is between the two variables.</p>
-<p>Let’s look at a second variable using the graph to judge which one is more correlated. Use advertising rather than attractiveness this time.</p>
+<p>A regression line is simply using a line to describe the relationship
+between the two variables. As the line increases in slope or steepness,
+that indicates a stronger relationship. If the line moves from the lower
+left to the upper right that indicates a positive correlation whereas if
+the line moves from the upper left hand corner to the bottom right that
+indicates a negative correlation. The more the line “flattens” or
+decreases in slope the less correlation there is between the two
+variables.</p>
+<p>Let’s look at a second variable using the graph to judge which one is
+more correlated. Use advertising rather than attractiveness this
+time.</p>
 <pre class="r"><code>ggplot(Album_Sales, mapping = aes(x = Adverts, 
         y =   Sales)) + geom_point()</code></pre>
 <p><img src="Correlation_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<p>Notice how most of the dots are gathered in the middle of the graph and moving from lower left to upper right. Notice also that no points are in the bottom right hand corner. So lower sales does not appear to be related to higher amount of advertising. Let’s see the location of the regression line.</p>
+<p>Notice how most of the dots are gathered in the middle of the graph
+and moving from lower left to upper right. Notice also that no points
+are in the bottom right hand corner. So lower sales does not appear to
+be related to higher amount of advertising. Let’s see the location of
+the regression line.</p>
 <pre class="r"><code>ggplot(Album_Sales, mapping = aes(x = Adverts, 
       y = Sales)) + geom_point() +
       geom_smooth(method = &#39;lm&#39;)</code></pre>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="Correlation_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-<p>Notice that the regression line seems slightly steeper on the adverts graph vs. the Image graph. But we can’t be totally sure. So let’s go ahead and use our Pearson’s r correlation coefficient to help us. The formula is really simple, it is just “cor” followed by the two variables you are analyzing.</p>
+<p>Notice that the regression line seems slightly steeper on the adverts
+graph vs. the Image graph. But we can’t be totally sure. So let’s go
+ahead and use our Pearson’s r correlation coefficient to help us. The
+formula is really simple, it is just “cor” followed by the two variables
+you are analyzing.</p>
 <pre class="r"><code>cor(Album_Sales$Sales, Album_Sales$Image)</code></pre>
 <pre><code>## [1] 0.3261111</code></pre>
-<p>Ok, so the correlation between Sales and Attractiveness is .33, now let’s look at Sales and Advertising.</p>
+<p>Ok, so the correlation between Sales and Attractiveness is .33, now
+let’s look at Sales and Advertising.</p>
 <pre class="r"><code>cor(Album_Sales$Sales, Album_Sales$Adverts)</code></pre>
 <pre><code>## [1] 0.5784877</code></pre>
-<p>Notice how the corrleation has increased (meaning moved closer to + 1) from .33 to .58. This would seem to justify our hunch that their was a stronger correlation between Sales and Advertising than between Sales and Image (Looks aren’t everything apparently), based on the regression line for each graph.</p>
+<p>Notice how the corrleation has increased (meaning moved closer to +
+1) from .33 to .58. This would seem to justify our hunch that their was
+a stronger correlation between Sales and Advertising than between Sales
+and Image (Looks aren’t everything apparently), based on the regression
+line for each graph.</p>
 </div>
-<div id="how-to-use-correlations-to-test-hypotheses" class="section level3">
+<div id="how-to-use-correlations-to-test-hypotheses"
+class="section level3">
 <h3>How to use correlations to test hypotheses</h3>
-<p>To more formally use correlation to test a hypothesis, let’s look at another variable in the Album Sales dataset, <em>airplay</em>. This is how often a song gets played on the radio (FYI, the <em>radio</em> is an ancient device that old people used to listen to random music played using mysterious spooky radio waves). So your hypothesis would look something like:</p>
+<p>To more formally use correlation to test a hypothesis, let’s look at
+another variable in the Album Sales dataset, <em>airplay</em>. This is
+how often a song gets played on the radio (FYI, the <em>radio</em> is an
+ancient device that old people used to listen to random music played
+using mysterious spooky radio waves). So your hypothesis would look
+something like:</p>
 <blockquote>
-<p>There is a correlation between the airplay an album receives and the sales for the album.</p>
+<p>There is a correlation between the airplay an album receives and the
+sales for the album.</p>
 </blockquote>
 <p>The null hypothesis would simply negate the primary hypothesis:</p>
 <blockquote>
-<p>There is no correlation between the airplay an album receives and the sales for the album.</p>
+<p>There is no correlation between the airplay an album receives and the
+sales for the album.</p>
 </blockquote>
-<p>To test the hypothesis we use the “cor.test” command and then specify each of the variables we are analyzing, so it looks like this:</p>
+<p>To test the hypothesis we use the “cor.test” command and then specify
+each of the variables we are analyzing, so it looks like this:</p>
 <pre class="r"><code>cor.test(Album_Sales$Sales, Album_Sales$Airplay)</code></pre>
 <pre><code>## 
 ##  Pearson&#39;s product-moment correlation
@@ -446,16 +550,35 @@ r = \frac {cov_{xy}}{s_{x}s_{y}}=\frac{\Sigma(x-\bar x)(y-\bar y)}{(N-1)s_{x}s_{
 ## sample estimates:
 ##       cor 
 ## 0.5989188</code></pre>
-<p>Then write the results using the output including the correlation coefficient, 95% confidence internal, and the <em>p</em> value.</p>
-<p>Results There was a significant correlation between the airply an album received and the sales for the album, r = .60, 95% CI [.50, .68], p &lt; .001.</p>
-<p>Let’s unpack these results a bit. The correlation is pretty high at .60. Remember that the closer a correlational coefficient is to either +/- 1 the stronger the correlation. We’ve also listed the confidence interval, which means that we are 95% confident that the correlation coefficient is between .50 and .68. The big problem that may show up here is if the CI range includes 0, which would mean that it’s possible that the correlation is zero, thus nullifying our primary hypothesis. The closer this range is the more accurate our correlation estimate and the closer to 1, the stronger the correlation. Finally, our p value is very low, so this shows us that the finding is significant.</p>
-<p>Finally, we want to include a scatterplot graph with the regression line to show the relationship we found.</p>
+<p>Then write the results using the output including the correlation
+coefficient, 95% confidence internal, and the <em>p</em> value.</p>
+<p>Results There was a significant correlation between the airply an
+album received and the sales for the album, r = .60, 95% CI [.50, .68],
+p &lt; .001.</p>
+<p>Let’s unpack these results a bit. The correlation is pretty high at
+.60. Remember that the closer a correlational coefficient is to either
++/- 1 the stronger the correlation. We’ve also listed the confidence
+interval, which means that we are 95% confident that the correlation
+coefficient is between .50 and .68. The big problem that may show up
+here is if the CI range includes 0, which would mean that it’s possible
+that the correlation is zero, thus nullifying our primary hypothesis.
+The closer this range is the more accurate our correlation estimate and
+the closer to 1, the stronger the correlation. Finally, our p value is
+very low, so this shows us that the finding is significant.</p>
+<p>Finally, we want to include a scatterplot graph with the regression
+line to show the relationship we found.</p>
 <pre class="r"><code>ggplot(Album_Sales, mapping = aes(x = Airplay, y = Sales)) +
          geom_point() +
         geom_smooth(method = &#39;lm&#39;)</code></pre>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="Correlation_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
-<p>Here’s a second version with a few more bells and whistles. I made a different color for the scatter dots by inserting a color command and changed the size to make them a bit bigger. I did something similar with the line to make it thicker by adjusting the size and removed the CIs with the “se = FALSE” command. I also added labels through the “labs” command, make sure to use quotations around your titles and x and y descriptions.</p>
+<p>Here’s a second version with a few more bells and whistles. I made a
+different color for the scatter dots by inserting a color command and
+changed the size to make them a bit bigger. I did something similar with
+the line to make it thicker by adjusting the size and removed the CIs
+with the “se = FALSE” command. I also added labels through the “labs”
+command, make sure to use quotations around your titles and x and y
+descriptions.</p>
 <pre class="r"><code>ggplot(Album_Sales, mapping = aes(x = Airplay, y = Sales)) +
         geom_point(size = 1.5, color = &quot;cornflower blue&quot;) +
         geom_smooth(method = &#39;lm&#39;, se=FALSE, size = 1.5) + 
