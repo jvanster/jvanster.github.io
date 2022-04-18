@@ -345,10 +345,8 @@ $(document).ready(function () {
 </div>
 
 
-<script>
-  addClassKlippyTo("pre.r, pre.markdown");
-  addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
-</script>
+<div id="introduction-to-chi-square" class="section level3">
+<h3>Introduction to Chi-Square</h3>
 <p>Not all data that is collected meets the standards for being
 parametric or based on populations. Some data that is collected is based
 on frequencies. Polling data is often of this type. If a person is
@@ -356,9 +354,9 @@ interested in who might win the next election, they may run a poll like
 many did in the most recent presidential election between Biden and
 Trump.</p>
 <p>What makes data based on frequencies different is that the mean
-cannot be used for analysis. Fequency data is often based on categories
-or nomimal data, thus it doesn’t make sense to compare these variables
-based on the types of statistical analysis we’ve done so far. Instead,
+cannot be used for analysis. Frequency data is often based on categories
+or nominal data, thus it doesn’t make sense to compare these variables
+based on the types of statistical analyses we’ve done so far. Instead,
 we’ll use what is known as a Chi-Square test. <span
 class="math display">\[
 Chi\;Square\;Test = \chi^2
@@ -385,7 +383,7 @@ class="math display">\[
 observed\;frequency = f_o
 \]</span> The chi square test is a combination of these two numbers.
 Basically the larger the difference between the observed and expected
-frequencies, the more likely there is a real prefernce either for or
+frequencies, the more likely there is a real preference either for or
 against the proposition. Here is the formula. <span
 class="math display">\[
 X^2 = \Sigma \frac{(f_o-f_e)^2}{f_e}
@@ -393,13 +391,14 @@ X^2 = \Sigma \frac{(f_o-f_e)^2}{f_e}
 expected frequencies squared divided by the expected frequencies for
 each cell. In this case we have 2 cells one for those who answered yes
 in favor of the propsosition (150) and those who answered no against the
-proposition (50). So the computation would look like this <span
+proposition (50). So the computation would look like this: <span
 class="math display">\[
 \frac{(150-100)^2}{100}+\frac{(50-100)^2}{100}
-\]</span> So in this case our answer turns out to be a Chi Square value
-of 50, which definitley reaches statistical significance (p &lt; .001).
-Thus there does seem to be a preference in favor for the proposition in
-the county.</p>
+\]</span></p>
+<p>So in this case our answer turns out to be a Chi Square value of 50,
+which definitely reaches statistical significance (p &lt; .001). Thus
+there does seem to be a preference in favor for the proposition in the
+county.</p>
 <p>R allows for the same types of statistical analysis without having to
 calculate the entire formula.</p>
 <p>The chi square test just calculated is called a single variable chi
@@ -411,139 +410,32 @@ use a tibble to create the dataset.</p>
 <pre class="r"><code>Proposition_Data &lt;- tribble(
                   ~Yes, ~No,
                   150, 50)</code></pre>
-<p>Then we just simply run the chi square test</p>
-<pre class="r"><code>chisq.test(Proposition_Data)</code></pre>
+<p>Then we just simply run the chi square test. Note the code
+<em>correct = FALSE</em>. We add this because we don’t want to use the
+continuity correction, which is necessary when expected frequencies are
+below <em>5</em> (Remember in this instance our expected frequency would
+be 100).</p>
+<pre class="r"><code>chisq.test(Proposition_Data, correct = FALSE)</code></pre>
 <pre><code>## 
 ##  Chi-squared test for given probabilities
 ## 
 ## data:  Proposition_Data
 ## X-squared = 50, df = 1, p-value = 1.537e-12</code></pre>
+</div>
+<div id="two-variable-chi-square" class="section level3">
+<h3>Two Variable Chi-Square</h3>
 <p>Another way that the chi square test is used is the testing of
 relationships between variables. Thus, are the variables related to each
-other or independent of each other.</p>
+other or are they independent of each other?</p>
 <p>For example, Look at dataset ch19ds2.</p>
-<pre class="r"><code>ch19ds2</code></pre>
-<pre><code>##        Sex Vote
-## 1     Male  Yes
-## 2     Male  Yes
-## 3     Male  Yes
-## 4     Male  Yes
-## 5     Male  Yes
-## 6     Male  Yes
-## 7     Male  Yes
-## 8     Male  Yes
-## 9     Male  Yes
-## 10    Male  Yes
-## 11    Male  Yes
-## 12    Male  Yes
-## 13    Male  Yes
-## 14    Male  Yes
-## 15    Male  Yes
-## 16    Male  Yes
-## 17    Male  Yes
-## 18    Male  Yes
-## 19    Male  Yes
-## 20    Male  Yes
-## 21    Male  Yes
-## 22    Male  Yes
-## 23    Male  Yes
-## 24    Male  Yes
-## 25    Male  Yes
-## 26    Male  Yes
-## 27    Male  Yes
-## 28    Male  Yes
-## 29    Male  Yes
-## 30    Male  Yes
-## 31    Male  Yes
-## 32    Male  Yes
-## 33    Male  Yes
-## 34    Male  Yes
-## 35    Male  Yes
-## 36    Male  Yes
-## 37    Male  Yes
-## 38  Female  Yes
-## 39  Female  Yes
-## 40  Female  Yes
-## 41  Female  Yes
-## 42  Female  Yes
-## 43  Female  Yes
-## 44  Female  Yes
-## 45  Female  Yes
-## 46  Female  Yes
-## 47  Female  Yes
-## 48  Female  Yes
-## 49  Female  Yes
-## 50  Female  Yes
-## 51  Female  Yes
-## 52  Female  Yes
-## 53  Female  Yes
-## 54  Female  Yes
-## 55  Female  Yes
-## 56  Female  Yes
-## 57  Female  Yes
-## 58  Female  Yes
-## 59  Female  Yes
-## 60  Female  Yes
-## 61  Female  Yes
-## 62  Female  Yes
-## 63  Female  Yes
-## 64  Female  Yes
-## 65  Female  Yes
-## 66  Female  Yes
-## 67  Female  Yes
-## 68  Female  Yes
-## 69  Female  Yes
-## 70    Male   No
-## 71    Male   No
-## 72    Male   No
-## 73    Male   No
-## 74    Male   No
-## 75    Male   No
-## 76    Male   No
-## 77    Male   No
-## 78    Male   No
-## 79    Male   No
-## 80    Male   No
-## 81    Male   No
-## 82    Male   No
-## 83    Male   No
-## 84    Male   No
-## 85    Male   No
-## 86    Male   No
-## 87    Male   No
-## 88    Male   No
-## 89    Male   No
-## 90  Female   No
-## 91  Female   No
-## 92  Female   No
-## 93  Female   No
-## 94  Female   No
-## 95  Female   No
-## 96  Female   No
-## 97  Female   No
-## 98  Female   No
-## 99  Female   No
-## 100 Female   No
-## 101 Female   No
-## 102 Female   No
-## 103 Female   No
-## 104 Female   No
-## 105 Female   No
-## 106 Female   No
-## 107 Female   No
-## 108 Female   No
-## 109 Female   No
-## 110 Female   No
-## 111 Female   No
-## 112 Female   No
-## 113 Female   No
-## 114 Female   No
-## 115 Female   No
-## 116 Female   No
-## 117 Female   No
-## 118 Female   No
-## 119 Female   No
-## 120 Female   No</code></pre>
+<pre class="r"><code>head(ch19ds2)</code></pre>
+<pre><code>##    Sex Vote
+## 1 Male  Yes
+## 2 Male  Yes
+## 3 Male  Yes
+## 4 Male  Yes
+## 5 Male  Yes
+## 6 Male  Yes</code></pre>
 <p>There are two variables, gender (labeled here sex) and Vote, which
 was whether they voted yes or no on a recent ballot measure. First let’s
 look at a contingency table to get an overview of the data.</p>
@@ -557,11 +449,36 @@ Chi_table</code></pre>
 how persons voted on a particular measure. Here again, the Null
 hypothesis would assume that these variables are independent of each
 other. The frequency of No and Yes would be roughly proportional for
-both males and females. The alternative hypothesis assumes these are
-frequencies are different based on whether you are a male or female.
-Performing the test is fairly straight forward. However, we do need to
-use the table verion of the data, so that chi square can use the
-frequency data.</p>
+both males and females. The alternative hypothesis assumes these
+frequencies are different based on whether you are a male or female.</p>
+<p>To run a chi-square test and construct a graph we need to create two
+different datasets, a matrix and a tibble or dataframe. We know how to
+do the tibble from earlier lessons, but the matrix is slightly
+different. Here is the way we create it.</p>
+<pre class="r"><code>Chi_table &lt;- matrix(c(31, 20,  32, 37), nrow = 2, ncol = 2, dimnames = list(c(&quot;Female&quot;, &quot;Male&quot;),
+                            c(&quot;No&quot;, &quot;Yes&quot;)))
+Chi_table</code></pre>
+<pre><code>##        No Yes
+## Female 31  32
+## Male   20  37</code></pre>
+<p>Look a little bit closer at the code.</p>
+<ol style="list-style-type: decimal">
+<li><p>Start with creating an object, in this case we called it
+<em>Chi_table</em> and then we start with the <em>matrix</em>
+command.</p></li>
+<li><p>Next we enter all the numbers that will be in the matrix with the
+<em>c</em> bind function starting with column 1, 1st number and 2nd
+number and then continuing with column 2, 1st number and 2nd number, and
+so on.</p></li>
+<li><p>Define how many rows and columns are needed (This will be more
+relevant for say a 2 x 4 matrix)</p></li>
+<li><p>Add the <em>dimnames</em> command and list the names for your
+rows and columns.</p></li>
+</ol>
+<p>Performing the test is fairly straight forward. The matrix is the
+dataset and we don’t want the continuity correction because that is only
+necessary when cell expected frequency is below 5. So we add the code,
+<em>correct = FALSE</em>, after the name of the matrix.</p>
 <pre class="r"><code>chisq.test(Chi_table, correct = FALSE)</code></pre>
 <pre><code>## 
 ##  Pearson&#39;s Chi-squared test
@@ -570,7 +487,9 @@ frequency data.</p>
 ## X-squared = 2.441, df = 1, p-value = 0.1182</code></pre>
 <p>The chi square value is very low and the p value is well above .05,
 so there is not a relationship between these two variables.</p>
-<p>#Effect size for chi square</p>
+</div>
+<div id="effect-size-for-chi-square" class="section level3">
+<h3>Effect size for chi square</h3>
 <p>For an effect size, we use the odds ratio, which looks at the odds of
 the outcome we obtained. Obviously the higher the odds ratio the
 stronger the relationship. To find the odds ratio, first let’s look at
@@ -588,11 +507,39 @@ yes vs. no. would be dividing these two numbers.</p>
 <p>So females were 1.79 times more likely to answer no then yes on the
 survey, which is very small, indicating that there is no real difference
 here.</p>
-<p>Here is how you report the results: There was a not a significant
-association between gender and their voting preference (yes vs. no),
-<span class="math display">\[Chi^2(1) = 2.441; p = 0.12\]</span>. Based
-on the odds ratio, females were 1.8 times more likely to vote no than
-males.</p>
+<p>Next we need to do a bar graph to help us see whether the differences
+in frequencies are significant and the direction of the differences. So
+we’ll start with a tibble based on the data, but this time we have to
+define our factor variables.</p>
+<pre class="r"><code>Chi_tibble &lt;- tribble(
+  ~Gender, ~Vote, ~Number, 
+  &quot;Male&quot;, &quot;Yes&quot;, 37,  
+  &quot;Female&quot;, &quot;Yes&quot;, 32, 
+  &quot;Male&quot;, &quot;No&quot;, 20,
+  &quot;Female&quot;, &quot;No&quot;, 31 
+)
+Chi_tibble</code></pre>
+<pre><code>## # A tibble: 4 × 3
+##   Gender Vote  Number
+##   &lt;chr&gt;  &lt;chr&gt;  &lt;dbl&gt;
+## 1 Male   Yes       37
+## 2 Female Yes       32
+## 3 Male   No        20
+## 4 Female No        31</code></pre>
+<p>Then we can do a bar graph to look at the differences in
+frequencies.</p>
+<pre class="r"><code>ggplot(Chi_tibble, aes(x = Vote, y = Number, fill = Gender)) +
+  geom_bar(stat = &quot;identity&quot;, position = position_dodge()) + 
+  theme_minimal() + 
+  labs(title = &quot;Differences in voting preference \n based on Gender&quot;)</code></pre>
+<p><img src="Chi_Square_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>Finally, here is how you report the results:</p>
+<div class="line-block">There was a not a significant association
+between gender and their voting preference (yes vs. no), <span
+class="math inline">\(\chi^2(1) = 2.441; p = 0.12\)</span>. Based on the
+odds ratio, females were 1.8 times more likely to vote no than
+males.</div>
+</div>
 
 
 
