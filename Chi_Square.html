@@ -345,6 +345,10 @@ $(document).ready(function () {
 </div>
 
 
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
 <div id="introduction-to-chi-square" class="section level3">
 <h3>Introduction to Chi-Square</h3>
 <p>Not all data that is collected meets the standards for being
@@ -532,7 +536,7 @@ frequencies.</p>
   geom_bar(stat = &quot;identity&quot;, position = position_dodge()) + 
   theme_minimal() + 
   labs(title = &quot;Differences in voting preference \n based on Gender&quot;)</code></pre>
-<p><img src="Chi_Square_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="Chi_Square_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <p>Finally, here is how you report the results:</p>
 <div class="line-block">There was a not a significant association
 between gender and their voting preference (yes vs. no), <span

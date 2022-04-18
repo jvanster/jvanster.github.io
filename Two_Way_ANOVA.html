@@ -373,8 +373,8 @@ View(goggles)</code></pre>
 <p>Check out Gender variable</p>
 <pre class="r"><code>goggles$Gender</code></pre>
 <pre><code>## &lt;labelled&lt;double&gt;[48]&gt;: Gender
-##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0
-## [33] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## [39] 0 0 0 0 0 0 0 0 0 0
 ## 
 ## Labels:
 ##  value  label
@@ -383,8 +383,8 @@ View(goggles)</code></pre>
 <p>Check out Alcohol variable</p>
 <pre class="r"><code>goggles$Alcohol</code></pre>
 <pre><code>## &lt;labelled&lt;double&gt;[48]&gt;: Alcohol Consumption
-##  [1] 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 1 1 1 1 1 1 1 1
-## [33] 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3
+##  [1] 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 1 1 1 1 1 1 1 1 2 2 2 2 2 2
+## [39] 2 2 3 3 3 3 3 3 3 3
 ## 
 ## Labels:
 ##  value   label
@@ -393,9 +393,8 @@ View(goggles)</code></pre>
 ##      3 4 Pints</code></pre>
 <p>Check out Attractiveness variable</p>
 <pre class="r"><code>goggles$Attractiveness</code></pre>
-<pre><code>##  [1] 65 70 60 60 60 55 60 55 70 65 60 70 65 60 60 50 55 65 70 55 55
-## [22] 60 50 50 50 55 80 65 70 75 75 65 45 60 85 65 70 70 80 60 30 30
-## [43] 30 55 35 20 45 40
+<pre><code>##  [1] 65 70 60 60 60 55 60 55 70 65 60 70 65 60 60 50 55 65 70 55 55 60 50 50 50
+## [26] 55 80 65 70 75 75 65 45 60 85 65 70 70 80 60 30 30 30 55 35 20 45 40
 ## attr(,&quot;label&quot;)
 ## [1] &quot;Attractiveness of Date&quot;
 ## attr(,&quot;format.spss&quot;)
@@ -413,8 +412,8 @@ fix this.</p>
 know the levels or numbering of the variable</p>
 <pre class="r"><code>goggles$Alcohol</code></pre>
 <pre><code>## &lt;labelled&lt;double&gt;[48]&gt;: Alcohol Consumption
-##  [1] 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 1 1 1 1 1 1 1 1
-## [33] 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3
+##  [1] 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 1 1 1 1 1 1 1 1 2 2 2 2 2 2
+## [39] 2 2 3 3 3 3 3 3 3 3
 ## 
 ## Labels:
 ##  value   label
@@ -453,8 +452,8 @@ First let’s look at each variable individually</p>
   geom_errorbar(aes(ymin  =mean - ci, 
                     ymax = mean + ci), 
                 width = .1)</code></pre>
-<pre><code>## geom_path: Each group consists of only one observation. Do you
-## need to adjust the group aesthetic?</code></pre>
+<pre><code>## geom_path: Each group consists of only one observation. Do you need to adjust
+## the group aesthetic?</code></pre>
 <p><img src="Two_Way_ANOVA_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>Graph the Gender variable individually</p>
 <pre class="r"><code>GogglesGender &lt;- goggles %&gt;%
@@ -473,8 +472,8 @@ First let’s look at each variable individually</p>
                     ymax = mean + ci), 
                 width = .1) +
   ylim(0,70)</code></pre>
-<pre><code>## geom_path: Each group consists of only one observation. Do you
-## need to adjust the group aesthetic?</code></pre>
+<pre><code>## geom_path: Each group consists of only one observation. Do you need to adjust
+## the group aesthetic?</code></pre>
 <p><img src="Two_Way_ANOVA_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <p>Finally, we can graph relationships for both variables.<br />
 First find your descriptive statistics, but this time based on two
@@ -486,8 +485,8 @@ independent variables</p>
             sd = sd(Attractiveness),
             se = sd/sqrt(n),
             ci = qt(0.975, df = n - 1) * sd / sqrt(n))</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;Alcohol&#39;. You can override
-## using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;Alcohol&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <p>Check it</p>
 <pre class="r"><code>GogglesDescriptives</code></pre>
 <pre><code>## # A tibble: 6 × 7
@@ -569,38 +568,22 @@ interested in</p>
 ## 4 Pints-2 Pints -18.1250 -25.952143 -10.297857 0.0000040
 ## 
 ## $`Gender:Alcohol`
-##                                  diff        lwr        upr
-## Female:None-Male:None          -6.250 -19.851381   7.351381
-## Male:2 Pints-Male:None          0.000 -13.601381  13.601381
-## Female:2 Pints-Male:None       -4.375 -17.976381   9.226381
-## Male:4 Pints-Male:None        -31.250 -44.851381 -17.648619
-## Female:4 Pints-Male:None       -9.375 -22.976381   4.226381
-## Male:2 Pints-Female:None        6.250  -7.351381  19.851381
-## Female:2 Pints-Female:None      1.875 -11.726381  15.476381
-## Male:4 Pints-Female:None      -25.000 -38.601381 -11.398619
-## Female:4 Pints-Female:None     -3.125 -16.726381  10.476381
-## Female:2 Pints-Male:2 Pints    -4.375 -17.976381   9.226381
-## Male:4 Pints-Male:2 Pints     -31.250 -44.851381 -17.648619
-## Female:4 Pints-Male:2 Pints    -9.375 -22.976381   4.226381
-## Male:4 Pints-Female:2 Pints   -26.875 -40.476381 -13.273619
-## Female:4 Pints-Female:2 Pints  -5.000 -18.601381   8.601381
-## Female:4 Pints-Male:4 Pints    21.875   8.273619  35.476381
-##                                   p adj
-## Female:None-Male:None         0.7432243
-## Male:2 Pints-Male:None        1.0000000
-## Female:2 Pints-Male:None      0.9277939
-## Male:4 Pints-Male:None        0.0000003
-## Female:4 Pints-Male:None      0.3286654
-## Male:2 Pints-Female:None      0.7432243
-## Female:2 Pints-Female:None    0.9983764
-## Male:4 Pints-Female:None      0.0000306
-## Female:4 Pints-Female:None    0.9825753
-## Female:2 Pints-Male:2 Pints   0.9277939
-## Male:4 Pints-Male:2 Pints     0.0000003
-## Female:4 Pints-Male:2 Pints   0.3286654
-## Male:4 Pints-Female:2 Pints   0.0000080
-## Female:4 Pints-Female:2 Pints 0.8796489
-## Female:4 Pints-Male:4 Pints   0.0002776</code></pre>
+##                                  diff        lwr        upr     p adj
+## Female:None-Male:None          -6.250 -19.851381   7.351381 0.7432243
+## Male:2 Pints-Male:None          0.000 -13.601381  13.601381 1.0000000
+## Female:2 Pints-Male:None       -4.375 -17.976381   9.226381 0.9277939
+## Male:4 Pints-Male:None        -31.250 -44.851381 -17.648619 0.0000003
+## Female:4 Pints-Male:None       -9.375 -22.976381   4.226381 0.3286654
+## Male:2 Pints-Female:None        6.250  -7.351381  19.851381 0.7432243
+## Female:2 Pints-Female:None      1.875 -11.726381  15.476381 0.9983764
+## Male:4 Pints-Female:None      -25.000 -38.601381 -11.398619 0.0000306
+## Female:4 Pints-Female:None     -3.125 -16.726381  10.476381 0.9825753
+## Female:2 Pints-Male:2 Pints    -4.375 -17.976381   9.226381 0.9277939
+## Male:4 Pints-Male:2 Pints     -31.250 -44.851381 -17.648619 0.0000003
+## Female:4 Pints-Male:2 Pints    -9.375 -22.976381   4.226381 0.3286654
+## Male:4 Pints-Female:2 Pints   -26.875 -40.476381 -13.273619 0.0000080
+## Female:4 Pints-Female:2 Pints  -5.000 -18.601381   8.601381 0.8796489
+## Female:4 Pints-Male:4 Pints    21.875   8.273619  35.476381 0.0002776</code></pre>
 <p>For us, the most important difference is that males are more likely
 to choose a less attractive person at 4 pints of alcohol than
 females</p>
@@ -635,7 +618,7 @@ class="section level5">
 <p>TukeyHSD post hoc tests revealed that at the largest amount of
 alcohol consumption (4 pints) Males were significantly more likely to
 choose a less attractive date (M=35.6, SE=3.83) in comparison to females
-(M=57.5, SE=57.5). This difference, 21.86, 95% CI[-23.90, -6.10] was
+(M=57.5, SE=57.5). This difference, 21.88, 95% CI[8.27, 35.48] was
 significant with an adjusted p = .0003.</p>
 </blockquote>
 </div>
