@@ -14,7 +14,7 @@
 
 <title>Why_R</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
@@ -61,6 +61,7 @@ if (window.hljs) {
 
 
 
+
 <style type = "text/css">
 .main-container {
   max-width: 940px;
@@ -81,6 +82,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -233,7 +237,7 @@ $(document).ready(function () {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -246,8 +250,8 @@ $(document).ready(function () {
   <a href="index.html">Home</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Basics
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    R Basics
      
     <span class="caret"></span>
   </a>
@@ -267,13 +271,37 @@ $(document).ready(function () {
     <li>
       <a href="Working_with_R_Markdown.html">Working with R Markdown</a>
     </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Intro to Statistics
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
     <li>
       <a href="Descriptive_Statistics.html">Descriptive Statistics</a>
+    </li>
+    <li>
+      <a href="Hypothesis_Testing.html">Hypothesis Testing</a>
+    </li>
+    <li>
+      <a href="Probability_Theory.html">Probability Theory</a>
+    </li>
+    <li>
+      <a href="Z_Test.html">z test</a>
+    </li>
+    <li>
+      <a href="Independent_t-test.html">Independent t-test</a>
+    </li>
+    <li>
+      <a href="Paired_samples_t-test.html">Paired Samples t-test</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Graphs
      
     <span class="caret"></span>
@@ -288,23 +316,23 @@ $(document).ready(function () {
     <li>
       <a href="Histograms.html">Histograms</a>
     </li>
+    <li>
+      <a href="Normal_Curve.html">Normal Curve</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Statistical Tests
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Z_Test.html">One Sample z test</a>
+      <a href="Correlation.html">Correlation</a>
     </li>
     <li>
-      <a href="Independent_t-test.html">Independent t-test</a>
-    </li>
-    <li>
-      <a href="Paired_samples_t-test.html">Paired Samples t-test</a>
+      <a href="Regression.html">Regression</a>
     </li>
     <li>
       <a href="One_Way_ANOVA.html">One-Way ANOVA</a>
@@ -314,12 +342,6 @@ $(document).ready(function () {
     </li>
     <li>
       <a href="Chi_Square.html">Chi Square</a>
-    </li>
-    <li>
-      <a href="Regression.html">Regression</a>
-    </li>
-    <li>
-      <a href="Correlation.html">Correlation</a>
     </li>
   </ul>
 </li>

@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="James Van Slyke" />
+
+
+<title>Hypothesis Testing</title>
+
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Using R Studio for Statistics</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    R Basics
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Why_R.html">Why Use R &amp; R Studio?</a>
+    </li>
+    <li>
+      <a href="Intro_to_R.html">Intro to R</a>
+    </li>
+    <li>
+      <a href="Building_databases.html">Building Databases</a>
+    </li>
+    <li>
+      <a href="More_with_databases.html">More with Databases</a>
+    </li>
+    <li>
+      <a href="Working_with_R_Markdown.html">Working with R Markdown</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Intro to Statistics
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Descriptive_Statistics.html">Descriptive Statistics</a>
+    </li>
+    <li>
+      <a href="Hypothesis_Testing.html">Hypothesis Testing</a>
+    </li>
+    <li>
+      <a href="Probability_Theory.html">Probability Theory</a>
+    </li>
+    <li>
+      <a href="Z_Test.html">z test</a>
+    </li>
+    <li>
+      <a href="Independent_t-test.html">Independent t-test</a>
+    </li>
+    <li>
+      <a href="Paired_samples_t-test.html">Paired Samples t-test</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Graphs
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Intro_ggplot.html">Intro to ggplot</a>
+    </li>
+    <li>
+      <a href="Bar_Graphs_CI.html">Bar Graphs with 95% CIs</a>
+    </li>
+    <li>
+      <a href="Histograms.html">Histograms</a>
+    </li>
+    <li>
+      <a href="Normal_Curve.html">Normal Curve</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Statistical Tests
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Correlation.html">Correlation</a>
+    </li>
+    <li>
+      <a href="Regression.html">Regression</a>
+    </li>
+    <li>
+      <a href="One_Way_ANOVA.html">One-Way ANOVA</a>
+    </li>
+    <li>
+      <a href="Two_Way_ANOVA.html">Two-Way ANOVA</a>
+    </li>
+    <li>
+      <a href="Chi_Square.html">Chi Square</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Hypothesis Testing</h1>
+<h4 class="author">James Van Slyke</h4>
+
+</div>
+
+
+<div id="populations-and-samples" class="section level3">
+<h3>Populations and Samples</h3>
+<p>So far, we’ve primarily dealt with <em>descriptive statistics</em>,
+which are used to describe the basics of a dataset (think central
+tendency and variability). However, most of psychological science is
+running experiments and testing hypotheses. When psychologists run an
+experiment, they use a <em>sample</em>, which is a smaller subgroup of
+the population (the larger group) they are trying to explain. Most
+experiments are run on samples, which serve as an estimation of some
+property of the population that a scientist is attempting to
+explain.</p>
+<p>For example, if a psychologist is interested in gender differences,
+the populations would be either all females or all males (That’s a large
+group of people!). So to run an experiment, psychologists instead use a
+sample (smaller subgroup) of males and a sample of females to compare
+them based on some particular variable.</p>
+<p>The process of using a sample to infer characteristics about a
+population is called <em>inferential statistics</em>. Many of the
+statistics used to analyze experiments are inferential statistics of one
+kind or another.</p>
+</div>
+<div id="hypotheses" class="section level3">
+<h3>Hypotheses</h3>
+<p>A good experiment begins with a good hypothesis, which clearly
+specifies the variables in an experiment. There are two types of
+variables in most experiments:</p>
+<p>1. Independent Variable (IV)</p>
+<p>2. Dependent Variable (DV)</p>
+<blockquote>
+<p>The independent variable is the variable that is manipulated in some
+way and is thought to be the cause in the experiment, while the
+dependent variable is measured to assess whether the independent
+variable produces any changes in it, so it is thought to be the effect
+in an experiment.</p>
+</blockquote>
+<p>The hypothesis specifies the relationship between the IV and the DV.
+In statistics, there are two types of hypotheses, the <em>null
+hypothesis</em> and the <em>alternative hypothesis</em>. The null
+hypothesis negates or contradicts the expected relationship between the
+IV and DV if the IV has a real effect. The alternative hypothesis
+specifies the relationship between the IV and DV as the experimenter
+expects it to be, the IV causing a change in the DV.</p>
+<p>In experimental methodology, the <em>null</em> hypothesis is directly
+tested and if it can be shown to be <em>unsupported</em> (based on the
+statistical analysis), it then lends support to its counterpart, the
+alternative hypothesis.</p>
+<p>For example, suppose you work for a gasoline company and you’ve
+developed a new additive that you believe increases gas mileage. Your
+supervisor would like to add it to their gasoline, but feels that it’s
+important to run a test first to see if the additive really increases
+gas mileage. So you collect a sample of 75 cars that are all using the
+gasoline additive. You discover that the mean gas mileage for your
+sample is 26.5 miles per gallon.</p>
+<p>Here are the two hypotheses for the gasoline additive example.</p>
+<blockquote>
+<p>Null hypothesis - “The gasoline additive will <em>not</em> increase
+the mileage of the gasoline”</p>
+</blockquote>
+<blockquote>
+<p>Alternative Hypothesis - “The gasoline additive will increase the
+mileage of the gasoline”</p>
+</blockquote>
+<p>Notice that the hypotheses are basically exactly the same, except
+that the null hypothesis <em>negates</em> the relationship between the
+IV and DV. A good hypothesis will include both the IV and DV and
+something to specify the expected outcome of the experiment. In this
+case the word “increases” shows the relationship between the two
+variables.</p>
+</div>
+<div id="directional-or-nondirectional" class="section level3">
+<h3>Directional or Nondirectional?</h3>
+<p>This is an example of a <em>directional</em> hypothesis because it’s
+specifying the direction of the expected effect of the IV. A
+nondirectional hypothesis does not specify the direction, it just states
+that the IV will have an <em>effect</em> on the DV. Here’s how gasoline
+mileage hypotheses would look like as <em>non</em>directional
+hypothesis.</p>
+<blockquote>
+<p>Null hypothesis - “The gasoline additive will <em>not</em> effect the
+mileage of the gasoline”</p>
+</blockquote>
+<blockquote>
+<p>Alternative Hypothesis - “The gasoline additive will effect the
+mileage of the gasoline”</p>
+</blockquote>
+<p>Notice that the only real difference is that the word “increase” was
+swapped with the word “effect”. Whether the hypothesis is directional or
+nondirectional is usually determined by the experimenter or the context
+of the experiment.</p>
+<div class="figure">
+<img
+src="https://miro.medium.com/max/2000/1*SsmEKrsKn03e3cxdoqOcNA.jpeg"
+alt="" />
+<p class="caption">Nondirectional vs. Directional tests</p>
+</div>
+<p>Image from <a
+href="https://towardsdatascience.com/hypothesis-testing-z-scores-337fb06e26ab"
+class="uri">https://towardsdatascience.com/hypothesis-testing-z-scores-337fb06e26ab</a></p>
+<p>Directional tests are one-tailed (evaluate only one tail of the
+distribution) because they are investigating a specific direction of
+effect for the IV (e.g. increasing) while nondirectional tests are
+two-tailed (evaluate both tails of the distribution) because they are
+not specifying the direction of effect for IV.</p>
+<p>Basic scientific methodology requires an experimental and a control
+group. The experimental group receives the IV while the control group
+does not. If a difference between the groups can be detected then that
+difference may be attributable to the IV. If there is no difference
+between the groups the IV does not have an effect.</p>
+<p>Another way to state this is that the null hypothesis assumes that
+there is no difference between the control and experimental groups (the
+groups or equal), while the alternative hypothesis assumes that there
+will be a difference between the groups.</p>
+<blockquote>
+<p>Null hypothesis - experimental group = control group</p>
+</blockquote>
+<blockquote>
+<p>Alternative Hypothesis - experimental group <span
+class="math inline">\(\neq\)</span> control group</p>
+</blockquote>
+<p>The null hypothesis is tested to answer the question are these
+results due to chance? Different statistical tests use different
+probability distributions to analyze the results of an experiment. The
+probability distributions allow us to see what is the probability
+associated with the results we obtained in our experiment. The
+probability that is shown through the probability distribution is
+compared to <em>alpha</em>. Alpha is an accepted scientific standard for
+determining the likelihood of rejecting the null hypothesis. Alpha is
+equal to .05 or 5%. So the standard that is accepted by the scientific
+community is that there is only a 5% chance or less that the findings in
+the experiment conducted are the result of chance alone. <span
+class="math display">\[
+\alpha = .05
+\]</span> The probability associated with the outcome of our experiment
+based on a probability distribution is known as the <em>p</em> value
+(<em>p</em> standing for probability)</p>
+</div>
+<div id="basic-statistical-formula" class="section level3">
+<h3>Basic Statistical Formula</h3>
+<p>A really easy way to understand how most statistical outputs are
+generated is to understand this simple formula. <span
+class="math display">\[
+\frac{signal}{noise}
+\]</span> Signal refers to what is known as systematic variation or
+variation that is introduced by an experiment. In the gasoline example,
+the additive that is supposed to increase gas mileage is systematic
+variation. The gasoline is being manipulated to try to increase gas
+mileage through the use of the additive. The more increase in gas
+mileage associated with the additive, the stronger the signal and the
+more likely the independent variable (in this case the additive) has a
+real effect.</p>
+<p>Noise is like background noise or variation that exists, but wasn’t
+introduced through the experimental manipulation. This is often referred
+to as unsystematic variation. This is variation that exists for a
+variety of reasons. Going back to our gasoline mileage example,
+unsystematic variation could be differences in the cars used,
+differences in the road conditions or differences in the weather.
+Experimentors try to minimize this type of variation as much as
+possible, but there is always a certain amount of unsystematic
+variation</p>
+<p>One potential form of unsystematic variation is <em>measurement
+error</em>. For example, imagine that you weigh yourself every day for a
+whole week. Most likely there will be fluctuations in your weight during
+the week. It will be slightly higher one day and slightly lower another
+day with an average or mean that stays more consistent. Measurement
+error exists in any variable that we are attempting to measure. It is
+unavoidable to a certain extent because whatever we are attempting to
+measure, there will be certain fluctuations in the precision of
+measurement. Going back to our original formula, measurement error is
+our estimation of noise and although experiments are always trying to
+minimize error a certain amount will always be present. So another way
+to understand our primary formula is <span class="math display">\[
+statistics = \frac{experimental\;manipulation}{measurement\;error}
+\]</span></p>
+</div>
+<div id="confidence-intervals" class="section level3">
+<h3>Confidence Intervals</h3>
+<p>One statistic to help analyze measurement error is called a
+<em>confidence interval</em>. A confidence interval is an interval of
+numbers between which we are 95% confident that the population mean is
+contained when drawn from a sample. According to Morling (2021) a
+confidence interval is composed of 3 components.</p>
+<ol style="list-style-type: decimal">
+<li>Variability component - this is most often the standard deviation
+<em>sd</em> (remember that the <em>sd</em> if one of our basic measures
+of dispersion or variability)</li>
+<li>Sample size component - Usually this will be a calculation involving
+the number in the sample, most often symbolized by <em>n</em>.</li>
+<li>Constant associated with 95% - Here we’ll use the z score associated
+with 95 percent</li>
+</ol>
+<p>Here is the basic formula for a confidence interval using z
+scores.</p>
+<p>lower boundary of CI - <span class="math inline">\(\bar X -
+1.96\)</span> x <span
+class="math inline">\(\frac{s}{\sqrt{n}}\)</span></p>
+<p>upper boundary of CI - <span class="math inline">\(\bar X +
+1.96\)</span> x <span
+class="math inline">\(\frac{s}{\sqrt{n}}\)</span></p>
+<p><span class="math inline">\(\frac{s}{\sqrt{n}}\)</span> is known as
+the standard error of the mean and is the standard deviation divided by
+the square root of the number in the sample. 1.96 is the z score
+associated with the 95% percentile, thus, the 95% confidence
+interval.</p>
+<p>Example</p>
+<p>Let’s imagine we have a sample of persons aged 40 to 50 who were
+trying to run on a treadmill at it’s fastest speed. This is a sample of
+times in seconds they were able to maintain a sprint at the treadmill’s
+fastest speed.</p>
+<pre class="r"><code>sprint &lt;- c(18, 16, 18, 24, 23, 22, 22, 23, 26, 29, 32, 34, 34, 36, 36, 43, 42, 49, 46, 46, 57)</code></pre>
+<p>Then we can find the mean and standard deviation for this group of
+scores</p>
+<pre class="r"><code>sprint_mean &lt;- mean(sprint)
+sprint_sd &lt;- sd(sprint)</code></pre>
+<p>Then we can use these scores to find the 95% confidence interval</p>
+<pre class="r"><code>lower &lt;- sprint_mean - 1.96*sprint_sd/sqrt(21)
+upper &lt;- sprint_mean + 1.96*sprint_sd/sqrt(21)
+lower</code></pre>
+<pre><code>## [1] 27.23457</code></pre>
+<pre class="r"><code>upper</code></pre>
+<pre><code>## [1] 37.14638</code></pre>
+<p>Based on this sample, we are 95% confident that the mean time for the
+population of 40 to 50-year-olds to sprint on the treadmill at its top
+speed is between 27.23 and 37.15 seconds.</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -14,7 +14,7 @@
 
 <title>Descriptive Statistics</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
@@ -65,6 +65,7 @@ if (window.hljs) {
 
 
 
+
 <style type = "text/css">
 .main-container {
   max-width: 940px;
@@ -85,6 +86,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -237,7 +241,7 @@ $(document).ready(function () {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -250,8 +254,8 @@ $(document).ready(function () {
   <a href="index.html">Home</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Basics
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    R Basics
      
     <span class="caret"></span>
   </a>
@@ -271,13 +275,37 @@ $(document).ready(function () {
     <li>
       <a href="Working_with_R_Markdown.html">Working with R Markdown</a>
     </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Intro to Statistics
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
     <li>
       <a href="Descriptive_Statistics.html">Descriptive Statistics</a>
+    </li>
+    <li>
+      <a href="Hypothesis_Testing.html">Hypothesis Testing</a>
+    </li>
+    <li>
+      <a href="Probability_Theory.html">Probability Theory</a>
+    </li>
+    <li>
+      <a href="Z_Test.html">z test</a>
+    </li>
+    <li>
+      <a href="Independent_t-test.html">Independent t-test</a>
+    </li>
+    <li>
+      <a href="Paired_samples_t-test.html">Paired Samples t-test</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Graphs
      
     <span class="caret"></span>
@@ -292,23 +320,23 @@ $(document).ready(function () {
     <li>
       <a href="Histograms.html">Histograms</a>
     </li>
+    <li>
+      <a href="Normal_Curve.html">Normal Curve</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Statistical Tests
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Z_Test.html">One Sample z test</a>
+      <a href="Correlation.html">Correlation</a>
     </li>
     <li>
-      <a href="Independent_t-test.html">Independent t-test</a>
-    </li>
-    <li>
-      <a href="Paired_samples_t-test.html">Paired Samples t-test</a>
+      <a href="Regression.html">Regression</a>
     </li>
     <li>
       <a href="One_Way_ANOVA.html">One-Way ANOVA</a>
@@ -318,12 +346,6 @@ $(document).ready(function () {
     </li>
     <li>
       <a href="Chi_Square.html">Chi Square</a>
-    </li>
-    <li>
-      <a href="Regression.html">Regression</a>
-    </li>
-    <li>
-      <a href="Correlation.html">Correlation</a>
     </li>
   </ul>
 </li>
@@ -386,14 +408,15 @@ View(Album_Sales)</code></pre>
 to <em>describe</em> a dataset. This is different from
 <em>inferential</em> statistics, which are used to <em>infer</em>
 population paramenters based on a sample.</p>
-<p>One of the most common descriptive statistics is <em>central
-tendency</em>, which is simply finding a way to get a basic overview of
-a dataset as a whole. The easiest way to do this is to find the average
-or the <em>mean</em>. The formula for the mean is very straightforward.
-It’s simply the sum of all the scores divied by the number of scores.
-<span class="math display">\[
-\frac{\Sigma X}{N}
-\]</span> The captial Greek letter Sigma in the numerator stands for sum
+<p>One of the most common set of descriptive statistics is known as
+<em>central tendency</em>, which is simply finding a way to get a basic
+overview of a dataset as a whole. The easiest way to do this is to find
+the average or the <em>mean</em>. The formula for the mean is very
+straightforward. It’s simply the sum of all the scores divided by the
+number of scores. The symbol for the sample mean is an x with a bar over
+it. <span class="math display">\[
+\bar X=\frac{\Sigma X}{N}
+\]</span> The capital Greek letter Sigma in the numerator stands for sum
 and X stands in for all the values in a dataset with the N standing for
 the number of values in the dataset. In R Studio, we simply use the mean
 command to find the mean for a particular variable</p>
@@ -422,65 +445,26 @@ more effected by extreme scores. So if you have several low or high
 outliers, the median may be a more accurate representation of the data.
 More often then not, we’ll use the mean. The mode is a more
 straightforward measure. So if you were interested in the most popular
-song on an album based on downloads, you would find the mode. The most
+song on an album based on downloads, you would find the mode. The mode
 is often very helpful with categorical data.</p>
-<p>The second important aspect of descriptive statistics is variability
-or dispersion in a dataset. This typically represents how the rest of
-the dataset relates to the mean. For example: are the scores close to or
+<p>The second most important aspect of descriptive statistics is
+<em>variability</em> or <em>dispersion</em> in a dataset. This typically
+represents how the rest of the dataset relates to the mean or some other
+measure of central tendency. For example: are the scores close to or
 widely dispersed from the mean?</p>
 </div>
 <div id="range" class="section level2">
 <h2>Range</h2>
 <p>The first measure of dispersion is range. This is simply subtracting
-the highest score from the lowest score. So the first thing you need to
-do is rank order your scores from lowest to highest. Pick out the
-highest and lowest scores and subtract them.</p>
-<p>So Let’s look at those album sales advertising data.</p>
-<pre class="r"><code>Album_Sales$Adverts</code></pre>
-<pre><code>##   [1]   10.256  985.685 1445.563 1188.193  574.513  568.954  471.814
-##   [8]  537.352  514.068  174.093 1720.806  611.479  251.192   97.972
-##  [15]  406.814  265.398 1323.287  196.650 1326.598 1380.689  792.345
-##  [22]  957.167 1789.659  656.137  613.697  313.362  336.510 1544.899
-##  [29]   68.954  785.692  125.628  377.925  217.994  759.862 1163.444
-##  [36]  842.957  125.179  236.598  669.811  612.234  922.019   50.000
-##  [43] 2000.000 1054.027  385.045 1507.972  102.568  204.568 1170.918
-##  [50]  689.547  784.220  405.913  179.778  607.258 1542.329 1112.470
-##  [57]  856.985  836.331  236.908 1077.855  579.321 1500.000  731.364
-##  [64]   25.689  391.749  233.999  275.700   56.895  255.117  566.501
-##  [71]  102.568  250.568   68.594  642.786 1500.000  102.563  756.984
-##  [78]   51.229  644.151   15.313  243.237  256.894   22.464   45.689
-##  [85]  724.938 1126.461 1985.119 1837.516  135.986  237.703  976.641
-##  [92] 1452.689 1600.000  268.598  900.889  982.063  201.356  746.024
-##  [99] 1132.877 1000.000   75.896 1351.254  202.705  365.985  305.268
-## [106]  263.268  513.694  152.609   35.987  102.568  215.368  426.784
-## [113]  507.772  233.291 1035.433  102.642  526.142  624.538  912.349
-## [120]  215.994  561.963  474.760  231.523  678.596   70.922 1567.548
-## [127]  263.598 1423.568  715.678  777.237  509.430  964.110  583.627
-## [134]  923.373  344.392 1095.578  100.025   30.425 1080.342  799.899
-## [141] 1071.752  893.355  283.161  917.017  234.568  456.897  206.973
-## [148] 1294.099  826.859  564.158  192.607   10.652   45.689   42.568
-## [155]   20.456  635.192 1002.273 1177.047  507.638  215.689  526.480
-## [162]   26.895  883.877    9.104  103.568  169.583  429.504  223.639
-## [169]  145.585  985.968  500.922  226.652 1051.168   68.093 1547.159
-## [176]  393.774  804.282  801.577  450.562   26.598  179.061  345.687
-## [183]  295.840 2271.860 1134.575  601.434   45.298  759.518  832.869
-## [190]   56.894  709.399   56.895  767.134  503.172  700.929  910.851
-## [197]  888.569  800.615 1500.000  785.694
-## attr(,&quot;label&quot;)
-## [1] &quot;Advertsing budget (thousands)&quot;
-## attr(,&quot;format.spss&quot;)
-## [1] &quot;F8.2&quot;</code></pre>
-<p>Notice how the variable isn’t currently ranked from lowest to
-highest. But we can use the “arrange” command from tidyverse to sort the
-dataset from lowest to highest by the Advertising variable and then pick
-out the numbers we need for the range</p>
-<pre class="r"><code>View(arrange(Album_Sales, Adverts))</code></pre>
-<p>The we just simply pick out the lowest and highest numbers</p>
-<p>lowest = 9.104 highest = 2271.860</p>
-<p>Then we subtract them.</p>
+the highest score from the lowest score for a particular variable or
+vector of scores. So to find the range simply use the <code>range</code>
+function and then subtract the two numbers provided, which are the
+highest and the lowest.</p>
+<pre class="r"><code>range(Album_Sales$Adverts)</code></pre>
+<pre><code>## [1]    9.104 2271.860</code></pre>
+<p>Then simply subtract the scores</p>
 <pre class="r"><code>2271.860-9.104</code></pre>
 <pre><code>## [1] 2262.756</code></pre>
-<p>So the range is 2262.756.</p>
 </div>
 <div id="standard-deviation" class="section level1">
 <h1>Standard Deviation</h1>
@@ -488,49 +472,49 @@ out the numbers we need for the range</p>
 the mean. <em>Deviance</em> is the distance from any particular score
 from the mean. So to find the deviance you simply take the score and
 subtract it from the mean. <span class="math display">\[
-deviance = x - \bar x
+deviance = X - \bar X
 \]</span> If we wanted to find out the total amount of deviance, we
 could simply add together the total deviance for each number in our
 dataset. So the equation would look like this: <span
 class="math display">\[
-total\;deviance = \Sigma(x-\bar x)
+total\;deviance = \Sigma(X-\bar X)
 \]</span> Unfortunately this equation causes some problems. If you
 remember, the mean is the average score, so it’s the score at around
 50%. But that means that for any dataset about half the scores will be
 above the mean and half the scores will be below the mean. Or another
-way to think about it, half the scores will be negative and half the
-scores will be positive. So if we add up all these scores, the total
-deviation will be equal to 0. Zero doesn’t tell us much about the spread
-of the scores.</p>
+way to think about it, half the deviation scores will be negative and
+half the deviation scores will be positive. So if we add up all these
+scores, the total deviation will be equal to 0, but 0 doesn’t tell us
+much about the spread of the scores.</p>
 <p>The way to overcome this problem is by squaring each deviation score,
 which makes all the deviation values positive and thus produces a
-positive number. This number is called the sum of squared errors of the
-sum of squares (SS) with the following formula. <span
-class="math display">\[
-sum\;of\;squares (SS) = \Sigma(x-\bar x)^2
+positive number. This number is called the <em>sum of squared
+errors</em> of the <em>sum of squares</em> (SS) with the following
+formula. <span class="math display">\[
+sum\;of\;squares (SS) = \Sigma(X-\bar X)^2
 \]</span> This number is still somewhat inflated, since its constructed
 based on squared values. One way to fix this issue to to find the
 average dispersion, which will be based on the number in our sample.
 Since the sample is an estimate of the population, we actually don’t use
-N, but N -1. This number is called the variance and has the following
-symbol and equation. <span class="math display">\[
-variance(s^2) = \frac {SS}{N-1} = \frac {\Sigma(x-\bar x)^2}{N-1}
+N, but N -1. This number is called <em>variance</em> and has the
+following symbol and equation. <span class="math display">\[
+variance(s^2) = \frac {SS}{N-1} = \frac {\Sigma(X-\bar X)^2}{N-1}
 \]</span> This number is closer to the original units of measurement,
 but to make it more accurate, the original squared values need to be
 taken back out of the measure. To do this, the square root of the
 variance is calculated.</p>
 <p><span class="math display">\[
-s = \sqrt {\frac {\Sigma (x- \bar x)^2}{N-1}}
+s = \sqrt {\frac {\Sigma (X- \bar X)^2}{N-1}}
 \]</span> To find the standard deviation using R Studio we use the
-<em>sd</em> command to find it.</p>
+<code>sd</code> command to find it.</p>
 <pre class="r"><code>sd(Album_Sales$Adverts)</code></pre>
 <pre><code>## [1] 485.6552</code></pre>
 <p>Another helpful type of range is the <em>interquartile range</em>,
 which is the range of numbers from the 25th and 75th percentile.
 Percentiles are just dividing up a dataset based on where certain scores
 are based on percentages. For example, we can look at what score is at
-the 50th percentile. To do that we use the <strong>quantile</strong>
-command (a <em>quantile</em> is the same thing as a
+the 50th percentile. To do that we use the <code>quantile</code>
+function (a <em>quantile</em> is the same thing as a
 <em>percentile</em>). x is the variable we are analyzing, and .5 is the
 percentile (.5 = 50%; .35 = 35%)</p>
 <pre class="r"><code>quantile(x = diamonds$carat, probs = .5)</code></pre>

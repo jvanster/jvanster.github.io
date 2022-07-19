@@ -1,0 +1,157 @@
+---
+title: "Independent t test"
+author: "James Van Slyke"
+output:
+  html_document:
+    theme: darkly
+---
+
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy()
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+Resources to consult Chapter 10 from Field, A. (2017). Discovering Statistics Using IBM SPSS Statistics (5th Edition). SAGE Publications, Ltd. (UK).
+
+Section from [Learning Statistics with R](https://learningstatisticswithr.com/book/ttest.html#studentttest)
+
+The independent t test is used when analyzing the difference in means between two separate groups. Typically, this is used to analyze the difference between the control group (group who did not receive the independent variable) and the experimental group (group who did receive the independent variable).
+
+> Null Hypothesis - Experimental Group = Control Group
+
+> Alternative Hypothesis - Experimental Group $\neq$ Control Group
+
+The null hypothesis assumes that the mean difference between the two groups is equal to zero. If the samples came from the same population, their means would be roughly the same and if they came from the same population their characteristics would be the same as well. Thus, the null hypothesis assumes no real differences based on the presence of the independent variable, while the alternative hypothesis assumes that the two means are different. $$
+Null = \bar x_{1} = \bar x_{2}
+$$
+
+$$
+Alternative = \bar x_{1} \neq \bar x_{2}
+$$
+
+This type of design is sometimes referred as a *between-groups* or *independent* design. It requires a categorical (nominal) predictor or independent variable that will specify the two groups (experimental and control) and a continuous dependent variable that specifies the outcome.
+
+There are two possible reasons why two samples have different means.
+
+1.  The two sample means come from the same population, but the existence of measurement error and variability are the reason they are different. (Null hypothesis)
+2.  The two sample means come from different populations, which have different characteristics, and reflect a genuine difference between the sample means. (Alternative hypothesis)
+
+The t test is related to the z test, except that we are analyzing t scores rather than z scores. Remember the formula for a z score. $$
+z = \frac{x - \mu}{\frac{\sigma}{\sqrt{n}}}
+$$ So for the t test, we use a version of the z test but compare the following: $$
+t = \frac{(observed \;difference\;between\;means) - (expected\; difference\; between\;means)}{estimate\; of\; the\; \;standard\; error\; of\; the\; differnce\; \\between\; two\; sample\; means}
+$$ Remember that the null hypothesis assumes that the expected difference between the means is equal to zero. So the numerator will simply be the difference between the two sample means $x_{1}-x_{2}$. The z test uses the standard deviation from the sample as an estimate of the error divided by the square root of n. The t distribution is slightly different. Instead, it uses the standard deviation from the *sample* as an estimate of the standard error. However we need estimates from both sample 1 and sample 2 so the equation looks like this: $$
+\sqrt{\frac{s^{2}_{1}}{n_{1}}+\frac{s^{2}_{2}}{n_{2}} }
+$$ This becomes the denominator of the independent t test formula, so we put it all together like this: $$
+t = \frac{x_{1}-x_{2}}{\sqrt{\frac{s^{2}_{1}}{n_{1}}+\frac{s^{2}_{2}}{n_{2}} }}
+$$
+
+Overall, for the independent t-test, if the mean difference between the two samples is significantly greater than the error in the two samples, there is a real difference between the two samples.
+
+## Independent t-test example
+
+1.  First Step, upload dataset from SPSS
+2.  Get data set named "Invisibility" from SPSS datasets
+3.  Use *import dataset* tool under the environment tab
+4.  Find file called *invisibility.sav*
+
+```{r, eval=TRUE}
+library(haven)
+Invisibility <- read_sav("Invisibility.sav")
+View(Invisibility)
+```
+
+Inspect variables
+
+```{r, eval=TRUE}
+Invisibility$Cloak
+Invisibility$Mischief
+```
+
+Create bar graph to examine data First step is to create a dataset with your descriptive variables We'll use the dplyr package to do this, which is part of tidyverse
+
+```{r, eval=TRUE}
+library(dplyr)
+Invis_Descriptives <- Invisibility %>%
+  group_by(Cloak) %>%
+  summarize(n = n(),
+            mean = mean(Mischief),
+            sd = sd(Mischief),
+            se = sd / sqrt(n),
+            ci = qt(0.975, df = n - 1) * sd / sqrt(n))
+Invis_Descriptives
+```
+
+First let's make a simple graph with just the basics
+
+```{r, eval=TRUE}
+ggplot(Invis_Descriptives, 
+       aes(x = Cloak, 
+           y = mean)) +
+  geom_bar(stat = "identity")
+```
+
+Next let's add error bars
+
+```{r, eval=TRUE}
+ggplot(Invis_Descriptives, 
+       aes(x = Cloak, 
+           y = mean)) +
+  geom_bar(stat = "identity") +
+  geom_errorbar(aes(ymin=mean-ci,
+                    ymax=mean+ci))
+```
+
+We can add in labels to improve the look of our chart. We've added labels to our factor variable and labels for the title and x and y variables.
+
+```{r, eval=TRUE}
+ggplot(Invis_Descriptives, 
+       aes(x = factor(Cloak, labels=c("No Cloak", "Cloak")),
+           y = mean)) +
+  geom_bar(stat = "identity") +
+  geom_errorbar(aes(ymin=mean-ci,
+                    ymax=mean+ci)) +
+  labs(title = "Mean Number of Mischievious Acts with or without Cloak", 
+       y="Mean Number of Mischievious Acts", x="Were They Wearing a Cloak?")
+```
+
+Next let's add some color to our chart
+
+```{r, eval=TRUE}
+ggplot(Invis_Descriptives, 
+       aes(x = factor(Cloak, labels=c("No Cloak", "Cloak")),
+           y = mean)) +
+  theme_minimal() +
+  geom_bar(stat = "identity", fill="cornflowerblue") +
+  geom_errorbar(aes(ymin=mean-ci,
+                    ymax=mean+ci), width=.3, size=1) +
+  labs(title = "Mean Number of Mischievious Acts with or without Cloak", 
+       y="Mean Number of Mischievious Acts", x="Were They Wearing a Cloak?")
+```
+
+Based on the graph, it looks like there is a difference between the groups Let's run a t test to make sure
+
+```{r, eval=TRUE}
+t.test(Mischief ~ Cloak, data = Invisibility)
+```
+
+List the effect size as well Cohen's d - Subtract the means from each other and divide by the standard deviation of the control group
+
+```{r,eval=TRUE}
+Cohens_d <- (5.00-3.75)/1.91
+Cohens_d
+```
+
+#### Results
+
+> On average, participants given a cloak of invisibility engaged in more acts of mischief (M = 5, SE = 0.48), than those not given a cloak (M = 3.75, SE = 0.55). This difference, 1.25, 95% CI[-2.76, 0.26], was not significant t(21.54) = −1.71, p = 0.101. However, it did represent a medium-sized effect d = 0.65.\*
+
+Steps to writing results
+
+1.  Write out the means and include standard error
+2.  Write out the difference between the means (Subtract the sample means) and the confidence intervals for the difference
+3.  t(df)= t score, p value, Cohen's d
