@@ -1,0 +1,158 @@
+---
+title: "Bar Graphs and CIs"
+author: "James Van Slyke"
+date: '2022-04-28'
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+#### Bar chart with 95% confidence Intervals
+
+Data set "Salaries" from the package *carData*
+
+```{r, eval=TRUE}
+data(Salaries, package = "carData")
+```
+
+Make sure carData is checked under packages
+
+Make sure tidyverse is selected
+
+```{r, eval=FALSE}
+library(tidyverse)
+```
+
+Check out the data set
+
+```{r, eval=TRUE}
+head(Salaries)
+```
+
+Find summary statistics for the data set using dplyr
+
+In this case you're going to find several descriptive statistics that you will be using in your graph.
+
+You'll find mean, standard deviation, standard error, and the 95% Confidence interval
+
+```{r, eval=TRUE}
+library(dplyr)
+DesData <- Salaries %>%
+  group_by(rank) %>%
+  summarize(n=n(),
+            mean=mean(salary),
+            sd= sd(salary),
+            se=sd/sqrt(n),
+            ci=qt(0.975, df=n-1)*sd/sqrt(n))
+```
+
+Check out the code here. First notice this symbol *%\>%*
+
+You can think of this symbol like a pipe or funnel
+
+So we start with our dataset *Salaries* and then we pipe it or funnel it by a particular variable *group_by(rank)*
+
+This variable will almost always be a factor or categorical variable.
+
+Then we use the *summarize* command to let R know what kinds of descriptive statistics we want
+
+1.  n = number of cases
+2.  mean = mean
+3.  sd = standard deviation
+4.  se = standard error
+5.  ci = confidence internval
+
+### Use Data to fill out chart
+
+Let's start with a simple bar chart of the means
+
+```{r, eval=TRUE}
+ggplot(DesData, 
+       aes(x = rank, 
+           y = mean)) +
+  geom_bar(stat = "identity")
+```
+
+Notice *geom_bar* is the geom we need for the bar chart
+
+We have to use a special stat as well, *identity*
+
+Next, we'll add in error bars to bar chart, which is the *geom_errorbar*
+
+```{r, eval=TRUE}
+ggplot(DesData, 
+       aes(x = rank, 
+           y = mean)) +
+  geom_bar(stat = "identity") +
+  geom_errorbar(aes(ymin=mean-se,
+                    ymax=mean+se))
+```
+
+We can also change length of error bars
+
+```{r, eval=TRUE}
+ggplot(DesData, 
+       aes(x = rank, 
+           y = mean)) +
+  geom_bar(stat = "identity") +
+  geom_errorbar(aes(ymin=mean-se,
+                    ymax=mean+se), width=.8)
+```
+
+Then let's add in all the bells and whistles
+
+1.  First let's add correct column labels for the rank variable
+2.  Second let's add more detail to the scale of the y variable
+3.  Finally let's add some better labels
+4.  For this one we'll use the standard error
+
+You'll also need to add the library *scales* to get the proper symbol for dollars
+
+```{r, eval=TRUE}
+library(scales)
+```
+
+Then you can do the graph, we'll use the Standard Error for the Confidence Interval this time.
+
+```{r, eval=TRUE}
+ggplot(DesData, 
+       aes(x = factor(rank,
+                      labels = c("Assistant\nProfessor",
+                                 "Associate\nProfessor",
+                                 "Full\nProfessor")), 
+           y = mean)) +
+  geom_bar(stat = "identity", 
+           fill = "cornflowerblue") +
+  geom_errorbar(aes(ymin=mean-se,
+                    ymax=mean+se), width=.8) +
+  scale_y_continuous(breaks = seq(0, 130000, 20000), 
+                     labels = dollar) +
+  labs(title = "Mean Salary by Rank", 
+       subtitle = "9-month academic salary for 2008-2009",
+       x = "",
+       y = "")
+```
+
+Using 95% Confidence Intervals
+
+```{r, eval=TRUE}
+ggplot(DesData, 
+       aes(x = factor(rank,
+                      labels = c("Assistant\nProfessor",
+                                 "Associate\nProfessor",
+                                 "Full\nProfessor")), 
+           y = mean)) +
+  geom_bar(stat = "identity", 
+           fill = "cornflowerblue") +
+  geom_errorbar(aes(ymin=mean-ci,
+                    ymax=mean+ci), width=.5, size=1) +
+  scale_y_continuous(breaks = seq(0, 130000, 20000), 
+                     labels = dollar) +
+  labs(title = "Mean Salary by Rank", 
+       subtitle = "9-month academic salary for 2008-2009",
+       x = "",
+       y = "")
+```

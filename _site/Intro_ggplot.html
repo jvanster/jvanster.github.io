@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="James Van Slyke" />
+
+
+<title>Intro to ggplot</title>
+
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Using R Studio for Statistics</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    R Basics
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Why_R.html">Why Use R &amp; R Studio?</a>
+    </li>
+    <li>
+      <a href="Intro_to_R.html">Intro to R</a>
+    </li>
+    <li>
+      <a href="Building_databases.html">Building Databases</a>
+    </li>
+    <li>
+      <a href="More_with_databases.html">More with Databases</a>
+    </li>
+    <li>
+      <a href="Working_with_R_Markdown.html">Working with R Markdown</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Intro to Statistics
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Descriptive_Statistics.html">Descriptive Statistics</a>
+    </li>
+    <li>
+      <a href="Hypothesis_Testing.html">Hypothesis Testing</a>
+    </li>
+    <li>
+      <a href="Probability_Theory.html">Probability Theory</a>
+    </li>
+    <li>
+      <a href="Z_Test.html">z test</a>
+    </li>
+    <li>
+      <a href="Independent_t-test.html">Independent t-test</a>
+    </li>
+    <li>
+      <a href="Paired_samples_t-test.html">Paired Samples t-test</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Graphs
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Intro_ggplot.html">Intro to ggplot</a>
+    </li>
+    <li>
+      <a href="Bar_Graphs_CI.html">Bar Graphs with 95% CIs</a>
+    </li>
+    <li>
+      <a href="Histograms.html">Histograms</a>
+    </li>
+    <li>
+      <a href="Normal_Curve.html">Normal Curve</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Statistical Tests
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Correlation.html">Correlation</a>
+    </li>
+    <li>
+      <a href="Regression.html">Regression</a>
+    </li>
+    <li>
+      <a href="One_Way_ANOVA.html">One-Way ANOVA</a>
+    </li>
+    <li>
+      <a href="Two_Way_ANOVA.html">Two-Way ANOVA</a>
+    </li>
+    <li>
+      <a href="Chi_Square.html">Chi Square</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Intro to ggplot</h1>
+<h4 class="author">James Van Slyke</h4>
+
+</div>
+
+
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
+<p>ggplot is a graphic language that we use to make graphs. The basic
+text we use to understand how to do ggplot is called <em>R for Data
+Science</em></p>
+<p>Like a lot of other attractive things about R and R Studio the book
+is free!! and probably one of the best resources for understanding R and
+Data.</p>
+<p>You can find the book <a
+href="https://r4ds.had.co.nz/index.html">here</a></p>
+<p>I’ll be using several modified examples from chapter 3 of that
+book.</p>
+<p>First you’ll want to load “tidyverse” as a package. Here’s how we
+find and load packages in R Studio.</p>
+<ol style="list-style-type: decimal">
+<li>First search under “Packages” in the bottom right window</li>
+<li>Second Click on install and search for it in the CRAN
+responsitory</li>
+<li>Third Make sure you click on tidyverse under packages</li>
+</ol>
+<p>This will execute a command that looks like the following</p>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<p>We’ll start off by using a dataset called “mpg” It should have loaded
+with the tidyverse package. Just type it in to find it</p>
+<pre class="r"><code>mpg</code></pre>
+<pre><code>## # A tibble: 234 × 11
+##    manufacturer model  displ  year   cyl trans drv     cty   hwy fl    class
+##    &lt;chr&gt;        &lt;chr&gt;  &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
+##  1 audi         a4       1.8  1999     4 auto… f        18    29 p     comp…
+##  2 audi         a4       1.8  1999     4 manu… f        21    29 p     comp…
+##  3 audi         a4       2    2008     4 manu… f        20    31 p     comp…
+##  4 audi         a4       2    2008     4 auto… f        21    30 p     comp…
+##  5 audi         a4       2.8  1999     6 auto… f        16    26 p     comp…
+##  6 audi         a4       2.8  1999     6 manu… f        18    26 p     comp…
+##  7 audi         a4       3.1  2008     6 auto… f        18    27 p     comp…
+##  8 audi         a4 qu…   1.8  1999     4 manu… 4        18    26 p     comp…
+##  9 audi         a4 qu…   1.8  1999     4 auto… 4        16    25 p     comp…
+## 10 audi         a4 qu…   2    2008     4 manu… 4        20    28 p     comp…
+## # … with 224 more rows</code></pre>
+<p>It shows the dataset as a “tibble”, which just means table in the
+tidyverse</p>
+<p>You can also view it as a regular dataset</p>
+<pre class="r"><code>View(mpg)</code></pre>
+<p>Because it’s a preloaded dataset we can get information about it by
+using a question mark. A question mark in front of any command in R will
+automatically generate the help file</p>
+<pre class="r"><code>?mpg</code></pre>
+<div id="levels-of-measurement" class="section level3">
+<h3>Levels of Measurement</h3>
+<ul>
+<li><em>Categorical</em>
+<ul>
+<li><strong>Binary variable</strong></li>
+<li><strong>Nominal variable</strong></li>
+<li><strong>Ordinal variable</strong></li>
+</ul></li>
+<li><em>Continuous</em>
+<ul>
+<li><strong>Interval variable</strong></li>
+<li><strong>Ratio variable</strong></li>
+</ul></li>
+</ul>
+<p>Datasets contain several different variables. Notice in the mpg
+dataset, there are several different variables such as <em>model</em>,
+<em>year</em>, <em>cty</em>, and <em>hwy</em>. These are several
+different types of variables because they represent different kinds of
+things. In statistics we refer to this as <em>levels of
+measurement</em>. There are two broad types of variables,
+<em>categorical</em> and <em>continuous</em> (Field, 2009, pages 8-9).
+Categorical variables are based on particular categories, such a type of
+shoe, religious affiliation, or political affiliation. A
+<strong>binary</strong> variable is a type of categorical variable that
+only takes two categories. So things like being pregnant or not, voting
+yes or no on a certain bill, or being alive or dead are binary
+variables, there are only two possible things in the category.
+Categorical variables that take on more than 2 possibilities are called
+<strong>nominal</strong> variables (nominal means names)</p>
+<p>There’s no mathematics involved in determining categorical variables,
+it’s simply based on which category has the most accurate fit. Either
+you are a republican, democrat, or independent, there is no mathematical
+quantity that would determine the appropriate category. There is one
+type of categorical variable that is ordered based on the absence or
+presence of a particular property, which is an <strong>ordinal</strong>
+variable. Ordinal variables have a particular rank order, but the
+rankings are <em>not</em> equal or uniform. So for example, college
+basketball team rankings would be an ordinal variable. The teams are
+ranked from best to worst, but team #2 may be twice is good as team #3,
+while team #5 maybe four times as good as team #6. So ordinal data tells
+us more about the variable than nominal data, but it still doesn’t
+provide a standardized scale of measurement.</p>
+<p><em>Continuous</em> variables are the second broad category and
+involves some type of numerical measurement to define the property in
+the variable. Continuous variables can take on any value in the
+measurement scale defined by the variable. The first example of this
+type variable is an <strong>interval</strong> variable. These types of
+variables are based on a measurement scale with equal distances between
+the ranks based on the property measured; equal intervals in the scale
+are able to represent equal differences in the variable being measured.
+The Fahrenheit scale would be an interval scale because the difference
+in degree between 64 and 65 is the same as 74 and 75.</p>
+<p><strong>Ratio</strong> variables add one more dimension to the
+properties of an interval variable. In addition to having an equal
+distance in ranks, ratios have an absolute zero point. This allows for
+multiplication of the intervals or the use of ratios. So on a ratio
+scale of 0 to 5, a score of 4 would be twice as good as a score of 2.
+Time is a good example of a ratio scale. There is an absolute zero point
+(there is no such thing as negative time), the distance between 40 and
+60 seconds is the same as the distance between 30 and 10 seconds. And 20
+seconds is twice as long as 10 seconds. Another example, Fahrenheit is
+an interval scale because you can have negative degrees (e. g. -2
+degrees below zero), while the Kelvin scale is a ratio scale because
+there is an absolute zero point and no negative numbers.</p>
+<p>One other property of continuous variables is that they allow for
+different degrees of measurement precision. So for example, the
+continuous ratio variable of time can be measured in hours, minutes,
+seconds, milliseconds, etc. In contrast, a <em>discrete</em> variable
+can only take on a fixed measurement scale, like a rank scale of 1 to
+10. The scale requires that you choose a value between 1 and 10, 2.5 is
+not possible.</p>
+<p>Let’s start by creating a simple scatterplot graph</p>
+<pre class="r"><code>ggplot(data = mpg) +
+  geom_point(mapping = aes(x= displ, y=hwy))</code></pre>
+<p><img src="Intro_ggplot_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>There’s a few things to learn here in the code</p>
+<ol style="list-style-type: decimal">
+<li>ggplot is the basic command and within the parentheses is the data
+we’ll be running our graph on</li>
+<li>geom_point is the type of graph will be using, geom stands for
+geometrical shape. So in this case we are making a graph of
+“points”</li>
+<li>The “mapping” argument lays out the variables we are graphing and is
+always paired with “aes”. Finally x and y lay out which variables are
+going to be on our x and y axes.</li>
+</ol>
+<p>So our basic formula looks lke this: ggplot(data = <DATA>) +
+<GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))</p>
+</div>
+<div id="about-the-variables" class="section level3">
+<h3>About the variables</h3>
+<p>If you look at the variables, you’ll notice that hwy and displ are
+numbers and R views them as integers or whole numbers. Scatterplots
+usually require data that are numeric like this, numbers that go up in
+scale. So in this case scatterplots typically require
+<strong>interval</strong> or <strong>ratio</strong> data.</p>
+<p>One peculiar thing about this graph is the group of numbers just
+above the numbers in the right corner. The general trend we see in these
+variables is that as displacement goes up (i.e. the engine using more
+gasoline) the highway mileage goes down. This is sometimes referred to
+as a negative relationship. The cars with the best highway mileage
+displace the least amount of gasoline. However, there’s a group of dots
+that range between 20 and 30 on the hwy variable, but seem to displace
+more gasoline than most. How can this be?</p>
+<p>One way we can answer this question is by adding in an additional
+variable. In this case the class or type of car. Let’s add that in now
+as an additional variable to our graph.</p>
+<pre class="r"><code>ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, color = class))</code></pre>
+<p><img src="Intro_ggplot_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>Notice how most of those dots are 2 seater cars. Thus, the reason
+they get better gas mileage is because they are smaller cars!!</p>
+<p>Class is a particular kind of variable, in this case a
+<strong>nominal</strong> or <em>categorical</em> variable. r refers to
+them as characters. These are basically categories, so we can’t do any
+math on them. You can’t make a formula out of compact x midsize or
+minivan/pickup.</p>
+<p>Let’s do one more graph, but add a little color</p>
+<pre class="r"><code>ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy), color = &quot;blue&quot;)</code></pre>
+<p><img src="Intro_ggplot_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Notice how when the word “color” is outside the x and y mappings it
+changes the color of our points. You can try several different colors
+for the points</p>
+<p>Let’s learn one more graph, which is especially important for
+categorical variables, the bar graph.</p>
+<p>First, download the “diamonds” data set</p>
+<pre class="r"><code>diamonds</code></pre>
+<pre><code>## # A tibble: 53,940 × 10
+##    carat cut       color clarity depth table price     x     y     z
+##    &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1  0.23 Ideal     E     SI2      61.5    55   326  3.95  3.98  2.43
+##  2  0.21 Premium   E     SI1      59.8    61   326  3.89  3.84  2.31
+##  3  0.23 Good      E     VS1      56.9    65   327  4.05  4.07  2.31
+##  4  0.29 Premium   I     VS2      62.4    58   334  4.2   4.23  2.63
+##  5  0.31 Good      J     SI2      63.3    58   335  4.34  4.35  2.75
+##  6  0.24 Very Good J     VVS2     62.8    57   336  3.94  3.96  2.48
+##  7  0.24 Very Good I     VVS1     62.3    57   336  3.95  3.98  2.47
+##  8  0.26 Very Good H     SI1      61.9    55   337  4.07  4.11  2.53
+##  9  0.22 Fair      E     VS2      65.1    61   337  3.87  3.78  2.49
+## 10  0.23 Very Good H     VS1      59.4    61   338  4     4.05  2.39
+## # … with 53,930 more rows</code></pre>
+<p>So the basics of the formula are going to be the same, but this time
+we are using “geom_bar” as our geometrical shape to create a bar
+graph.</p>
+<pre class="r"><code>ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut))</code></pre>
+<p><img src="Intro_ggplot_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>If you look in section 3.7 in <em>R for Data Science</em> it explains
+what R is doing with the data</p>
+<p><img
+src="https://d33wubrfki0l68.cloudfront.net/70a3b18a1128c785d8676a48c005ee9b6a23cc00/7283c/images/visualization-stat-bar.png" /></p>
+<p>So R looks at the data set and automatically uses the <em>count</em>
+statistic to simply count the number of occurrences for that variable.
+So this only works for categorical variables.</p>
+<p>Let’s inspect the <em>cut</em> variable to see if this is true.
+Remember that the <em>str</em> command allows us to investigate the
+types of variables in the dataset</p>
+<pre class="r"><code>str(diamonds)</code></pre>
+<pre><code>## tibble [53,940 × 10] (S3: tbl_df/tbl/data.frame)
+##  $ carat  : num [1:53940] 0.23 0.21 0.23 0.29 0.31 0.24 0.24 0.26 0.22 0.23 ...
+##  $ cut    : Ord.factor w/ 5 levels &quot;Fair&quot;&lt;&quot;Good&quot;&lt;..: 5 4 2 4 2 3 3 3 1 3 ...
+##  $ color  : Ord.factor w/ 7 levels &quot;D&quot;&lt;&quot;E&quot;&lt;&quot;F&quot;&lt;&quot;G&quot;&lt;..: 2 2 2 6 7 7 6 5 2 5 ...
+##  $ clarity: Ord.factor w/ 8 levels &quot;I1&quot;&lt;&quot;SI2&quot;&lt;&quot;SI1&quot;&lt;..: 2 3 5 4 2 6 7 3 4 5 ...
+##  $ depth  : num [1:53940] 61.5 59.8 56.9 62.4 63.3 62.8 62.3 61.9 65.1 59.4 ...
+##  $ table  : num [1:53940] 55 61 65 58 58 57 57 55 61 61 ...
+##  $ price  : int [1:53940] 326 326 327 334 335 336 336 337 337 338 ...
+##  $ x      : num [1:53940] 3.95 3.89 4.05 4.2 4.34 3.94 3.95 4.07 3.87 4 ...
+##  $ y      : num [1:53940] 3.98 3.84 4.07 4.23 4.35 3.96 3.98 4.11 3.78 4.05 ...
+##  $ z      : num [1:53940] 2.43 2.31 2.31 2.63 2.75 2.48 2.47 2.53 2.49 2.39 ...</code></pre>
+<p>Each of the variables are preceded by the <em>$</em> sign. So we can
+see that <em>cut</em> is the second variable. Notice that it says cut is
+an ord. factor with 5 levels. This tells us that this variable is an
+<strong>ordinal</strong> variable because it is ordered based on the
+type of cut from fair (lowest type of cut) to ideal (the best type of
+cut)</p>
+<p>Here’s another example from scratch</p>
+<pre class="r"><code>Example &lt;- tribble(
+  ~group, ~number, 
+  &quot;Group 1&quot;, 30, 
+  &quot;Group 2&quot;, 50
+)</code></pre>
+<p>Notice that our variable <em>group</em> is a categorical variable,
+but on it’s own the stat <em>count</em> won’t really tell us much (Group
+1 = 1, Group 2 =1). So notice what happens when we use the code like our
+last example.</p>
+<pre class="r"><code>ggplot(data = Example) + 
+  geom_bar(mapping = aes(x = group))</code></pre>
+<p><img src="Intro_ggplot_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>Doesn’t really tell us much does it? So in this case the count has to
+be supplied by a second variable, <em>y</em>. When we use a <em>y</em>
+variable for our bar chart we have to use a different stat for the bar
+chart, in this case, the stat is <em>“identity”</em> so the code looks
+like this.</p>
+<pre class="r"><code>ggplot(data = Example) +
+  geom_bar(mapping = aes(x = group, y = number), stat = &quot;identity&quot;)</code></pre>
+<p><img src="Intro_ggplot_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>Now it’s easy to see the difference in count between Group 1 and
+Group 2</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

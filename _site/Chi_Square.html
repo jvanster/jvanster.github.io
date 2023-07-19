@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="James Van Slyke" />
+
+
+<title>Chi Square</title>
+
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Using R Studio for Statistics</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    R Basics
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Why_R.html">Why Use R &amp; R Studio?</a>
+    </li>
+    <li>
+      <a href="Intro_to_R.html">Intro to R</a>
+    </li>
+    <li>
+      <a href="Building_databases.html">Building Databases</a>
+    </li>
+    <li>
+      <a href="More_with_databases.html">More with Databases</a>
+    </li>
+    <li>
+      <a href="Working_with_R_Markdown.html">Working with R Markdown</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Intro to Statistics
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Descriptive_Statistics.html">Descriptive Statistics</a>
+    </li>
+    <li>
+      <a href="Hypothesis_Testing.html">Hypothesis Testing</a>
+    </li>
+    <li>
+      <a href="Probability_Theory.html">Probability Theory</a>
+    </li>
+    <li>
+      <a href="Z_Test.html">z test</a>
+    </li>
+    <li>
+      <a href="Independent_t-test.html">Independent t-test</a>
+    </li>
+    <li>
+      <a href="Paired_samples_t-test.html">Paired Samples t-test</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Graphs
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Intro_ggplot.html">Intro to ggplot</a>
+    </li>
+    <li>
+      <a href="Bar_Graphs_CI.html">Bar Graphs with 95% CIs</a>
+    </li>
+    <li>
+      <a href="Histograms.html">Histograms</a>
+    </li>
+    <li>
+      <a href="Normal_Curve.html">Normal Curve</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Statistical Tests
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Correlation.html">Correlation</a>
+    </li>
+    <li>
+      <a href="Regression.html">Regression</a>
+    </li>
+    <li>
+      <a href="One_Way_ANOVA.html">One-Way ANOVA</a>
+    </li>
+    <li>
+      <a href="Two_Way_ANOVA.html">Two-Way ANOVA</a>
+    </li>
+    <li>
+      <a href="Chi_Square.html">Chi Square</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Chi Square</h1>
+<h4 class="author">James Van Slyke</h4>
+
+</div>
+
+
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
+<div id="introduction-to-chi-square" class="section level3">
+<h3>Introduction to Chi-Square</h3>
+<p>Not all data that is collected meets the standards for being
+parametric or based on populations. Some data that is collected is based
+on frequencies. Polling data is often of this type. If a person is
+interested in who might win the next election, they may run a poll like
+many did in the most recent presidential election between Biden and
+Trump.</p>
+<p>What makes data based on frequencies different is that the mean
+cannot be used for analysis. Frequency data is often based on categories
+or nominal data, thus it doesn’t make sense to compare these variables
+based on the types of statistical analyses we’ve done so far. Instead,
+we’ll use what is known as a Chi-Square test. <span
+class="math display">\[
+Chi\;Square\;Test = \chi^2
+\]</span> Let’s start with a very simple example. Perhaps, you are
+trying to decide whether a certain proposition will pass in the county
+and you want to decide if there is a preference. You collect data from
+200 participants about whether they are in favor of the proposition or
+against the proposition on a simple yes vs. no question.</p>
+<p>If there is no preference in the county, what would you expect the
+outcome of your survey to be? Well, if about the same amount of people
+were for the proposition as were against it, the outcome would be 50%
+yes and 50% no or half the participants would be against it, half for
+it. This is called the expected frequency or the expected frequency if
+the null hypothesis is correct, which in this case would be no
+particular preference in the sample for the proposition. Here’s the
+formula. <span class="math display">\[
+f_e = \frac {total\;in\;survey}{number\;of\;categories}= \frac {200}{2}
+\]</span> So in this case the expected frequency would be 100. So if
+there was no preference for a particular county proposition we would
+expect 100 persons to be for it and 100 persons to be against it. So
+Let’s say here is what the actual data looked like. 150 were for it and
+50 were against it. This is called the observed frequency. <span
+class="math display">\[
+observed\;frequency = f_o
+\]</span> The chi square test is a combination of these two numbers.
+Basically the larger the difference between the observed and expected
+frequencies, the more likely there is a real preference either for or
+against the proposition. Here is the formula. <span
+class="math display">\[
+X^2 = \Sigma \frac{(f_o-f_e)^2}{f_e}
+\]</span> So the chi square test is the sum of the observed minus
+expected frequencies squared divided by the expected frequencies for
+each cell. In this case we have 2 cells one for those who answered yes
+in favor of the propsosition (150) and those who answered no against the
+proposition (50). So the computation would look like this: <span
+class="math display">\[
+\frac{(150-100)^2}{100}+\frac{(50-100)^2}{100}
+\]</span></p>
+<p>So in this case our answer turns out to be a Chi Square value of 50,
+which definitely reaches statistical significance (p &lt; .001). Thus
+there does seem to be a preference in favor for the proposition in the
+county.</p>
+<p>R allows for the same types of statistical analysis without having to
+calculate the entire formula.</p>
+<p>The chi square test just calculated is called a single variable chi
+square because we are just looking at a single variable. It can also be
+calculated using R.</p>
+<p>First we need to create a contingency table, which is simply a table
+of contingent frequencies based on the data we’ve collected. Here I’ll
+use a tibble to create the dataset.</p>
+<pre class="r"><code>Proposition_Data &lt;- tribble(
+                  ~Yes, ~No,
+                  150, 50)</code></pre>
+<p>Then we just simply run the chi square test. Note the code
+<em>correct = FALSE</em>. We add this because we don’t want to use the
+continuity correction, which is necessary when expected frequencies are
+below <em>5</em> (Remember in this instance our expected frequency would
+be 100).</p>
+<pre class="r"><code>chisq.test(Proposition_Data, correct = FALSE)</code></pre>
+<pre><code>## 
+##  Chi-squared test for given probabilities
+## 
+## data:  Proposition_Data
+## X-squared = 50, df = 1, p-value = 1.537e-12</code></pre>
+</div>
+<div id="two-variable-chi-square" class="section level3">
+<h3>Two Variable Chi-Square</h3>
+<p>Another way that the chi square test is used is the testing of
+relationships between variables. Thus, are the variables related to each
+other or are they independent of each other?</p>
+<p>For example, Look at dataset ch19ds2.</p>
+<pre class="r"><code>head(ch19ds2)</code></pre>
+<pre><code>##    Sex Vote
+## 1 Male  Yes
+## 2 Male  Yes
+## 3 Male  Yes
+## 4 Male  Yes
+## 5 Male  Yes
+## 6 Male  Yes</code></pre>
+<p>There are two variables, gender (labeled here sex) and Vote, which
+was whether they voted yes or no on a recent ballot measure. First let’s
+look at a contingency table to get an overview of the data.</p>
+<pre class="r"><code>Chi_table &lt;- table(ch19ds2)
+Chi_table</code></pre>
+<pre><code>##         Vote
+## Sex      No Yes
+##   Female 31  32
+##   Male   20  37</code></pre>
+<p>So we want to see whether there was a relationship between gender and
+how persons voted on a particular measure. Here again, the Null
+hypothesis would assume that these variables are independent of each
+other. The frequency of No and Yes would be roughly proportional for
+both males and females. The alternative hypothesis assumes these
+frequencies are different based on whether you are a male or female.</p>
+<p>To run a chi-square test and construct a graph we need to create two
+different datasets, a matrix and a tibble or dataframe. We know how to
+do the tibble from earlier lessons, but the matrix is slightly
+different. Here is the way we create it.</p>
+<pre class="r"><code>Chi_table &lt;- matrix(c(31, 20,  32, 37), nrow = 2, ncol = 2, dimnames = list(c(&quot;Female&quot;, &quot;Male&quot;),
+                            c(&quot;No&quot;, &quot;Yes&quot;)))
+Chi_table</code></pre>
+<pre><code>##        No Yes
+## Female 31  32
+## Male   20  37</code></pre>
+<p>Look a little bit closer at the code.</p>
+<ol style="list-style-type: decimal">
+<li><p>Start with creating an object, in this case we called it
+<em>Chi_table</em> and then we start with the <em>matrix</em>
+command.</p></li>
+<li><p>Next we enter all the numbers that will be in the matrix with the
+<em>c</em> bind function starting with column 1, 1st number and 2nd
+number and then continuing with column 2, 1st number and 2nd number, and
+so on.</p></li>
+<li><p>Define how many rows and columns are needed (This will be more
+relevant for say a 2 x 4 matrix)</p></li>
+<li><p>Add the <em>dimnames</em> command and list the names for your
+rows and columns.</p></li>
+</ol>
+<p>Performing the test is fairly straight forward. The matrix is the
+dataset and we don’t want the continuity correction because that is only
+necessary when cell expected frequency is below 5. So we add the code,
+<em>correct = FALSE</em>, after the name of the matrix.</p>
+<pre class="r"><code>chisq.test(Chi_table, correct = FALSE)</code></pre>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test
+## 
+## data:  Chi_table
+## X-squared = 2.441, df = 1, p-value = 0.1182</code></pre>
+<p>The chi square value is very low and the p value is well above .05,
+so there is not a relationship between these two variables.</p>
+</div>
+<div id="effect-size-for-chi-square" class="section level3">
+<h3>Effect size for chi square</h3>
+<p>For an effect size, we use the odds ratio, which looks at the odds of
+the outcome we obtained. Obviously the higher the odds ratio the
+stronger the relationship. To find the odds ratio, first let’s look at
+the ratio for yes vs. no based on gender. For no it was 31 females to 20
+males.</p>
+<pre class="r"><code>31/20</code></pre>
+<pre><code>## [1] 1.55</code></pre>
+<p>So this was 1.55 and we’ll also look at yes.</p>
+<pre class="r"><code>32/37</code></pre>
+<pre><code>## [1] 0.8648649</code></pre>
+<p>So the odds of their being a difference between males and females on
+yes vs. no. would be dividing these two numbers.</p>
+<pre class="r"><code>(31/20)/(32/37)</code></pre>
+<pre><code>## [1] 1.792188</code></pre>
+<p>So females were 1.79 times more likely to answer no then yes on the
+survey, which is very small, indicating that there is no real difference
+here.</p>
+<p>Next we need to do a bar graph to help us see whether the differences
+in frequencies are significant and the direction of the differences. So
+we’ll start with a tibble based on the data, but this time we have to
+define our factor variables.</p>
+<pre class="r"><code>Chi_tibble &lt;- tribble(
+  ~Gender, ~Vote, ~Number, 
+  &quot;Male&quot;, &quot;Yes&quot;, 37,  
+  &quot;Female&quot;, &quot;Yes&quot;, 32, 
+  &quot;Male&quot;, &quot;No&quot;, 20,
+  &quot;Female&quot;, &quot;No&quot;, 31 
+)
+Chi_tibble</code></pre>
+<pre><code>## # A tibble: 4 × 3
+##   Gender Vote  Number
+##   &lt;chr&gt;  &lt;chr&gt;  &lt;dbl&gt;
+## 1 Male   Yes       37
+## 2 Female Yes       32
+## 3 Male   No        20
+## 4 Female No        31</code></pre>
+<p>Then we can do a bar graph to look at the differences in
+frequencies.</p>
+<pre class="r"><code>ggplot(Chi_tibble, aes(x = Vote, y = Number, fill = Gender)) +
+  geom_bar(stat = &quot;identity&quot;, position = position_dodge()) + 
+  theme_minimal() + 
+  labs(title = &quot;Differences in voting preference \n based on Gender&quot;)</code></pre>
+<p><img src="Chi_Square_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>Finally, here is how you report the results:</p>
+<div class="line-block">There was a not a significant association
+between gender and their voting preference (yes vs. no), <span
+class="math inline">\(\chi^2(1) = 2.441; p = 0.12\)</span>. Based on the
+odds ratio, females were 1.8 times more likely to vote no than
+males.</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
