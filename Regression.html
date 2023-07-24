@@ -1,585 +1,563 @@
 <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
-<html>
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.475">
 
-<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta charset="utf-8" />
-<meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+<meta name="author" content="James Van Slyke">
 
-
-<meta name="author" content="James Van Slyke" />
-
-
-<title>Regression</title>
-
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
-<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<style>h1 {font-size: 34px;}
-       h1.title {font-size: 38px;}
-       h2 {font-size: 30px;}
-       h3 {font-size: 24px;}
-       h4 {font-size: 18px;}
-       h5 {font-size: 16px;}
-       h6 {font-size: 12px;}
-       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
-       pre:not([class]) { background-color: white }</style>
-<script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
-<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
-<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
-<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
-
-<style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
-
-<style type="text/css">code{white-space: pre;}</style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+<title>Using R Studio for Statistics - Regression</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
   }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</script>
-
-
-
-
-
-
-
-
-
-<style type = "text/css">
-.main-container {
-  max-width: 940px;
-  margin-left: auto;
-  margin-right: auto;
-}
-img {
-  max-width:100%;
-}
-.tabbed-pane {
-  padding-top: 12px;
-}
-.html-widget {
-  margin-bottom: 20px;
-}
-button.code-folding-btn:focus {
-  outline: none;
-}
-summary {
-  display: list-item;
-}
-details > summary > p:only-child {
-  display: inline;
-}
-pre code {
-  padding: 0;
-}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
-<style type="text/css">
-.dropdown-submenu {
-  position: relative;
-}
-.dropdown-submenu>.dropdown-menu {
-  top: 0;
-  left: 100%;
-  margin-top: -6px;
-  margin-left: -1px;
-  border-radius: 0 6px 6px 6px;
-}
-.dropdown-submenu:hover>.dropdown-menu {
-  display: block;
-}
-.dropdown-submenu>a:after {
-  display: block;
-  content: " ";
-  float: right;
-  width: 0;
-  height: 0;
-  border-color: transparent;
-  border-style: solid;
-  border-width: 5px 0 5px 5px;
-  border-left-color: #cccccc;
-  margin-top: 5px;
-  margin-right: -10px;
-}
-.dropdown-submenu:hover>a:after {
-  border-left-color: #adb5bd;
-}
-.dropdown-submenu.pull-left {
-  float: none;
-}
-.dropdown-submenu.pull-left>.dropdown-menu {
-  left: -100%;
-  margin-left: 10px;
-  border-radius: 6px 0 6px 6px;
-}
-</style>
-
-<script type="text/javascript">
-// manage active state of menu based on current page
-$(document).ready(function () {
-  // active menu anchor
-  href = window.location.pathname
-  href = href.substr(href.lastIndexOf('/') + 1)
-  if (href === "")
-    href = "index.html";
-  var menuAnchor = $('a[href="' + href + '"]');
-
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
-
-  // Navbar adjustments
-  var navHeight = $(".navbar").first().height() + 15;
-  var style = document.createElement('style');
-  var pt = "padding-top: " + navHeight + "px; ";
-  var mt = "margin-top: -" + navHeight + "px; ";
-  var css = "";
-  // offset scroll position for anchor links (for fixed navbar)
-  for (var i = 1; i <= 6; i++) {
-    css += ".section h" + i + "{ " + pt + mt + "}\n";
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
   }
-  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
-  document.head.appendChild(style);
-});
-</script>
+}</script>
 
-<!-- tabsets -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<style type="text/css">
-.tabset-dropdown > .nav-tabs {
-  display: inline-table;
-  max-height: 500px;
-  min-height: 44px;
-  overflow-y: auto;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
-  font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
-  font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
-}
-
-.tabset-dropdown > .nav-tabs > li.active {
-  display: block;
-}
-
-.tabset-dropdown > .nav-tabs > li > a,
-.tabset-dropdown > .nav-tabs > li > a:focus,
-.tabset-dropdown > .nav-tabs > li > a:hover {
-  border: none;
-  display: inline-block;
-  border-radius: 4px;
-  background-color: transparent;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
-  display: block;
-  float: none;
-}
-
-.tabset-dropdown > .nav-tabs > li {
-  display: none;
-}
-</style>
-
-<!-- code folding -->
-
-
-
-
+<link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
+<body class="nav-sidebar docked nav-fixed">
 
-
-<div class="container-fluid main-container">
-
-
-
-
-<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Using R Studio for Statistics</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">
+ <span class="menu-text">R Studio for Statistics</span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Regression</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
       </button>
-      <a class="navbar-brand" href="index.html">Using R Studio for Statistics</a>
     </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li>
-  <a href="index.html">Home</a>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">R Basics</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Why R?.html" class="sidebar-item-text sidebar-link">Why R?</a>
+  </div>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    R Basics
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="Why_R.html">Why Use R &amp; R Studio?</a>
-    </li>
-    <li>
-      <a href="Intro_to_R.html">Intro to R</a>
-    </li>
-    <li>
-      <a href="Building_databases.html">Building Databases</a>
-    </li>
-    <li>
-      <a href="More_with_databases.html">More with Databases</a>
-    </li>
-    <li>
-      <a href="Working_with_R_Markdown.html">Working with R Markdown</a>
-    </li>
-  </ul>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Intro to R.html" class="sidebar-item-text sidebar-link">Intro to R &amp; R Studio</a>
+  </div>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Intro to Statistics
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="Descriptive_Statistics.html">Descriptive Statistics</a>
-    </li>
-    <li>
-      <a href="Hypothesis_Testing.html">Hypothesis Testing</a>
-    </li>
-    <li>
-      <a href="Probability_Theory.html">Probability Theory</a>
-    </li>
-    <li>
-      <a href="Z_Test.html">z test</a>
-    </li>
-    <li>
-      <a href="Independent_t-test.html">Independent t-test</a>
-    </li>
-    <li>
-      <a href="Paired_samples_t-test.html">Paired Samples t-test</a>
-    </li>
-  </ul>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Building Databases.html" class="sidebar-item-text sidebar-link">Building Databases</a>
+  </div>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Graphs
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="Intro_ggplot.html">Intro to ggplot</a>
-    </li>
-    <li>
-      <a href="Bar_Graphs_CI.html">Bar Graphs with 95% CIs</a>
-    </li>
-    <li>
-      <a href="Histograms.html">Histograms</a>
-    </li>
-    <li>
-      <a href="Normal_Curve.html">Normal Curve</a>
-    </li>
-  </ul>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./More with Databases.html" class="sidebar-item-text sidebar-link">More with Databases</a>
+  </div>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Statistical Tests
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="Correlation.html">Correlation</a>
-    </li>
-    <li>
-      <a href="Regression.html">Regression</a>
-    </li>
-    <li>
-      <a href="One_Way_ANOVA.html">One-Way ANOVA</a>
-    </li>
-    <li>
-      <a href="Two_Way_ANOVA.html">Two-Way ANOVA</a>
-    </li>
-    <li>
-      <a href="Chi_Square.html">Chi Square</a>
-    </li>
-  </ul>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Working with R Markdown.html" class="sidebar-item-text sidebar-link">Working with R Markdown</a>
+  </div>
 </li>
       </ul>
-      <ul class="nav navbar-nav navbar-right">
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Intro to Statistics</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Descriptive Statistics.html" class="sidebar-item-text sidebar-link">Descriptive Statistics</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  Hypothesis Testing.qmd
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Probability Theory.html" class="sidebar-item-text sidebar-link">Probability Theory</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Independent t test.html" class="sidebar-item-text sidebar-link">Independent t test</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Paired Samples t test.html" class="sidebar-item-text sidebar-link">Paired Samples t test</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Graphs</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Bar Graphs and CIs.html" class="sidebar-item-text sidebar-link">Bar Graphs and CIs</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Normal Curve.html" class="sidebar-item-text sidebar-link">Normal Curve</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Statistical Tests</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Correlation.html" class="sidebar-item-text sidebar-link">Correlation</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./One-Way ANOVA.html" class="sidebar-item-text sidebar-link">One-Way ANOVA</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Two-Way ANOVA.html" class="sidebar-item-text sidebar-link">Two-Way ANOVA</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chi Square.html" class="sidebar-item-text sidebar-link">Chi Square</a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-      </ul>
-    </div><!--/.nav-collapse -->
-  </div><!--/.container -->
-</div><!--/.navbar -->
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
 
-<div id="header">
-
-
-
-<h1 class="title toc-ignore">Regression</h1>
-<h4 class="author">James Van Slyke</h4>
-
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Regression</h1>
 </div>
 
 
-<script>
-  addClassKlippyTo("pre.r, pre.markdown");
-  addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
-</script>
-<div id="regression" class="section level4">
-<h4>Regression</h4>
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>James Van Slyke </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="regression" class="level4">
+<h4 class="anchored" data-anchor-id="regression">Regression</h4>
 <p>Understanding Linear regression.</p>
-<p>As we saw with correlation, one way we can understand a relationship
-is through using a line as a model. Lines require two points and when
-using a scatterplot, based on the slope, an estimate of the strength of
-the relationship between two variables can be assessed. Linear
-regression adds more tools to understand the relationship between two
-variables.</p>
-<p>Let’s start with the basic equation for a line. <span
-class="math display">\[
+<p>As we saw with correlation, one way we can understand a relationship is through using a line as a model. Lines require two points and when using a scatterplot, based on the slope, an estimate of the strength of the relationship between two variables can be assessed. Linear regression adds more tools to understand the relationship between two variables.</p>
+<p>Let’s start with the basic equation for a line. <span class="math display">\[
 Y=b_0 + b_1X
-\]</span> <span class="math inline">\(b_1\)</span> tells us the shape of
-the model, basically whether it’s positive or negative, just like we saw
-with correlational coefficients earlier. <span
-class="math inline">\(b_0\)</span> stands for our Y intercept or where
-the line crosses the Y axis. So these two values essentially stand in
-for our two points on a line. One indicates the point on the Y axis
-where the line crosses the Y axis and the other one describes the slope
-of the line (either positive or negative) and the degree of the slope of
-the line.</p>
-<p>One thing that regression lines enable is the prediction of one
-variable (the outcome variable or dependent variables) based on another
-(predictor variable or independent variable). This is a form of simple
-regression. If you are using more than one variable or several
-predictors to predict an outcome variable, this is known as multiple
-regression.</p>
-<p>For example, going back to our Album Sales dataset. If we wanted to
-predict album sales (Y)(outcome variable) based on our advertising
-budget (X)(predictor variable) and the regression model had 50 as the
-constant and 100 as the gradient, the formula would look like this:
-<span class="math display">\[
+\]</span> <span class="math inline">\(b_1\)</span> tells us the shape of the model, basically whether it’s positive or negative, just like we saw with correlational coefficients earlier. <span class="math inline">\(b_0\)</span> stands for our Y intercept or where the line crosses the Y axis. So these two values essentially stand in for our two points on a line. One indicates the point on the Y axis where the line crosses the Y axis and the other one describes the slope of the line (either positive or negative) and the degree of the slope of the line.</p>
+<p>One thing that regression lines enable is the prediction of one variable (the outcome variable or dependent variables) based on another (predictor variable or independent variable). This is a form of simple regression. If you are using more than one variable or several predictors to predict an outcome variable, this is known as multiple regression.</p>
+<p>For example, going back to our Album Sales dataset. If we wanted to predict album sales (Y)(outcome variable) based on our advertising budget (X)(predictor variable) and the regression model had 50 as the constant and 100 as the gradient, the formula would look like this: <span class="math display">\[
 album\;sales = b_0 + b_1(advertising\;budget)
-\]</span> The we could supply the constant and the gradient <span
-class="math display">\[
+\]</span> The we could supply the constant and the gradient <span class="math display">\[
 album\;sales = 50 + (100 \times advertising\;budget)
-\]</span> Then we could solve for the number of albums we could sell if
-we spent 5 dollars on the advertising budget <span
-class="math display">\[
+\]</span> Then we could solve for the number of albums we could sell if we spent 5 dollars on the advertising budget <span class="math display">\[
 album\;sales = 50 + (100 \times 5)
 \]</span> Thus in R</p>
-<pre class="r"><code>50+(100*5)</code></pre>
-<pre><code>## [1] 550</code></pre>
-<p>The values of 50 and 100 were just made up numbers. How do we find
-the actual intercepts and gradients using R?</p>
-<p>Let’s take a look at the code for running a linear regression in
-R</p>
-<pre class="r"><code>regression &lt;- lm(formula = Sales ~ Adverts, data = Album_Sales)</code></pre>
-<p>For regression models, the output needs to be saved in an object, so
-there’s a second step to display the results.</p>
-<pre class="r"><code>regression</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = Sales ~ Adverts, data = Album_Sales)
-## 
-## Coefficients:
-## (Intercept)      Adverts  
-##   134.13994      0.09612</code></pre>
-<p>Notice that when the object is called up it provides the intercept
-and gradient discussed earlier. Thus we can plug these numbers into our
-formula using R and find the predicted album sales based on spending 500
-dollars on the advertising budget.</p>
-<pre class="r"><code>134.14 + (.096*500)</code></pre>
-<pre><code>## [1] 182.14</code></pre>
-<p>The two coefficent have been identified, but we still don’t know if
-advertising is a <em>good</em> predictor of album sales. However, this
-information is also in the results that were saved in the object
-“regression”. To look at these results, the summary command is used.</p>
-<pre class="r"><code>summary(regression)</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = Sales ~ Adverts, data = Album_Sales)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -152.949  -43.796   -0.393   37.040  211.866 
-## 
-## Coefficients:
-##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 1.341e+02  7.537e+00  17.799   &lt;2e-16 ***
-## Adverts     9.612e-02  9.632e-03   9.979   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 65.99 on 198 degrees of freedom
-## Multiple R-squared:  0.3346, Adjusted R-squared:  0.3313 
-## F-statistic: 99.59 on 1 and 198 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>Remember that the variable of interest, the predictor variable, was
-advertising. If we worked at this record company we would be interested
-if money spent on advertising would help in increasing record sales. The
-first thing to notice is the F statistic, which analyzes whether the
-regression model is signficant or not. Notice that this number is 99.59
-with a p value well below .05, so that tells us our regression model is
-a good one.</p>
-<p>Where did this statistics analysis come from though? To answer this
-question we need to look at little bit closer at how to analyze the fit
-of a line.</p>
-<p>From the discussion of correlation, you may remember that a
-regression line is a line that is used to fit the data as well as
-possible, but as with all statistics there is a certain amount of error.
-The regression line does not cross all the points on a scatterdot, but
-tries to be as close to as many points as possible. The difference
-between the line and a particular point is known as a <em>residual</em>.
-A residual is similar to a deviation, but it is the distance or error
-between the line and a particular point. The smaller the residual the
-better the line is a preditor for that particular point or score. The
-larger the residual the less predictive the regression line is for that
-score.</p>
-<p>To evaluate the regression model, the average amount of residual
-error must be calculated. However, the same problem observed with trying
-to find the average deviation for a dataset remains here. If you add up
-all the residuals and try to divide by N, the residuals will add up to
-zero, which doesn’t help very much. We solve this problem the same way
-it was solved with deviations, we square them!. This number becomes the
-sum of squared deviations and is symbolized below: <span
-class="math display">\[
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">50</span><span class="sc">+</span>(<span class="dv">100</span><span class="sc">*</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 550</code></pre>
+</div>
+</div>
+<p>The values of 50 and 100 were just made up numbers. How do we find the actual intercepts and gradients using R?</p>
+<p>Let’s take a look at the code for running a linear regression in R</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>regression <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> Sales <span class="sc">~</span> Adverts, <span class="at">data =</span> Album_Sales)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For regression models, the output needs to be saved in an object, so there’s a second step to display the results.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>regression</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Sales ~ Adverts, data = Album_Sales)
+
+Coefficients:
+(Intercept)      Adverts  
+  134.13994      0.09612  </code></pre>
+</div>
+</div>
+<p>Notice that when the object is called up it provides the intercept and gradient discussed earlier. Thus we can plug these numbers into our formula using R and find the predicted album sales based on spending 500 dollars on the advertising budget.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fl">134.14</span> <span class="sc">+</span> (.<span class="dv">096</span><span class="sc">*</span><span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 182.14</code></pre>
+</div>
+</div>
+<p>The two coefficents have been identified, but we still don’t know if advertising is a <em>good</em> predictor of album sales. However, this information is also in the results that were saved in the object “regression”. To look at these results, the summary command is used.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(regression)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Sales ~ Adverts, data = Album_Sales)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-152.949  -43.796   -0.393   37.040  211.866 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 1.341e+02  7.537e+00  17.799   &lt;2e-16 ***
+Adverts     9.612e-02  9.632e-03   9.979   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 65.99 on 198 degrees of freedom
+Multiple R-squared:  0.3346,    Adjusted R-squared:  0.3313 
+F-statistic: 99.59 on 1 and 198 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Remember that the variable of interest, the predictor variable, was advertising. If we worked at this record company we would be interested if money spent on advertising would help in increasing record sales. The first thing to notice is the F statistic, which analyzes whether the regression model is significant or not. Notice that this number is 99.59 with a p value well below .05, so that tells us our regression model is a good one.</p>
+<p>Where did this statistics analysis come from though? To answer this question we need to look at little bit closer at how to analyze the fit of a line.</p>
+<p>From the discussion of correlation, you may remember that a regression line is a line that is used to fit the data as well as possible, but as with all statistics there is a certain amount of error. The regression line does not cross all the points on a scatterdot, but tries to be as close to as many points as possible. The difference between the line and a particular point is known as a <em>residual</em>. A residual is similar to a deviation, but it is the distance or error between the line and a particular point. The smaller the residual the better the line is a predictor for that particular point or score. The larger the residual the less predictive the regression line is for that score.</p>
+<p>To evaluate the regression model, the average amount of residual error must be calculated. However, the same problem observed with trying to find the average deviation for a dataset remains here. If you add up all the residuals and try to divide by N, the residuals will add up to zero, which doesn’t help very much. We solve this problem the same way it was solved with deviations, we square them!. This number becomes the sum of squared deviations and is symbolized below: <span class="math display">\[
 SS_R
-\]</span> To decide whether the regression line is a good predictor,
-something must be used as a comparator. In this case, the mean is
-compared to the line to see which serves as a better predictor for the
-data. If the line has a low amount of error (low <span
-class="math inline">\(SS_R\)</span>) and shows considerable improvement
-in comparison to the mean (high <span
-class="math inline">\(SS_M\)</span>), the regression line is a good
-predictor. Sum of squares model (<span
-class="math inline">\(SS_M\)</span>) is a measurement of the average
-distance between the line and the mean. This provides a measurement of
-the slope or gradient of the line. Remember that the steeper the slope
-or gradient of the line the stronger the relationship between two
-variables. Here the mean, (which is a horizontal line drawn on the Y
-axis) acts as an estimate of zero relationship or correlation. Thus, the
-greater the difference between the line and the mean, the greater the
-relationship or correlation between the variables and the better the
-predictor variable is at predicting the relationship.</p>
-<p>There are a few more steps to get to the F value. 1. Each sum of
-squares must be divided by the degrees of freedom. Think back to finding
-the standard deviation. We divided the sum of squares by N -1. Sum of
-squares residual and sum of squares model each have a slightly different
-degrees of freedom. - k - 1 - N - k 2. Once we’ve divided by the degrees
-of freedom, we get two numbers, The Means squared model and the Means
-squared residual. This his how we get to the F value. <span
-class="math display">\[
+\]</span> To decide whether the regression line is a good predictor, something must be used as a comparator. In this case, the mean is compared to the line to see which serves as a better predictor for the data. If the line has a low amount of error (low <span class="math inline">\(SS_R\)</span>) and shows considerable improvement in comparison to the mean (high <span class="math inline">\(SS_M\)</span>), the regression line is a good predictor. Sum of squares model (<span class="math inline">\(SS_M\)</span>) is a measurement of the average distance between the line and the mean. This provides a measurement of the slope or gradient of the line. Remember that the steeper the slope or gradient of the line the stronger the relationship between two variables. Here the mean, (which is a horizontal line drawn on the Y axis) acts as an estimate of zero relationship or correlation. Thus, the greater the difference between the line and the mean, the greater the relationship or correlation between the variables and the better the predictor variable is at predicting the relationship.</p>
+<p>There are a few more steps to get to the F value. 1. Each sum of squares must be divided by the degrees of freedom. Think back to finding the standard deviation. We divided the sum of squares by N -1. Sum of squares residual and sum of squares model each have a slightly different degrees of freedom. - k - 1 - N - k 2. Once we’ve divided by the degrees of freedom, we get two numbers, The Means squared model and the Means squared residual. This his how we get to the F value. <span class="math display">\[
 F = \frac {MS_M}{MS_R}
-\]</span> F is a proportional value, so it starts at 1 and is never a
-negative value. The higher the F value the higher the amount of
-improvement demonstrated by the regression model in comparison to the
-residuals (error in the model).</p>
-<p>Of course, we also want to include a scatterplot to show the
-relationship.</p>
-<pre class="r"><code>ggplot(Album_Sales, mapping = aes(x = Adverts, y = Sales)) +
-         geom_point() +
-        geom_smooth(method = &#39;lm&#39;)</code></pre>
-<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<p><img src="Regression_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-<p>Finally, the results section should be properly formatted. Here is a
-good example:</p>
-<blockquote>
-<p>The regression model does appear to be significant. Advertising
-budget is a good predictor of sales based on the ANOVA test, <em>F
-(1/98)</em>= 99.59, <em>p</em> &lt; .001. Based on the <span
-class="math inline">\(R^2\)</span> value of .33, 33% of the sales
-variable can be explained by the advertising budget.</p>
+\]</span> F is a proportional value, so it starts at 1 and is never a negative value. The higher the F value the higher the amount of improvement demonstrated by the regression model in comparison to the residuals (error in the model).</p>
+<p>Of course, we also want to include a scatterplot to show the relationship.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Album_Sales, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Adverts, <span class="at">y =</span> Sales)) <span class="sc">+</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">'lm'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="Regression_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Finally, the results section should be properly formatted. Here is a good example:</p>
+<blockquote class="blockquote">
+<p>The regression model does appear to be significant. Advertising budget is a good predictor of sales based on the ANOVA test, <em>F (1/98)</em>= 99.59, <em>p</em> &lt; .001. Based on the <span class="math inline">\(R^2\)</span> value of .33, 33% of the sales variable can be explained by the advertising budget.</p>
 </blockquote>
-</div>
 
 
+</section>
 
-
-</div>
-
-<script>
-
-// add bootstrap table styles to pandoc tables
-function bootstrapStylePandocTables() {
-  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
-}
-$(document).ready(function () {
-  bootstrapStylePandocTables();
-});
-
-
-</script>
-
-<!-- tabsets -->
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open');
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
   });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
 });
 </script>
+</div> <!-- /content -->
 
-<!-- code folding -->
 
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
-
-</body>
-</html>
+</body></html>

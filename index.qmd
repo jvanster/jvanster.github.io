@@ -1,0 +1,54 @@
+---
+title: R Studio for Statistics
+author: James Van Slyke
+---
+
+This is the website for Students at Fresno Pacific University to learn about statistics using R Studio. 
+
+Examples and content are for anyone interested in learning how to use statistics, but they are especially for Psychology 300 Statistics and Psy 315 Advanced Research Methods taught by Dr. James A. Van Slyke
+
+There are two books used to help teach this content. Both are free and online.
+
+- [R for Data Science](https://r4ds.had.co.nz/index.html)
+- [Learning statistics with R: A tutorial for psychology students and other beginners](https://learningstatisticswithr.com/book/)
+
+This site is also based on examples from books I've used in the past, which continue to be excellent resources for learning statistics. 
+
+- Fields, A. (2017). *Discovering statistics using IBM SPSS Statistics* (5th ed.). Sage. 
+- Salkind, N. J. & Shaw, L. A. (2019). *Statistics for people who (think they) hate statistics using R.* Sage. 
+- Pagano, R. R. (2012). *Understanding Statistics in the behavioral sciences* (10th ed.). Cengage. 
+
+This site contains several examples of the types of things you need to know to perform calculations using R Studio. R Studio uses "R" to perform statistical calculations (and all kinds of others!) with a few extras helps for working with various data sets. 
+
+There are a few different ways to install and use the programs. 
+
+**Install both on your laptop**
+
+R - the most current version - https://cran.r-project.org/
+1. Click the link and then select your operating system. 
+2. A) For Mac download the link labeled *R-4.1.1.pkg*
+2. B) For Windows click the link that says *base*, Then click "Download R 4.1.1 for Windows
+
+R Studio - a program that supports using R - https://rstudio.com/products/rstudio/download/
+1. Click on the Link and then scroll down 
+2. Choose R Studio Desktop, which will say FREE under it. 
+3. The Website should detect your operating system and then you just press the download button. 
+3. A) Or you can look through the the installers by scrolling down and select your operating system. 
+
+**Use R Studio from the Cloud**
+
+The easiest way to use R Studio is to use the cloud version that you can run in your internet browser (Safari, Chrome, etc.) If you don't want to download the program or have difficulty installing it go to this website and sign up for the "Cloud Free" plan. 
+
+https://rstudio.cloud/plans/free
+
+This is a great way to get started and gives you everything you need for the course. 
+
+If you have any problems installing the program, please use the cloud version, it's easy to use and a great way to get started. 
+
+R is the programming language that builds databases and analyzes statistics, R Studio is the program we use to get the most out of R and add several different tools that make R easier to use. 
+
+### Here's some more videos that may be useful
+
+- Here's a brief video to introduce you to R Studio - https://youtu.be/haYxa3vWA28 
+- Here is a video on how to install the programs - https://edge.sagepub.com/salkindshaw/student-resources-0/r-tutorial-videos
+- Here's a video for Mac users - https://youtu.be/LanBozXJjOk
