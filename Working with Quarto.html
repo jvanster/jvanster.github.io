@@ -144,7 +144,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Working with Quarto</li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Why R.html">R Basics</a></li><li class="breadcrumb-item"><a href="./Working with Quarto.html">Working with Quarto</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -199,8 +199,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Working with R Markdown.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Working with R Markdown</span></a>
+  <a href="./Working with Quarto.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Working with Quarto</span></a>
   </div>
 </li>
       </ul>
@@ -335,17 +335,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#quarto" id="toc-quarto" class="nav-link active" data-scroll-target="#quarto">Quarto</a>
   <ul class="collapse">
   <li><a href="#palmer-penguins" id="toc-palmer-penguins" class="nav-link" data-scroll-target="#palmer-penguins">Palmer Penguins</a></li>
-  <li><a href="#plots" id="toc-plots" class="nav-link" data-scroll-target="#plots">Plots</a>
+  <li><a href="#graphs" id="toc-graphs" class="nav-link" data-scroll-target="#graphs">Graphs</a>
   <ul class="collapse">
   <li><a href="#rendering" id="toc-rendering" class="nav-link" data-scroll-target="#rendering">Rendering</a></li>
+  <li><a href="#code-chunks" id="toc-code-chunks" class="nav-link" data-scroll-target="#code-chunks">Code Chunks</a></li>
   </ul></li>
-  <li><a href="#including-plots" id="toc-including-plots" class="nav-link" data-scroll-target="#including-plots">Including Plots</a></li>
   <li><a href="#how-to-set-up-an-assignment" id="toc-how-to-set-up-an-assignment" class="nav-link" data-scroll-target="#how-to-set-up-an-assignment">How to set up an assignment</a></li>
   <li><a href="#write-your-yaml-file" id="toc-write-your-yaml-file" class="nav-link" data-scroll-target="#write-your-yaml-file">1. Write your YAML file</a></li>
   <li><a href="#add-the-r-setup-file" id="toc-add-the-r-setup-file" class="nav-link" data-scroll-target="#add-the-r-setup-file">2. Add the r setup file</a></li>
   <li><a href="#add-questions-from-the-assignment." id="toc-add-questions-from-the-assignment." class="nav-link" data-scroll-target="#add-questions-from-the-assignment.">3. Add questions from the assignment.</a></li>
   <li><a href="#answer-the-question" id="toc-answer-the-question" class="nav-link" data-scroll-target="#answer-the-question">4. Answer the question</a></li>
-  <li><a href="#knit-your-document" id="toc-knit-your-document" class="nav-link" data-scroll-target="#knit-your-document">5 Knit your document</a></li>
+  <li><a href="#render-your-document" id="toc-render-your-document" class="nav-link" data-scroll-target="#render-your-document">5 Render your document</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -378,34 +378,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="quarto" class="level1">
 <h1>Quarto</h1>
-<p><a href="https://quarto.org/">Quarto</a> is a document format in R Studio that allows you to print off your notes, homework, and code as a word doc or other types of files. It is based on <a href="https://rmarkdown.rstudio.com/">R markdown</a>, which is a prior version of this software. You can also make websites, slide decks, and other formats to present your findings from your statistical research. For our class well be using it for homework, quizzes, and tests when we’re working on problems that involve data analysis.</p>
+<p><a href="https://quarto.org/">Quarto</a> is a document format in R Studio that allows you to print off your notes, homework, and code as a word doc or other types of files. It is based on <a href="https://rmarkdown.rstudio.com/">R markdown</a>, which is a prior version of this software. You can also make websites, slide decks, and other formats to present your findings from your statistical research. For our class we’ll be using it for homework, quizzes, and tests when we’re working on problems that involve data analysis.</p>
 <section id="palmer-penguins" class="level2">
 <h2 class="anchored" data-anchor-id="palmer-penguins">Palmer Penguins</h2>
-<p><img src="https://raw.githubusercontent.com/quarto-dev/quarto-web/main/docs/get-started/hello/rstudio/lter_penguins.png" class="img-fluid" style="float:right;" alt="Illustration of three species of Palmer Archipelago penguins: Chinstrap, Gentoo, and Adelie. Artwork by @allison_horst." width="401"></p>
+<div class="quarto-figure quarto-figure-left" style="float:right;">
+<figure class="figure">
+<p><img src="https://raw.githubusercontent.com/quarto-dev/quarto-web/main/docs/get-started/hello/rstudio/lter_penguins.png" class="img-fluid figure-img" alt="Illustration of three species of Palmer Archipelago penguins: Chinstrap, Gentoo, and Adelie. Artwork by @allison_horst."></p>
+</figure>
+</div>
 <p>For example, the <code>penguins</code> data from the <a href="https://allisonhorst.github.io/palmerpenguins" title="palmerpenguins R package"><strong>palmerpenguins</strong></a> package contains size measurements for 344 penguins from three species observed on three islands in the Palmer Archipelago, Antarctica.</p>
 </section>
-<section id="plots" class="level2">
-<h2 class="anchored" data-anchor-id="plots">Plots</h2>
+<section id="graphs" class="level2">
+<h2 class="anchored" data-anchor-id="graphs">Graphs</h2>
 <p>You can use the Palmer Penguins dataset to make a graph or plot of the data.</p>
-<p>The plot below shows the relationship between flipper and bill lengths of these penguins.</p>
+<p>The graph below shows the relationship between flipper and bill lengths of these penguins.</p>
 <div class="cell">
 <div class="cell-output-display">
 <p><img src="Working-with-Quarto_files/figure-html/plot-penguins-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>Notice how Quarto runs the code to create your graph and then includes it in the output.</p>
+<p><a href="https://quarto.org/docs/get-started/hello/rstudio.html">Here</a> is a tutorial for Quarto using R Studio</p>
 <section id="rendering" class="level3">
 <h3 class="anchored" data-anchor-id="rendering">Rendering</h3>
 <p>When you want to preview your content you hit the render button and it will show you how you are doing so far.</p>
-<p>Code Chunks</p>
-<p>Here is the code to create a <em>code chunk</em>. Three left quotes or accents followed by braces with an r and then closing 3 accents.</p>
-<p>If you click the green arrow on the right, it will run the code chunk for you and you can check it to make sure it’s right.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://jvanster.github.io/Code%20Chunk.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Code Chunk</figcaption>
-</figure>
-</div>
-<p>So the output will look like this:</p>
+</section>
+<section id="code-chunks" class="level3">
+<h3 class="anchored" data-anchor-id="code-chunks">Code Chunks</h3>
+<p>If you go up to the insert feature in the tool bar, you can insert a cell like the one below where you can include R code. Or you can use the hot keys <code>Option+Command+I</code> for the Mac or in Windows <code>Control+Alt+I</code></p>
+<p>Then you can put code into the cell to run it in the document</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -418,57 +419,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  Max.   :25.0   Max.   :120.00  </code></pre>
 </div>
 </div>
+<p>If you click the green arrow on the right of the cell, it will run the code chunk for you and you can check it to make sure it’s right.</p>
 </section>
-</section>
-<section id="including-plots" class="level2">
-<h2 class="anchored" data-anchor-id="including-plots">Including Plots</h2>
-<p>You can also embed plots, for example:</p>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="Working-with-Quarto_files/figure-html/pressure-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot. Most of the time we’ll have this set to <code>echo=TRUE</code> so we can see your code.</p>
 </section>
 <section id="how-to-set-up-an-assignment" class="level2">
 <h2 class="anchored" data-anchor-id="how-to-set-up-an-assignment">How to set up an assignment</h2>
+<p>You can download the <a href="https://jvanster.github.io/Assignment%20Template.qmd">assignment template</a> to use when you are working on your assignment. Here is how to set it up.</p>
 </section>
 <section id="write-your-yaml-file" class="level2">
 <h2 class="anchored" data-anchor-id="write-your-yaml-file">1. Write your YAML file</h2>
-<p>This is just the title of the assignment and your name, date, and the output, which will be a word document. This is always at the top of any R Markdown document.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://jvanster.github.io/YAML.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">YAML front matter</figcaption>
-</figure>
-</div>
+<p>This is just the title of the assignment and your name, date, and the output, which will be a word document. This is always at the top of any Quarto document.</p>
 </section>
 <section id="add-the-r-setup-file" class="level2">
 <h2 class="anchored" data-anchor-id="add-the-r-setup-file">2. Add the r setup file</h2>
 <p>The r setup file lets you add any libraries or datasets you may need for the file. For example, you’ll need to usually add the <em>tidyverse</em> library for most of the assignments.</p>
-<p>You’ll also need to add any datasets you are working with that you need to import. For example, to add SPSS files like the “Album Sales” Dataset you’ll need to add the “haven library” and then include the code to import the file.</p>
+<p>You’ll also need to add any datasets you are working with that you need to import. For example, to add SPSS files like the <code>Album Sales</code> Dataset you’ll need to add the <code>haven</code> library and then include the code to import the file.</p>
 <p>Or if you import a .csv file, you’ll need to include the code for that as well.</p>
 <p>If you’re not sure of where the file is, you can always import the file first and the copy the code from your console. Typically this is not included (include = FALSE), but sometimes we need to see how you set things up.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://jvanster.github.io/r%20setup%20file.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">r setup file</figcaption>
-</figure>
-</div>
 </section>
 <section id="add-questions-from-the-assignment." class="level2">
 <h2 class="anchored" data-anchor-id="add-questions-from-the-assignment.">3. Add questions from the assignment.</h2>
-<p>For each question you’ll want to copy and paste the question from your homework into R Markdown. For example, from your quiz.</p>
-<ol type="1">
-<li>Use the “Star Wars” data from the tidy verse, use the “pipe” feature to filter the dataset to mass below 250. With the new dataset, create a scatterplot of mass and height.</li>
-</ol>
+<p>For each question you’ll want to copy and paste the question from your homework into R Markdown.</p>
 </section>
 <section id="answer-the-question" class="level2">
 <h2 class="anchored" data-anchor-id="answer-the-question">4. Answer the question</h2>
-<p>R Markdown allows you to answer the question using both the code and output. So I’ll start with a descriptive sentence or annotation about what I’m doing and then show the code and the output.</p>
+<p>Quarto allows you to answer the question using both the code and output. So I’ll start with a descriptive sentence or annotation about what I’m doing and then show the code and the output.</p>
 <p>Filter dataset to mass below 250</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Smaller_StarWars <span class="ot">&lt;-</span> starwars <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Smaller_StarWars <span class="ot">&lt;-</span> starwars <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(starwars<span class="sc">$</span>mass <span class="sc">&lt;</span> <span class="dv">250</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>Smaller_StarWars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -496,16 +474,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> mass, </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">y =</span> height))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Working-with-Quarto_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<p><img src="Working-with-Quarto_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="knit-your-document" class="level2">
-<h2 class="anchored" data-anchor-id="knit-your-document">5 Knit your document</h2>
-<p>After your done with your document and want to turn it in, you’ll click the <strong>knit</strong> button and knit it as a word document.</p>
+<section id="render-your-document" class="level2">
+<h2 class="anchored" data-anchor-id="render-your-document">5 Render your document</h2>
+<p>After your done with your document and want to turn it in, you’ll click the <code>render</code> button and it will open as a word document.</p>
 <p>The document will be saved in your working directory. The working directory is the file where all your current files are being saved. It should be listed in your console or you can type the command <code>getwd()</code> to find it as well.</p>
-<p>Here is a R Markdown template file to get you started:</p>
-<p><a href="https://jvanster.github.io/Assignment%20Template.Rmd">Assignment Template</a></p>
 
 
 </section>
@@ -743,6 +719,20 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       });
     }
   }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+      }
+    }
 });
 </script>
 </div> <!-- /content -->

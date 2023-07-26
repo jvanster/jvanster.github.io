@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="James Van Slyke">
 
-<title>Using R Studio for Statistics - Descriptive Statistics</title>
+<title>Using R Studio for Statistics – assignment-template-(1</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -93,8 +92,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -146,7 +143,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Descriptive Statistics.html">Intro to Statistics</a></li><li class="breadcrumb-item"><a href="./Descriptive Statistics.html">Descriptive Statistics</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -218,7 +215,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Descriptive Statistics.html" class="sidebar-item-text sidebar-link active">
+  <a href="./Descriptive Statistics.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Descriptive Statistics</span></a>
   </div>
 </li>
@@ -334,178 +331,78 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#opening-datasets" id="toc-opening-datasets" class="nav-link active" data-scroll-target="#opening-datasets">Opening datasets</a></li>
-  <li><a href="#descriptive-statistics" id="toc-descriptive-statistics" class="nav-link" data-scroll-target="#descriptive-statistics">Descriptive Statistics</a>
-  <ul class="collapse">
-  <li><a href="#mean" id="toc-mean" class="nav-link" data-scroll-target="#mean">Mean</a></li>
-  <li><a href="#median-and-mode" id="toc-median-and-mode" class="nav-link" data-scroll-target="#median-and-mode">Median and Mode</a></li>
-  </ul></li>
-  <li><a href="#variability" id="toc-variability" class="nav-link" data-scroll-target="#variability">Variability</a>
-  <ul class="collapse">
-  <li><a href="#standard-deviation" id="toc-standard-deviation" class="nav-link" data-scroll-target="#standard-deviation">Standard Deviation</a></li>
-  <li><a href="#range" id="toc-range" class="nav-link" data-scroll-target="#range">Range</a></li>
-  <li><a href="#interquartile-range" id="toc-interquartile-range" class="nav-link" data-scroll-target="#interquartile-range">Interquartile Range</a></li>
-  </ul></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link active" data-scroll-target="#setup">Setup</a></li>
+  <li><a href="#add-questions-from-homework" id="toc-add-questions-from-homework" class="nav-link" data-scroll-target="#add-questions-from-homework">Add Questions from homework</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Descriptive Statistics</h1>
-</div>
 
 
-
-<div class="quarto-title-meta">
-
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>James Van Slyke </p>
-          </div>
-  </div>
-    
-  
-    
-  </div>
-  
-
-</header>
-
-<section id="opening-datasets" class="level2">
-<h2 class="anchored" data-anchor-id="opening-datasets">Opening datasets</h2>
-<p>Sometimes pre-existing datasets are imported into R Studio. There are several different types of datasets that can be imported. The ones used most frequently in this course are from Excel and SPSS. Types of computer files are indicated by what follows the period (“.”) in the file name. For example file.docx is a type of word file.</p>
-<p>Here’s a list of common file types we’ll use.</p>
+<section id="setup" class="level1">
+<h1>Setup</h1>
 <ul>
-<li>Excel = .xlsx</li>
-<li>SPSS = .sav</li>
-<li>Comma Seperated Values = .csv</li>
+<li>Add packages</li>
+<li>Add External Datasets</li>
 </ul>
-<p>One files we’ll be using today is the <em>Album Sales</em> file. On the moodle page for the course at the very top underneath the link for zoom sessions, you’ll see a folder with SPSS Data Sets. When you click on the folder you’ll see a list of datasets. Click on the one that says, “Album Sales.sav” and download it to your computer.</p>
-<p>Once the file is downloaded go to the upper right pane in R Studio. Under the environment tab you’ll see a button that says “Import Dataset”. Click on the button and you’ll get several different options. Go to the one that says “From SPSS” and click on it. At the top of the window you’ll need to find the file you are importing to open it. Click on the Browse buttom to find the file. Once you find it click open and it will give you a preview of the file in the window. Then all you need to do is click import.</p>
-<p>Here is the code for importing the file</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Album_Sales <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">"Album Sales.sav"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(Album_Sales)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="descriptive-statistics" class="level2">
-<h2 class="anchored" data-anchor-id="descriptive-statistics">Descriptive Statistics</h2>
-<p>Descriptive statisitics are just what the name implies, they are used to <em>describe</em> a dataset. This is different from <em>inferential</em> statistics, which are used to <em>infer</em> population paramenters based on a sample.</p>
-<p>One of the most common sets of descriptive statistics is known as <em>central tendency</em>, which is simply finding a way to get a basic overview of a dataset as a whole.</p>
-<section id="mean" class="level3">
-<h3 class="anchored" data-anchor-id="mean">Mean</h3>
-<p>The easiest way to measure central tendency is to find the average or the <em>mean</em>. The formula for the mean is very straightforward. It’s simply the sum of all the scores divided by the number of scores. The symbol for the sample mean is an x with a bar over it. <span class="math display">\[
-\bar X=\frac{\Sigma X}{N}
-\]</span> The capital Greek letter Sigma in the numerator stands for sum and X stands in for all the values in a dataset with the N standing for the number of values in the dataset. In R Studio, we simply use the mean command to find the mean for a particular variable</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(diamonds<span class="sc">$</span>carat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.7979397</code></pre>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.2     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
 </div>
 </section>
-<section id="median-and-mode" class="level3">
-<h3 class="anchored" data-anchor-id="median-and-mode">Median and Mode</h3>
-<p>There are two other measures of central tendency that are often used in statistics, <em>median</em> and <em>mode</em>. The median is simply the center score, so to find it, you simply rank order your values from lowest to highest and the middle score in that rank order. For even scores you take the two middle scores add them and divide them by two. For odd scores there is only one middle score. Here again, R gives us an easy way to find the median.</p>
+<section id="add-questions-from-homework" class="level1">
+<h1>Add Questions from homework</h1>
+<ol type="1">
+<li>Create a data set of the total number of Covid cases in 5 counties in California.</li>
+</ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(diamonds<span class="sc">$</span>carat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Total_Cases <span class="ot">&lt;-</span> <span class="fu">tribble</span>(<span class="sc">~</span>County, <span class="sc">~</span>Cases, </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"Los Angeles"</span>, <span class="dv">2730000</span>, </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"Fresno"</span>, <span class="dv">233000</span>, </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"Stanislaus"</span>, <span class="dv">129000</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"Tulare"</span>, <span class="dv">124000</span>, </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"San Diego"</span>, <span class="dv">750000</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>Total_Cases</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.7</code></pre>
+<pre><code># A tibble: 5 × 2
+  County        Cases
+  &lt;chr&gt;         &lt;dbl&gt;
+1 Los Angeles 2730000
+2 Fresno       233000
+3 Stanislaus   129000
+4 Tulare       124000
+5 San Diego    750000</code></pre>
 </div>
 </div>
-<p>The mode is the score or value with the highest frequency in your dataset. So whatever value occurs the most times is the mode. For some reason, mode is not part of the basic R package, so you need to install the “modeest” package if you need to find this descriptive statistic.</p>
+<p><em>(Write a summary statement or add any other details if necessary)</em></p>
+<ol start="4" type="1">
+<li>Create a bar graph based on the Covid cases by county dataset you just created.</li>
+</ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modeest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Once the library is installed use the mfv command</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mfv</span>(diamonds<span class="sc">$</span>carat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.3</code></pre>
-</div>
-</div>
-<p>We tend to use the mean most often for central tendency, but it’s more effected by extreme scores. So if you have several low or high outliers (extreme scores that are higher or lower than the mean), the median may be a more accurate representation of the data. More often then not, we’ll use the mean. The mode is a more straightforward measure. So if you were interested in the most popular song on an album based on downloads, you would find the mode. The mode is often very helpful with categorical data.</p>
-</section>
-</section>
-<section id="variability" class="level2">
-<h2 class="anchored" data-anchor-id="variability">Variability</h2>
-<p>The second most important aspect of descriptive statistics is <em>variability</em> or <em>dispersion</em> in a dataset. This typically represents how the rest of the dataset relates to the mean or some other measure of central tendency. For example: are the scores close to or widely dispersed from the mean?</p>
-<section id="standard-deviation" class="level3">
-<h3 class="anchored" data-anchor-id="standard-deviation">Standard Deviation</h3>
-<p>Often times were interested in the average spread or deviation from the mean. <em>Deviance</em> is the distance from any particular score from the mean. So to find the deviance you simply take the score and subtract it from the mean. <span class="math display">\[
-deviance = X - \bar X
-\]</span> If we wanted to find out the total amount of deviance, we could simply add together the total deviance for each number in our dataset. So the equation would look like this: <span class="math display">\[
-total\;deviance = \Sigma(X-\bar X)
-\]</span> Unfortunately this equation causes some problems. If you remember, the mean is the average score, so it’s the score at around 50%. But that means that for any dataset about half the scores will be above the mean and half the scores will be below the mean. Or another way to think about it, half the deviation scores will be negative and half the deviation scores will be positive. So if we add up all these scores, the total deviation will be equal to 0, but 0 doesn’t tell us much about the spread of the scores.</p>
-<p>The way to overcome this problem is by squaring each deviation score, which makes all the deviation values positive and thus produces a positive number. This number is called the <em>sum of squared errors</em> of the <em>sum of squares</em> (SS) with the following formula. <span class="math display">\[
-sum\;of\;squares (SS) = \Sigma(X-\bar X)^2
-\]</span> This number is still somewhat inflated, since its constructed based on squared values. One way to fix this issue to to find the average dispersion, which will be based on the number in our sample. Since the sample is an estimate of the population, we actually don’t use N, but N -1. This number is called <em>variance</em> and has the following symbol and equation. <span class="math display">\[
-variance(s^2) = \frac {SS}{N-1} = \frac {\Sigma(X-\bar X)^2}{N-1}
-\]</span></p>
-<p>This number is closer to the original units of measurement, but to make it more accurate, the original squared values need to be taken back out of the measure. To do this, the square root of the variance is calculated.</p>
-<p><span class="math display">\[
-s = \sqrt {\frac {\Sigma (X- \bar X)^2}{N-1}}
-\]</span></p>
-<p>To find the standard deviation using R Studio we use the <code>sd</code> command to find it.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(Album_Sales<span class="sc">$</span>Adverts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 485.6552</code></pre>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Total_Cases) <span class="sc">+</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> County, <span class="at">y =</span> Cases), </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Total Cases by County in California"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Assignment-Template--1-_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-</section>
-<section id="range" class="level3">
-<h3 class="anchored" data-anchor-id="range">Range</h3>
-<p>Another measure of dispersion is range. This is simply subtracting the highest score from the lowest score for a particular variable or vector of scores. So to find the range simply use the <code>range</code> function and then subtract the two numbers provided, which are the highest and the lowest.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(Album_Sales<span class="sc">$</span>Adverts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1]    9.104 2271.860</code></pre>
-</div>
-</div>
-<p>Then simply subtract the scores</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fl">2271.860-9.104</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2262.756</code></pre>
-</div>
-</div>
-</section>
-<section id="interquartile-range" class="level3">
-<h3 class="anchored" data-anchor-id="interquartile-range">Interquartile Range</h3>
-<p>Another helpful type of range is the <em>interquartile range</em>, which is the range of numbers from the 25th and 75th percentile. Percentiles are just dividing up a dataset based on where certain scores are based on percentages. For example, we can look at what score is at the 50th percentile. To do that we use the <code>quantile</code> function (a <em>quantile</em> is the same thing as a <em>percentile</em>). x is the variable we are analyzing, and .5 is the percentile (.5 = 50%; .35 = 35%)</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(<span class="at">x =</span> diamonds<span class="sc">$</span>carat, <span class="at">probs =</span> .<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>50% 
-0.7 </code></pre>
-</div>
-</div>
-<p>So the number at the 50th percentile is 0.7. Notice that this is the same as the median, described earlier. Remember that the median is the number from the dataset that is in the middle or center of the dataset. Because the mean is calculated, it may or may not be a number in the dataset. The mean is the number that describes the closest number to the average, but may or may not be a number contained in the dataset.</p>
-<p>So to find the interquartile range, we want our two quartiles or numbers at “quarters” of the dataset, so 25% and 75%. Think of a dollar, which is made up of 4 quarters. We already know that half a dolar is 50 cents, which would be the median, but the other two quartiles (quarters) would be 25 cents and 75 cents.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(<span class="at">x =</span> diamonds<span class="sc">$</span>carat, <span class="at">probs =</span> <span class="fu">c</span>(.<span class="dv">25</span>, .<span class="dv">75</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> 25%  75% 
-0.40 1.04 </code></pre>
-</div>
-</div>
-<p>Finally, to get the interquartile ranks we simply subtract these two numbers.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.04-.40</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.64</code></pre>
-</div>
-</div>
-<p>So the interquartile range is 0.64.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
