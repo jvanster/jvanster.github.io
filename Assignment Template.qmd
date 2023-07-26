@@ -1,0 +1,36 @@
+---
+title: "Homework #1 score (Assignment description)"
+subtitle: "James Van Slyke (your name)"
+date: now
+format: docx
+---
+
+1.  Create a new dataset based on the following information using the `data.frame` function. You're interested in determining whether the birth control has the side effect of changing blood pressure. Here is the data.
+
+| Subject | Birth Control Pill | Placebo |
+|:--------|:-------------------|:--------|
+| 1       | 108                | 102     |
+| 2       | 76                 | 68      |
+| 3       | 69                 | 66      |
+| 4       | 78                 | 71      |
+| 5       | 74                 | 76      |
+| 6       | 85                 | 80      |
+| 7       | 79                 | 82      |
+| 8       | 78                 | 79      |
+| 9       | 80                 | 78      |
+| 10      | 81                 | 85      |
+
+2.   A nurse was hired by an agency to investigate the impact of a lead smelter on the level of lead in the blood of children living near the smelter. Here is the level of blood in children in the data she collected. Use the `tibble` function to create a data frame.
+
+  | Live near the Smelter | Live in another area |
+  |:----------------------|:---------------------|
+  | 16                    | 9                    |
+  | 18                    | 13                   |
+  | 21                    | 8                    |
+  | 14                    | 15                   |
+  | 17                    | 17                   |
+  | 19                    | 12                   |
+  | 22                    | 11                   |
+  | 24                    | 16                   |
+  | 15                    | 12                   |
+  | 18                    | 15                   |
