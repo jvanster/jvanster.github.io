@@ -1,0 +1,15 @@
+{
+  "hash": "f82c945ec96a6fce38d74cedb8993c11",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Data Import\"\nauthor: \"James Van Slyke\"\nformat: html\neditor: visual\n---\n\n\n\n\n## Data Importing\n\nAlthough it's possible to create datasets in R Studio, it is often the case that datasets will be imported into R Studio and then manipulated and analyzed using code. Code is often more helpful for cleaning datasets and even importing a variety of different formats.\n\nHere's a list of several types of datasets that can be imported:\n\n| Data Types             | File Extension |\n|------------------------|----------------|\n| Comma Separated Values | .csv           |\n| Excel                  | .xlsx          |\n| Tab-delimited Files    | .tsv           |\n| SPSS                   | .sav           |\n| Google Sheet.          | *no extension* |\n| Text File              | .txt           |\n\n: Data Types\n\n## Importing a .csv file\n\nComma Separated Values files (`.csv`) are some of the more commonly found dataset files that can be imported. From the tidyverse the readr package can be used to import these types of datasets along with several others.\n\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(readr)\n```\n:::\n\n\n\n\nYou can add options to executable code like this\n\n\n\n\n::: {.cell}\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 4\n```\n\n\n:::\n:::\n\n\n\n\nThe `echo: false` option disables the printing of code (only output is displayed).\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

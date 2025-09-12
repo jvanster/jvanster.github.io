@@ -1,0 +1,26 @@
+---
+title: "Presentation Trial"
+format: revealjs
+---
+
+## Slide 1
+
+-   Turn off alarm
+
+-   Get out of bed
+
+-   Eat spaghetti
+
+## Slide 2
+
+-   Get in bed
+
+-   Count sheep
+
+---
+
+Another Slide
+
+
+
+

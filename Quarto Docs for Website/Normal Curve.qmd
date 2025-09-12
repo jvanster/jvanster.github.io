@@ -1,0 +1,271 @@
+---
+title: "Normal Curve"
+author: "James Van Slyke"
+---
+
+### Properties of the Normal Curve
+
+The normal curve is a special kind of histogram that has a particular shape and certain properties. Remember that a histogram usually represents a continuous variable, so it is most often numeric. There's other important attributes of the normal curve that are essential to hypothesis testing and statistical analysis.
+
+Here's an example normal curve representing a hypothetical reading proficiency test administered in a local school district with mean reading proficiency score of 75 and a standard deviation of 16.
+
+```{r, echo=FALSE}
+#Normal Curve example
+population_mean <- 75
+population_sd <- 16
+
+#define upper and lower bound
+lower_bound <- population_mean - population_sd
+upper_bound <- population_mean + population_sd
+
+#Create a sequence of 1000 x values based on population mean and standard deviation
+x <- seq(-4, 4, length = 1000) * population_sd + population_mean
+
+#create a vector of values that shows the height of the probability distribution
+#for each value in x
+y <- dnorm(x, population_mean, population_sd)
+
+#plot normal distribution with customized x-axis labels
+plot(x,y, type = "l", lwd = 2, axes = FALSE, xlab = "",
+     ylab = "")
+sd_axis_bounds = 5
+axis_bounds <- seq(-sd_axis_bounds * population_sd + population_mean,
+                   sd_axis_bounds * population_sd + population_mean,
+                   by = population_sd)
+axis(side = 1, at = axis_bounds, pos = 0)
+```
+
+### Important Properties
+
+There are several important properties of a normal curve.
+
+1.  The distribution of scores is symmetrical about the mean, which indicates that if you were to fold the distribution in half both sides or tails of the distribution would match.
+
+2.  The mean, median and mode are all equal
+
+3.  The distribution will have two inflection points indicating one standard deviation above and below the mean.
+
+Remember that in a normal curve most of the data is close to the mean or scores with the highest frequency are closest to the mean. As you move to the tails of the normal distribution there is a lower frequency of scores, less of the variable is contained in the tails of the distribution. Another way to think of this is that more extreme scores (scores that are either much smaller or much larger than the mean) are contained in the tails of the distribution and are less probable.
+
+### The proportion or percentage of a particular variable in a normal curve is dispersed differently throughout the curve
+
+![Distribution of scores in a normal curve](https://miro.medium.com/max/1400/1*IdGgdrY_n_9_YfkaCh-dag.png)
+
+Image credit - <https://towardsdatascience.com/understanding-the-68-95-99-7-rule-for-a-normal-distribution-b7b7cbf760c2>
+
+1.  34.13% of the data are between the mean and one standard deviation above it or below it.
+2.  13.59% of the data is between one and two standard deviations
+3.  2.15% of the data is between two and three standard deviations
+
+So when a data point or score is further on either of the tails of the distribution, the data point is less probable or more extreme.
+
+### Z Scores
+
+One of the ways we are able to understand the probability or distribution of scores in a normal curve is through the use of *z scores*. A z score is score that designates how many standard deviations a particular score is above or below the mean.
+
+The formula is the score minus the mean divided by the standard deviation. Here is the formula: $$
+z = \frac{X - \bar X}{s}
+$$ z scores can be positive or negative depending on whether the score in question is above or below the mean. Thus, the higher the magnitude of the score (meaning independent of whether it's positive or negative) the further the score is away from the mean.
+
+![Z scores](https://cdn.scribbr.com/wp-content/uploads/2020/10/standard-normal-distribution.png){alt="Z scores"} Image from <https://www.scribbr.com/statistics/standard-normal-distribution/>
+
+###PNorm Function Each z score also has a particular percentage associated with it. For example we can see what percentage is associated with a z score of 1
+
+```{r}
+pnorm(1)
+```
+
+This tells us that a z score of 1 is at the 84th percentile or that 84% of the scores in a normal curve are below a z score of 1.
+
+Remember also that half of the scores are above and below the mean or 50% of the scores are above and below the mean.
+
+If we take this score (0.8413447) minus 50% or .50, we'll get proportion or percentage between the mean and 1 standard deviation above it.
+
+```{r}
+pnorm(1) - .50
+```
+
+Notice that this is the same percentage we saw earlier between the mean and one standard deviation above it, 34.13%.
+
+### Example Problem
+
+Imagine that a nationwide mathematics aptitude test is normally distributed with a mean of 80 and a standard deviation of 12. Here's a look at the graph of the distribution of mathematics aptitude test scores.
+
+```{r echo=FALSE}
+#Gasoline additive example
+population_mean <- 80
+population_sd <- 12
+
+#define upper and lower bound
+lower_bound <- population_mean - population_sd
+upper_bound <- population_mean + population_sd
+
+#Create a sequence of 1000 x values based on population mean and standard deviation
+x <- seq(-4, 4, length = 1000) * population_sd + population_mean
+
+#create a vector of values that shows the height of the probability distribution
+#for each value in x
+y <- dnorm(x, population_mean, population_sd)
+
+#plot normal distribution with customized x-axis labels
+plot(x,y, type = "l", lwd = 2, axes = FALSE, xlab = "",
+     ylab = "")
+sd_axis_bounds = 5
+axis_bounds <- seq(-sd_axis_bounds * population_sd + population_mean,
+                   sd_axis_bounds * population_sd + population_mean,
+                   by = population_sd)
+axis(side = 1, at = axis_bounds, pos = 0)
+```
+
+Now imagine our score on the aptitude test was 90 and we were curious what percentage of scores were below our score. So we were interested in the area below a score of 90 as shown in the shaded area below.
+
+```{r echo=FALSE}
+#Specify mean and standard deviation
+population_mean <- 80
+population_sd <- 12
+
+#define upper and lower bound
+lower_bound <- population_mean - population_sd
+upper_bound <- population_mean + population_sd
+
+#Create a sequence of 1000 x values based on population mean and standard deviation
+x <- seq(-4, 4, length = 1000) * population_sd + population_mean
+
+#create a vector of values that shows the height of the probability distribution
+#for each value in x
+y <- dnorm(x, population_mean, population_sd)
+
+#plot normal distribution with customized x-axis labels
+plot(x,y, type = "l", lwd = 2, axes = FALSE, xlab = "",
+     ylab = "")
+sd_axis_bounds = 5
+axis_bounds <- seq(-sd_axis_bounds * population_sd + population_mean,
+                   sd_axis_bounds * population_sd + population_mean,
+                   by = population_sd)
+axis(side = 1, at = axis_bounds, pos = 0)
+
+#Shade area
+x_adj <- seq(30, 90)
+
+y_adj <- dnorm(x_adj, population_mean, population_sd)
+
+polygon(c(x_adj, rev(x_adj)), 
+        c(y_adj, rep(0, length(y_adj))),
+        col = adjustcolor('red', alpha=0.3), border = NA)
+```
+
+To perform this calculation, we can find the z score associated with the score of 90 and then use `pnorm` to find what percentage is associated with that z score.
+
+Find the z score
+
+```{r}
+(90-80)/12
+```
+
+Then find the percentage associated with that z score
+
+```{r}
+pnorm(.83)
+```
+
+So a score of 90 is at the 80th percentile or approximately 80% of the scores on the aptitude test are less than a score of 90.
+
+Or we can go the opposite direction. Let's say we want to know the percentage of scores above a score of 65. Or the area described below.
+
+```{r echo=FALSE}
+#Specify mean and standard deviation
+population_mean <- 80
+population_sd <- 12
+
+#define upper and lower bound
+lower_bound <- population_mean - population_sd
+upper_bound <- population_mean + population_sd
+
+#Create a sequence of 1000 x values based on population mean and standard deviation
+x <- seq(-4, 4, length = 1000) * population_sd + population_mean
+
+#create a vector of values that shows the height of the probability distribution
+#for each value in x
+y <- dnorm(x, population_mean, population_sd)
+
+#plot normal distribution with customized x-axis labels
+plot(x,y, type = "l", lwd = 2, axes = FALSE, xlab = "",
+     ylab = "")
+sd_axis_bounds = 5
+axis_bounds <- seq(-sd_axis_bounds * population_sd + population_mean,
+                   sd_axis_bounds * population_sd + population_mean,
+                   by = population_sd)
+axis(side = 1, at = axis_bounds, pos = 0)
+
+#Shade area
+x_adj <- seq(65, 130)
+
+y_adj <- dnorm(x_adj, population_mean, population_sd)
+
+polygon(c(x_adj, rev(x_adj)), 
+        c(y_adj, rep(0, length(y_adj))),
+        col = adjustcolor('red', alpha=0.3), border = NA)
+```
+
+First, we need to find the z score associated with a score of 65.
+
+```{r}
+(65-80)/12
+```
+
+Then we take the pnorm of that number but subtract it from 1.00 because we are looking for the scores above it.
+
+```{r}
+1.00 - pnorm(-1.25)
+```
+
+So approximately 89% of the scores are above a score of 65.
+
+So if you want to know the percentage of scores above a particular score you subtract the pnorm z score from 1.00, but if you want to know the percentage below a certain number or the percentile rank, you simply do the pnorm of the z score.
+
+You can also find the percentage of scores between certain scores. Just find the z scores associated with each score and subtract them.
+
+For example, what percentage of scores are between a score of 72 and 106?
+
+```{r echo=FALSE}
+#Specify mean and standard deviation
+population_mean <- 80
+population_sd <- 12
+
+#define upper and lower bound
+lower_bound <- population_mean - population_sd
+upper_bound <- population_mean + population_sd
+
+#Create a sequence of 1000 x values based on population mean and standard deviation
+x <- seq(-4, 4, length = 1000) * population_sd + population_mean
+
+#create a vector of values that shows the height of the probability distribution
+#for each value in x
+y <- dnorm(x, population_mean, population_sd)
+
+#plot normal distribution with customized x-axis labels
+plot(x,y, type = "l", lwd = 2, axes = FALSE, xlab = "",
+     ylab = "")
+sd_axis_bounds = 5
+axis_bounds <- seq(-sd_axis_bounds * population_sd + population_mean,
+                   sd_axis_bounds * population_sd + population_mean,
+                   by = population_sd)
+axis(side = 1, at = axis_bounds, pos = 0)
+
+#Shade area
+x_adj <- seq(72, 106)
+
+y_adj <- dnorm(x_adj, population_mean, population_sd)
+
+polygon(c(x_adj, rev(x_adj)), 
+        c(y_adj, rep(0, length(y_adj))),
+        col = adjustcolor('red', alpha=0.3), border = NA)
+```
+
+Find the z score associated with each and then use pnorm to find the percentage associated with each z score. Make sure to subtract the smaller number from the larger.
+
+```{r}
+z1 <- (72-80)/12
+z2 <- (106-80)/12
+pnorm(z2) - pnorm(z1)
+```

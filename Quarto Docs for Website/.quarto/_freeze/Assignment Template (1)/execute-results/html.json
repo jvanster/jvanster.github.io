@@ -1,0 +1,17 @@
+{
+  "hash": "28808db9c6edaf894453c3d8f4de8cfc",
+  "result": {
+    "engine": "knitr",
+    "markdown": "# Setup\n\n-   Add packages\n-   Add External Datasets\n\n\n::: {.cell}\n\n```{.r .cell-code}\nknitr::opts_chunk$set(echo = TRUE)\nlibrary(tidyverse)\n```\n\n::: {.cell-output .cell-output-stderr}\n\n```\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors\n```\n\n\n:::\n:::\n\n\n# Add Questions from homework\n\n1.  Create a data set of the total number of Covid cases in 5 counties in California.\n\n\n::: {.cell}\n\n```{.r .cell-code}\nTotal_Cases <- tribble(~County, ~Cases, \n                       \"Los Angeles\", 2730000, \n                       \"Fresno\", 233000, \n                       \"Stanislaus\", 129000,\n                       \"Tulare\", 124000, \n                       \"San Diego\", 750000)\nTotal_Cases\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n# A tibble: 5 × 2\n  County        Cases\n  <chr>         <dbl>\n1 Los Angeles 2730000\n2 Fresno       233000\n3 Stanislaus   129000\n4 Tulare       124000\n5 San Diego    750000\n```\n\n\n:::\n:::\n\n\n*(Write a summary statement or add any other details if necessary)*\n\n4.  Create a bar graph based on the Covid cases by county dataset you just created.\n\n\n::: {.cell}\n\n```{.r .cell-code}\nggplot(data = Total_Cases) + \n  geom_bar(mapping = aes(x = County, y = Cases), \n           stat = \"identity\") +\n  labs(title = \"Total Cases by County in California\")\n```\n\n::: {.cell-output-display}\n![](Assignment-Template--1-_files/figure-html/unnamed-chunk-2-1.png){width=672}\n:::\n:::\n",
+    "supporting": [
+      "Assignment-Template--1-_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
