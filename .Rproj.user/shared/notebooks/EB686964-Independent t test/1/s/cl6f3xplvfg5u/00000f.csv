@@ -1,0 +1,2 @@
+"0","library(haven)"
+"0","Invisibility <- read_sav(""https://github.com/jvanster/Psy_300_Datasets/raw/refs/heads/main/SPSS_Datasets/Invisibility.sav"")"

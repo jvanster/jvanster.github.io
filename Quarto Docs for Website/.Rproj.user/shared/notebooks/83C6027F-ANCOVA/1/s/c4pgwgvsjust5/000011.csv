@@ -1,0 +1,6 @@
+"0","ggplot(ANCOVA_Descriptives, "
+"0","       aes(x = Dose, "
+"0","           y = mean)) +"
+"0","  geom_bar(stat = ""identity"") +"
+"0","  geom_errorbar(aes(ymin=mean-ci,"
+"0","                    ymax=mean+ci))"

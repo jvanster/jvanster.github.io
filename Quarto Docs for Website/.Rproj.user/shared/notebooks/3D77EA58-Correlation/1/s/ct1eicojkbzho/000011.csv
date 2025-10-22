@@ -1,0 +1,6 @@
+"0","ggplot(Album_Sales, mapping = aes(x = Airplay, y = Sales)) +"
+"0","        geom_point(size = 1.5, color = ""cornflower blue"") +"
+"0","        geom_smooth(method = 'lm', se=FALSE, linewidth = 1.5) + "
+"0","        labs(title = ""Scatterplot of the Relationship between Airplay"
+"0","             and Sales"", y = ""Album Sales (thousands)"", "
+"0","             x = ""Number of Plays on the Radio"")"

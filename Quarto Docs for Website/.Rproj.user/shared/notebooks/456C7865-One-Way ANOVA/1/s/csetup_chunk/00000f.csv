@@ -1,0 +1,3 @@
+"0","library(tidyverse)"
+"0","ch15ds1 <- read.csv(""ch15ds1.csv"")"
+"0","library(sjPlot)"

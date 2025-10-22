@@ -1,0 +1,3 @@
+"0","Practice <- data.frame(Condition = "
+"0","            c(rep(c(""A"", ""B""), each=250)), "
+"0","            Dist = rnorm(500, mean = 0, sd = 1))"

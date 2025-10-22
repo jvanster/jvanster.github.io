@@ -1,0 +1,3 @@
+"0","ggplot(data = Smaller_StarWars) +"
+"0","  geom_point(mapping = aes(x = mass, "
+"0","                           y = height))"

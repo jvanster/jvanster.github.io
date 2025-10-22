@@ -1,0 +1,5 @@
+"0","ggplot(Practice, aes(x=Dist)) + "
+"0","    geom_histogram(aes(y= after_stat(density)),"
+"0","                   binwidth=.4,"
+"0","                   colour=""black"", fill=""white"") +"
+"0","    geom_density()"
