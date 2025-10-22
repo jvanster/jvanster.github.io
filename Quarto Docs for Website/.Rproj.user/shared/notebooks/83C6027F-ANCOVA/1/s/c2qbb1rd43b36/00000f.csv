@@ -1,4 +1,0 @@
-"0","Puppy_love |> "
-"0","  group_by(Dose) |>"
-"0","    summarize(n = n(),"
-"0","              mean = mean(Happiness))"

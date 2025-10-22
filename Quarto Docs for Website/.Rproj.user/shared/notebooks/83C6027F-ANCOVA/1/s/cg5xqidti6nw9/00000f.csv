@@ -1,3 +1,0 @@
-"0","Puppy_love <- Puppy_love |> "
-"0","  mutate(Dose = factor(Dose, levels = c(1, 2, 3), "
-"0","         labels = c(""Control"", ""15 mins"", ""30 mins"")))"

@@ -1,1 +1,0 @@
-"0","Puppy_ANCOVA <- aov(Happiness ~ Dose + Puppy_love, data = Puppy_love)"

@@ -1,5 +1,0 @@
-"0","Learning_Mean <- Learning |>"
-"0","  group_by(Anxiety) |>"
-"0","  summarise(n = n(),"
-"0","            mean = mean(Score))"
-"0","Learning_Mean"

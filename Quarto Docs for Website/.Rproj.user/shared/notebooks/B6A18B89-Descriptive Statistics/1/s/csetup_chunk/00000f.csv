@@ -1,6 +1,0 @@
-"0","knitr::opts_chunk$set(echo =TRUE)"
-"0","library(tidyverse)"
-"0","library(modeest)"
-"0","data(diamonds)"
-"0","data(Album_Sales)"
-"2","Warning: data set ‘Album_Sales’ not found"

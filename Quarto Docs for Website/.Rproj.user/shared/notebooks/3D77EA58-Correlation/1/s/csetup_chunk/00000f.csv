@@ -1,4 +1,0 @@
-"0","library(tidyverse)"
-"0","data(diamonds)"
-"0","library(haven)"
-"0","Album_Sales <- read_sav(""Album Sales.sav"")"

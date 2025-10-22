@@ -1,5 +1,0 @@
-"0","sd_axis_bounds = 5"
-"0","axis_bounds <- seq(-sd_axis_bounds * population_sd + population_mean,"
-"0","                   sd_axis_bounds * population_sd + population_mean,"
-"0","                   by = population_sd)"
-"0","axis(side = 1, at = axis_bounds, pos = 0)"

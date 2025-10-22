@@ -1,5 +1,0 @@
-"0","barplot(Matrix1, beside = TRUE,"
-"0","        col = c(""red"", ""green""), legend.text = TRUE, "
-"0","        xlab = ""Voting based on Gender"", "
-"0","        ylab = ""Frequency of Yes and No Votes"", "
-"0","        main = ""Gender and Voting Frequency on Recent Bill"")"

@@ -1,4 +1,0 @@
-"0","TestData <- data.frame("
-"0","            group= rep(c(""Pretest"", ""Posttest""), each=25),"
-"0","            Test = c(ch14ds1$Pretest, ch14ds1$Posttest)"
-"0","            )"

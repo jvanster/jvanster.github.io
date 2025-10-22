@@ -1,3 +1,0 @@
-"0","ggplot(data = Learning_Mean) +"
-"0","  geom_bar(mapping = aes(x = Anxiety, "
-"0","           y = mean), stat = ""identity"" )"

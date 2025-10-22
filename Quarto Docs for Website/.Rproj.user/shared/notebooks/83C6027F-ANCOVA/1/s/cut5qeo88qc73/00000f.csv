@@ -1,7 +1,0 @@
-"0","ANCOVA_Descriptives <- Puppy_love |>"
-"0","  group_by(Dose) |>"
-"0","  summarize(n = n(),"
-"0","            mean = mean(Happiness),"
-"0","            sd = sd(Happiness),"
-"0","            se = sd / sqrt(n),"
-"0","            ci = qt(0.975, df = n - 1) * sd / sqrt(n))"

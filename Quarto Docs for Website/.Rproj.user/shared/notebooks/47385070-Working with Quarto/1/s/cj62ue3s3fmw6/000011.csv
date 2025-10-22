@@ -1,3 +1,0 @@
-"0","Smaller_StarWars <- starwars |>"
-"0","  filter(starwars$mass < 250)"
-"0","Smaller_StarWars"
