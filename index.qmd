@@ -11,8 +11,8 @@ Examples and content are for anyone interested in learning how to use statistics
 
 There are two books used to help teach this content. Both are free and online.
 
--   [R for Data Science](https://r4ds.had.co.nz/index.html)
--   [Learning statistics with R: A tutorial for psychology students and other beginners](https://learningstatisticswithr.com/book/)
+-   [R for Data Science](https://r4ds.hadley.nz/)
+-   [Learning statistics with R: A tutorial for psychology students and other beginners](https://learningstatisticswithr.com/)
 
 ### Book Resources 
 

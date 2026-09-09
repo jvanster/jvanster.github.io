@@ -87,14 +87,14 @@ The t distribution varies based on the degrees of freedom, which is directly rel
 ###Example using R Studio For the example import the following dataset.
 
 ```{r}
-ch14ds1 <- read.csv("ch14ds1.csv")
+ch14ds1 <- read_csv("https://github.com/jvanster/Psy_300_Datasets/raw/refs/heads/main/ch14ds1.csv", show_col_types = FALSE)
 ```
 
 
 View the dataset in Console
 
 ```{r, eval=TRUE}
-ch14ds1
+print(ch14ds1, n = Inf)
 ```
 
 Notice that this is a fairly straightforward pre vs. posttest dataset.

@@ -58,6 +58,8 @@ Remember that the null hypothesis assumes no differences between the groups, whe
 
 ANOVA enables the comparison of more than two groups, which is often structured to analyze different levels of an independent variable. By levels we are referring to different amounts or quantities of the independent variable. For example, one group may be the control group, but then subsequent groups may have different quantities of the independent variable.
 
+This dataset looks at whether the amount of time spent in preschool has an effect on language development. Notice there are three different levels of the independent variable in that each level spends more time in preschool. Language development is measured by the score on a test.
+
 Here is the dataset
 
 ```{r, eval=TRUE}

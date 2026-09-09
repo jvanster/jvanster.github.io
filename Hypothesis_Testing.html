@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,6 +10,9 @@
 
 <title>Hypothesis Testing – Using R Studio for Statistics</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -71,14 +74,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-2fef5ea3f8957b3e4ecc936fc74692ca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-90720e2d7f4afcd590ceef788dce0e6c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-d14c91004f303c40d19eafe7af64fdb3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-90720e2d7f4afcd590ceef788dce0e6c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-f03b798792517fb5a45c3e14692051bc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-9d5c8f4dd5c1d3a206247ae9faf2df12.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-f03b798792517fb5a45c3e14692051bc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -108,7 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -121,7 +124,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -656,22 +659,16 @@ window.Quarto = {
 </section>
 <section id="alpha" class="level3">
 <h3 class="anchored" data-anchor-id="alpha">Alpha</h3>
-<p>The probability that is shown through the probability distribution is compared to <em>alpha</em>. Alpha is an accepted scientific standard for determining the likelihood of rejecting the null hypothesis. Alpha is equal to .05 or 5%. So the standard that is accepted by the scientific community is that there is only a 5% chance or less that the findings in the experiment conducted are the result of chance alone. <span class="math display">\[
-\alpha = .05
-\]</span> The probability associated with the outcome of our experiment based on a probability distribution is known as the <em>p</em> value (<em>p</em> standing for probability)</p>
+<p>The probability that is shown through the probability distribution is compared to <em>alpha</em>. Alpha is an accepted scientific standard for determining the likelihood of rejecting the null hypothesis. Alpha is equal to .05 or 5%. So the standard that is accepted by the scientific community is that there is only a 5% chance or less that the findings in the experiment conducted are the result of chance alone. <span class="math display">\[\alpha = .05\]</span> The probability associated with the outcome of our experiment based on a probability distribution is known as the <em>p</em> value (<em>p</em> standing for probability)</p>
 </section>
 <section id="basic-statistical-formula" class="level3">
 <h3 class="anchored" data-anchor-id="basic-statistical-formula">Basic Statistical Formula</h3>
-<p>A really easy way to understand how most statistical outputs are generated is to understand this simple formula. <span class="math display">\[
-\frac{signal}{noise}
-\]</span> Signal refers to what is known as systematic variation or variation that is introduced by an experiment. In the gasoline example, the additive that is supposed to increase gas mileage is systematic variation. The gasoline is being manipulated to try to increase gas mileage through the use of the additive. The more increase in gas mileage associated with the additive, the stronger the signal and the more likely the independent variable (in this case the additive) has a real effect.</p>
+<p>A really easy way to understand how most statistical outputs are generated is to understand this simple formula. <span class="math display">\[\frac{signal}{noise}\]</span> Signal refers to what is known as systematic variation or variation that is introduced by an experiment. In the gasoline example, the additive that is supposed to increase gas mileage is systematic variation. The gasoline is being manipulated to try to increase gas mileage through the use of the additive. The more increase in gas mileage associated with the additive, the stronger the signal and the more likely the independent variable (in this case the additive) has a real effect.</p>
 <p>Noise is like background noise or variation that exists, but wasn’t introduced through the experimental manipulation. This is often referred to as unsystematic variation. This is variation that exists for a variety of reasons. Going back to our gasoline mileage example, unsystematic variation could be differences in the cars used, differences in the road conditions or differences in the weather. Experimentors try to minimize this type of variation as much as possible, but there is always a certain amount of unsystematic variation</p>
 </section>
 <section id="measurement-error" class="level3">
 <h3 class="anchored" data-anchor-id="measurement-error">Measurement Error</h3>
-<p>One potential form of unsystematic variation is <em>measurement error</em>. For example, imagine that you weigh yourself every day for a whole week. Most likely there will be fluctuations in your weight during the week. It will be slightly higher one day and slightly lower another day with an average or mean that stays more consistent. Measurement error exists in any variable that we are attempting to measure. It is unavoidable to a certain extent because whatever we are attempting to measure, there will be certain fluctuations in the precision of measurement. Going back to our original formula, measurement error is our estimation of noise and although experiments are always trying to minimize error a certain amount will always be present. So another way to understand our primary formula is <span class="math display">\[
-statistics = \frac{experimental\;manipulation}{measurement\;error}
-\]</span></p>
+<p>One potential form of unsystematic variation is <em>measurement error</em>. For example, imagine that you weigh yourself every day for a whole week. Most likely there will be fluctuations in your weight during the week. It will be slightly higher one day and slightly lower another day with an average or mean that stays more consistent. Measurement error exists in any variable that we are attempting to measure. It is unavoidable to a certain extent because whatever we are attempting to measure, there will be certain fluctuations in the precision of measurement. Going back to our original formula, measurement error is our estimation of noise and although experiments are always trying to minimize error a certain amount will always be present. So another way to understand our primary formula is <span class="math display">\[statistics = \frac{experimental\;manipulation}{measurement\;error}\]</span></p>
 </section>
 <section id="confidence-intervals" class="level3">
 <h3 class="anchored" data-anchor-id="confidence-intervals">Confidence Intervals</h3>
@@ -689,22 +686,22 @@ statistics = \frac{experimental\;manipulation}{measurement\;error}
 <h4 class="anchored" data-anchor-id="confidence-interval-example">Confidence Interval Example</h4>
 <p>Let’s imagine we have a sample of persons aged 40 to 50 who were trying to run on a treadmill at it’s fastest speed. This is a sample of times in seconds they were able to maintain a sprint at the treadmill’s fastest speed.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>sprint <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">18</span>, <span class="dv">16</span>, <span class="dv">18</span>, <span class="dv">24</span>, <span class="dv">23</span>, <span class="dv">22</span>, <span class="dv">22</span>, <span class="dv">23</span>, <span class="dv">26</span>, <span class="dv">29</span>, <span class="dv">32</span>, <span class="dv">34</span>, <span class="dv">34</span>, <span class="dv">36</span>, <span class="dv">36</span>, <span class="dv">43</span>, <span class="dv">42</span>, <span class="dv">49</span>, <span class="dv">46</span>, <span class="dv">46</span>, <span class="dv">57</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>sprint <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">18</span>, <span class="dv">16</span>, <span class="dv">18</span>, <span class="dv">24</span>, <span class="dv">23</span>, <span class="dv">22</span>, <span class="dv">22</span>, <span class="dv">23</span>, <span class="dv">26</span>, <span class="dv">29</span>, <span class="dv">32</span>, <span class="dv">34</span>, <span class="dv">34</span>, <span class="dv">36</span>, <span class="dv">36</span>, <span class="dv">43</span>, <span class="dv">42</span>, <span class="dv">49</span>, <span class="dv">46</span>, <span class="dv">46</span>, <span class="dv">57</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Then we can find the mean and standard deviation for this group of scores</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sprint_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(sprint)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sprint_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(sprint)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sprint_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(sprint)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sprint_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(sprint)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Then we can use these scores to find the 95% confidence interval</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>lower <span class="ot">&lt;-</span> sprint_mean <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>sprint_sd<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">21</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>lower <span class="ot">&lt;-</span> sprint_mean <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>sprint_sd<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">21</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>upper <span class="ot">&lt;-</span> sprint_mean <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>sprint_sd<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">21</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>lower</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>lower</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 27.23457</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>upper</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>upper</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 37.14638</code></pre>
 </div>
@@ -780,13 +777,14 @@ statistics = \frac{experimental\;manipulation}{measurement\;error}
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
