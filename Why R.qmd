@@ -1,0 +1,59 @@
+---
+title: "Why R?"
+format: html
+author: "James Van Slyke"
+---
+
+### Why R & R Studio?
+
+Many persons are curious about the shift to using R rather than SPSS or one of the other basic computer programs. A great overview is offered here:
+
+[SPSS is dying](https://lindeloev.net/spss-is-dying/)
+
+### Reasons to Move to R Studio
+
+Here are the reasons I think it's important to move to R Studio.
+
+### 1. It's free.
+
+         
+You can put it on your home computer for free. You can use it on Windows and Macs and even inexpensive educational computers like Raspberry pi
+
+[Raspberry pi](https://www.raspberrypi.org/)
+
+If you learn SPSS, most likely your company won't have it and your educational organization may or may not have it. If you learn R and R Studio you can take it into any work setting and use it. This is especially helpful for nonprofits who often can't afford statistical software.
+
+
+### 2. There's this new thing called a **'com-pu-tor'**
+
+     
+Computers are ubiquitous, you probably carried one with you into class in your pocket. A contemporary iPhone is [120 million times more powerful than the computers that sent humans to the moon](https://www.idropnews.com/news/your-iphone-is-120-million-times-more-powerful-than-the-computer-that-sent-men-to-the-moon/112146/). However, not everyone is as familiar with the various types of code that makes modern computers, iPhones, apps, Instagram, etc., run. Learning R gives you a very rudimentary understanding of how to code. More importantly, it teaches you how to *manipulate code*. No one ever writes code on their own from scratch, but parts are taken and then transformed to work for your specific needs. The introduction to r and code in this class allows you to do basic statistics, make professional looking graphs, and even make websites (This website was created using R Studio and Quarto).
+
+
+### 3. Simplifying replication
+
+        
+A big story in the last couple of years is the problem with replication in the social sciences, some calling it a [replication crisis.](https://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.0020124) Replication is also requiring access to the code you used, not just the output shared in the research article. Mistakes have been found with scientific research findings because of the computations performed and how the data was processed, which haven't been a normal part of research reports in the past. R Studio makes this easier because as you learn to code, you can also share the code you used to give a complete picture of the data analysis process from start to finish. Many journals are beginning to require that authors include their data as well as their code in the submission of research manuscripts.
+
+
+### 4. Collaboration
+
+       
+Websites like [GitHub](https://github.com/) are making it more and more easier to collaborate on various projects together. Github enables users to monitor how data is manipulated and changed over time. R Studio helps to facilitate this collaboration. More and more websites and companies are making their data free and open source (just like R is) so that persons can learn from each other or look at the data for themselves and check the sources. For example, here's a [site](https://github.com/Covid19R/covid19nytimes) that actively pulls data from The NY Times data repository on Covid-19 to be used in R.
+
+
+### 5. Self-Teaching
+
+    
+Most of the resources you need to learn R and R Studio are free. I taught myself R Studio through using free open source books, websites, and YouTube videos. Any time I had a question, I just googled it! I could usually find the answer with a little work. R also includes different packages that allow you to do different types of tasks (we use *tidyverse* for our class and *ggplot*) These are free as well and have tons of online help for free training. If you start with a little bit of R Studio, you can literally go anywhere in the world of data science and analysis.
+
+
+### 6. Social Justice
+
+      
+[R Studio has committed to donate time and resources to various social justice groups such as Black Lives Matter and the ACLU](https://www.rstudio.com/black-lives-matter/)
+
+As a company, R Studio is committed to providing open-source free software for data science (they also have an enterprise wing that provides data services for a fee). They are also a Designated Public Benefit Corporation, which means that their open source mission is [written into their charter and stakeholders must uphold that mission in their decision-making](https://www.rstudio.com/about/what-makes-rstudio-different/)
+
+RStudio was recently renamed [Posit](https://posit.co/) and you can see their annual report [here](https://posit.co/about/pbc-report/)
+

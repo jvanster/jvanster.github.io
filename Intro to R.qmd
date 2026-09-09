@@ -1,0 +1,313 @@
+---
+title: "Intro to R & R Studio"
+author: "James Van Slyke"
+---
+
+*R* is the base program for R Studio, it does all the calculations, while *R studio* is the addition of several windows around R that helps with your analysis
+
+In R Studio, "R" performs calculations in the *console*. The console is in the lower left window. You can think of the console as a big calculator. You can do all the basics with R.
+
+The *Editor* is where you write the code and notes to yourself in *scripts*. The console is where you code gets entered and run and the *output* is in the lower right hand corner. The upper left hand window is the *environment* and keeps track of the data and other things used in your analysis.
+
+Here is a picture of what the program looks like and the different sections.
+
+![](https://d33wubrfki0l68.cloudfront.net/8a64bb047429d7ae0e2acae35c40e421e6439bf6/80e5d/diagrams/rstudio-editor.png)
+
+### Basic Calculations using R
+
+Addition
+
+```{r, eval=TRUE}
+A <- 3
+B <- 2
+A + B
+```
+
+Subtraction
+
+```{r, eval=TRUE}
+A = 15
+B = 5
+A - B
+```
+
+Multiplication
+
+```{r, eval=TRUE}
+A <-  55
+B <-  22
+A * B
+```
+
+Division
+
+```{r, eval=TRUE}
+A = 30
+B = 5
+A / B
+```
+
+Exponent
+
+```{r, eval=TRUE}
+A = 10
+B <- 10
+A ^ B
+```
+
+You'll notice that the numbers are being saved as what's called an *object*. An object is anything you save in R that is related to data or output of a calculation. You can save calculations, databases, words or lots of other stuff.
+
+If you look in the upper right window, under the environment tab, you should notice an *x* there based on your last calculation. The environment tab saves all the saved objects you are working with in R.
+
+**Here's a couple of examples of objects for you to try**
+
+```{r, eval=TRUE}
+Word <- "Word"
+Number <- 1
+Calculation <- 3+2 
+```
+
+Notice that when you call up a calculation it gives you the answer, not the formula
+
+## Vectors
+
+Besides individual numbers your can also create vectors or arrays of numbers, which are a set of number that are saved in an object
+
+Here is a basic vector of numbers
+
+```{r}
+Vector <- c(23, 26, 45, 22, 43, 91, 82, 12, 57, 2)
+```
+
+### Special Vectors
+
+You can create a sequence of numbers without needing to write them all down. Just list the first and last number of the sequence in your code
+
+```{r, eval=TRUE}
+Sequence <- seq(1,10)
+```
+
+You can also repeat numbers
+
+```{r, eval=TRUE}
+Repeat <- rep(10, times = 10)
+```
+
+And of course you can always store it in an object
+
+```{r, eval=TRUE}
+Repeat <- rep(10, times = 25)
+Repeat
+```
+
+Then you can use that to make a new database
+
+First we'll add a sequence of numbers to match our repeat variable
+
+```{r, eval=TRUE}
+Sequence <- seq(1,25)
+Sequence
+```
+
+Then create a dataset using the *data.frame* command and include the two objects that were just recently created.
+
+```{r, eval=TRUE}
+Dataset <- data.frame(Repeat, Sequence)
+Dataset
+```
+
+# Inspecting data
+
+There's lots of things you can do with a dataset
+
+Let's start with one that is already in the R environment ***iris***
+
+It's a longer dataset, so we'll start with the head command that just shows the first couple of rows
+
+The top rows and columns of the dataset
+
+```{r, eval=TRUE}
+head(iris)
+```
+
+We can look at the types of data we have using the *str* command
+
+```{r, eval=TRUE}
+str(iris)
+```
+
+Notice we have 2 data types, numbers and what are called "factors"
+
+Factors are typically categories of something. In this case, types of iris flowers.
+
+We can check on the names of each of our variables
+
+```{r, eval=TRUE}
+names(iris)
+```
+
+We can look at the row names
+
+```{r, eval=TRUE}
+rownames(iris)
+```
+
+We can create a table of a particular variable
+
+We specify the variable we want by using the \$ sign
+
+```{r, eval=TRUE}
+table(iris$Species)
+```
+
+Notice that it automatically makes a table of the counts of each iris type
+
+Anytime we want to look at a specific variable from a dataset, we use the \$ sign. Notice when you type in the dataset name followed by the \$ you'll see a little pop-up with all the variables. Just scroll through and select the one you want.
+
+```{r, eval=TRUE}
+iris$Sepal.Width
+```
+
+### Dataframes
+
+Many times we work with datasets using dataframes, which creates an object very similar to a spreadsheet. Notice that when we create a dataframe and add variables to it, the letter **c** is used before the parentheses, which basically tells R that what follows should be added to the object/variable before it.
+
+Here is a sample dataset
+
+```{r, eval=TRUE}
+Dataframe <- data.frame(Words = c("One", "Two", "Three", "Four"),
+                        Numbers = c(1,2,3,4))
+```
+
+Inspect It
+
+```{r, eval=TRUE}
+Dataframe
+```
+
+
+There's actually lots of ways to make datasets and we can always import data, which we will learn later.
+
+# Different class types in r
+
+*Numeric* means number
+
+*Integer* means a number that is not a fraction
+
+check it out
+
+```{r, eval=TRUE}
+is.numeric(4.2)
+```
+
+```{r, eval=TRUE}
+is.integer(4.2)
+```
+
+*Characters* are strings or words
+
+check it out
+
+```{r, eval=TRUE}
+is.character("Word")
+```
+
+```{r, eval=TRUE}
+is.character(4)
+```
+
+*Factors* are categories as I described earlier, it can be ordered (like an ordinal scale) or non-ordered
+
+```{r, eval=TRUE}
+str(iris)
+```
+
+# The basic structure of R commands
+
+Their are four main elements of every R code
+
+1.  objects
+2.  functions
+3.  arguments
+4.  operators
+
+Basic Structure
+
+![](https://go-bayes.github.io/psych-447/posts/2_1/syntax.png)
+
+The function mean generates the arithmetic mean of some object
+
+```{r, eval=TRUE}
+mean(iris$Sepal.Length)
+```
+
+Or we can find the standard deviation
+
+```{r, eval=TRUE}
+sd(iris$Sepal.Length)
+```
+
+We can also get a summary of the variable or the dataset as a whole
+
+```{r, eval=TRUE}
+summary(iris$Sepal.Length)
+```
+
+```{r, eval=TRUE}
+summary(iris)
+```
+
+# Packages
+
+When you first install r studio you get all the basics, but sometimes you need other "packages" that provide different tools.
+
+One package we use often is the "tidyverse" package
+
+1.  To install it, simply go to the bottom right window and click on packages
+2.  Type the package you are looking for in the search bar and check the package and R Studio will install it.
+3.  If the package you are looking for isn't in the list, click on "Install" and you can search for it in the Repository \[CRAN\], which is like a cloud system.
+
+### Scripts
+
+Although the console does the calculations, we usually write the code in "scripts" or text that includes the code and our annotations about it (i.e. notes to ourselves)
+
+You can cut and paste from the website whatever you'd like into your scripts and then modify to help with your own learning.
+
+To start a new script
+
+1.  In the upper right corner, click on the blank paper icon with a white plus sign on a green background.
+2.  Then click on the "R Script" option, which will create a new R script document.
+
+Then you can write you code in scripts with notes and then run the code in the console.
+
+Here's two examples of good vs. bad code
+
+#### Bad code
+
+```{r}
+df1<-data.frame(a=rnorm(10,1,1),b=rnorm(10,4,8),c=rnorm(10,8,1),d=rnorm(10,7,2))
+```
+
+#### Good code
+
+```{r}
+df1 <- data.frame(
+  a = rnorm( 10, mean = 1, sd = 1 ),
+  b = rnorm( 10, mean = 4, sd = 8 ),
+  c = rnorm( 10, mean = 8, sd = 1 ),
+  d = rnorm( 10, mean = 7, sd = 2 )
+)
+```
+
+Notice how by adding rows, you can improve the look and understanding of what's happening in the code
+
+Anytime you type a "\#" that part of the text will not be calculated by r. Here's an example
+
+```{r}
+# Here's how to find the mean
+mean(iris$Sepal.Width)
+```
+
+So you can use *hashmarks* "\#" to write notes to yourself about the code you are using. Once you've typed in your code into the script you can hit CTRL+Return to send the code to the console and run it to get your output.
+
+It's a great way to teach yourself and remember what you learned and use the code again when you are in a similar situation.

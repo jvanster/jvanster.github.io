@@ -1,0 +1,92 @@
+---
+title: "Working with R Markdown"
+author: "James Van Slyke"
+---
+
+```{r, include=FALSE}
+library(tidyverse)
+```
+
+## R Markdown
+
+Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com> or a nice slide presentation of what R Markdown can do is [here](https://slides.djnavarro.net/starting-rmarkdown/#1).
+
+When you click the ***Knit*** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+
+Here is the code to create a *code chunk*. Three left quotes or accents followed by braces with an r and then closing 3 accents.
+
+If you click the green arrow on the right, it will run the code chunk for you and you can check it to make sure it's right.
+
+![Code Chunk](https://jvanster.github.io/Code%20Chunk.png)
+
+So the output will look like this:
+
+```{r include=TRUE}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot. Most of the time we'll have this set to `echo=TRUE` so we can see your code.
+
+## How to set up an assignment
+
+## 1. Write your YAML file
+
+This is just the title of the assignment and your name, date, and the output, which will be a word document. This is always at the top of any R Markdown document.
+
+![YAML front matter](https://jvanster.github.io/YAML.png)
+
+## 2. Add the r setup file
+
+The r setup file lets you add any libraries or datasets you may need for the file. For example, you'll need to usually add the *tidyverse* library for most of the assignments.
+
+You'll also need to add any datasets you are working with that you need to import. For example, to add SPSS files like the "Album Sales" Dataset you'll need to add the "haven library" and then include the code to import the file.
+
+Or if you import a .csv file, you'll need to include the code for that as well.
+
+If you're not sure of where the file is, you can always import the file first and the copy the code from your console. Typically this is not included (include = FALSE), but sometimes we need to see how you set things up.
+
+![r setup file](https://jvanster.github.io/r%20setup%20file.png)
+
+## 3. Add questions from the assignment.
+
+For each question you'll want to copy and paste the question from your homework into R Markdown. For example, from your quiz.
+
+1.  Use the "Star Wars" data from the tidy verse, use the "pipe" feature to filter the dataset to mass below 250. With the new dataset, create a scatterplot of mass and height.
+
+## 4. Answer the question
+
+R Markdown allows you to answer the question using both the code and output. So I'll start with a descriptive sentence or annotation about what I'm doing and then show the code and the output.
+
+Filter dataset to mass below 250
+
+```{r}
+Smaller_StarWars <- starwars %>%
+  filter(starwars$mass < 250)
+Smaller_StarWars
+```
+
+Create a scatterplot of mass and height
+
+```{r include=TRUE}
+ggplot(data = Smaller_StarWars) +
+  geom_point(mapping = aes(x = mass, 
+                           y = height))
+```
+
+## 5 Knit your document
+
+After your done with your document and want to turn it in, you'll click the **knit** button and knit it as a word document.
+
+The document will be saved in your working directory. The working directory is the file where all your current files are being saved. It should be listed in your console or you can type the command `getwd()` to find it as well.
+
+Here is a R Markdown template file to get you started:
+
+[Assignment Template](https://jvanster.github.io/Assignment%20Template.Rmd)
