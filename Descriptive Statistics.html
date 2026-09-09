@@ -600,30 +600,28 @@ window.Quarto = {
 
 <section id="opening-datasets" class="level2">
 <h2 class="anchored" data-anchor-id="opening-datasets">Opening datasets</h2>
-<p>Sometimes pre-existing datasets are imported into R Studio. There are several different types of datasets that can be imported. The ones used most frequently in this course are from Excel and SPSS. Types of computer files are indicated by what follows the period (“.”) in the file name. For example file.docx is a type of word file.</p>
+<p>Sometimes pre-existing datasets are imported into R Studio. There are several different types of datasets that can be imported. The ones used most frequently in this course are from Excel and SPSS. Types of computer files are indicated by what follows the period (“.”) in the file name. For example file.docx is a type of <strong>Word</strong> file.</p>
 <p>Here’s a list of common file types we’ll use.</p>
 <ul>
 <li>Excel = .xlsx</li>
 <li>SPSS = .sav</li>
-<li>Comma Seperated Values = .csv</li>
+<li>Comma Separated Values = .csv</li>
 </ul>
-<p>One files we’ll be using today is the <em>Album Sales</em> file. On the moodle page for the course at the very top underneath the link for zoom sessions, you’ll see a folder with SPSS Data Sets. When you click on the folder you’ll see a list of datasets. Click on the one that says, “Album Sales.sav” and download it to your computer.</p>
-<p>Once the file is downloaded go to the upper right pane in R Studio. Under the environment tab you’ll see a button that says “Import Dataset”. Click on the button and you’ll get several different options. Go to the one that says “From SPSS” and click on it. At the top of the window you’ll need to find the file you are importing to open it. Click on the Browse buttom to find the file. Once you find it click open and it will give you a preview of the file in the window. Then all you need to do is click import.</p>
-<p>Here is the code for importing the file</p>
+<p>One file we’ll be using today is the <em>Album Sales</em> file. You can either import the file in R Studio by downloading it first or you can actually import the file from the website itself. So instead of importing the file on you computer you simply point R Studio to the web address of the file. To make things easier, that’s how we will do it here.</p>
+<p>Here is the code for importing the file from the web.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Album_Sales <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">"Album Sales.sav"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Album_Sales <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">"https://github.com/jvanster/Psy_300_Datasets/raw/refs/heads/main/SPSS_Datasets/Album%20Sales.sav"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(Album_Sales)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="descriptive-statistics" class="level2">
 <h2 class="anchored" data-anchor-id="descriptive-statistics">Descriptive Statistics</h2>
-<p>Descriptive statisitics are just what the name implies, they are used to <em>describe</em> a dataset. This is different from <em>inferential</em> statistics, which are used to <em>infer</em> population paramenters based on a sample.</p>
+<p>Descriptive statistics are just what the name implies, they are used to <em>describe</em> a dataset. This is different from <em>inferential</em> statistics, which are used to <em>infer</em> population parameters based on a sample.</p>
 <p>One of the most common sets of descriptive statistics is known as <em>central tendency</em>, which is simply finding a way to get a basic overview of a dataset as a whole.</p>
 <section id="mean" class="level3">
 <h3 class="anchored" data-anchor-id="mean">Mean</h3>
-<p>The easiest way to measure central tendency is to find the average or the <em>mean</em>. The formula for the mean is very straightforward. It’s simply the sum of all the scores divided by the number of scores. The symbol for the sample mean is an x with a bar over it. <span class="math display">\[
-\bar X=\frac{\Sigma X}{N}
-\]</span> The capital Greek letter Sigma in the numerator stands for sum and X stands in for all the values in a dataset with the N standing for the number of values in the dataset. In R Studio, we simply use the mean command to find the mean for a particular variable</p>
+<p>One measure of central tendency is the <em>mean or average</em>, which shows us the center of a distribution of data. The formula for the mean is very straightforward. It’s simply the sum of all the scores divided by the number of scores. The symbol for the sample mean is an x with a bar over it. <span class="math display">\[\bar x=\frac{\Sigma x}{n}\]</span> The capital Greek letter Sigma in the numerator stands for sum and X stands in for all the values in a dataset with the N standing for the number of values in the dataset. In R Studio, we simply use the mean command to find the mean for a particular variable</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(diamonds<span class="sc">$</span>carat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -651,7 +649,7 @@ window.Quarto = {
 <pre><code>[1] 0.3</code></pre>
 </div>
 </div>
-<p>We tend to use the mean most often for central tendency, but it’s more effected by extreme scores. So if you have several low or high outliers (extreme scores that are higher or lower than the mean), the median may be a more accurate representation of the data. More often then not, we’ll use the mean. The mode is a more straightforward measure. So if you were interested in the most popular song on an album based on downloads, you would find the mode. The mode is often very helpful with categorical data.</p>
+<p>We tend to use the mean most often for central tendency, but it’s more effected by extreme scores. So if you have several low or high outliers (extreme scores that are higher or lower than the mean), the median may be a more accurate representation of the data. More often than not, we’ll use the mean. The mode is a more straightforward measure. So if you were interested in the most popular song on an album based on downloads, you would find the mode. The mode is often very helpful with categorical data.</p>
 </section>
 </section>
 <section id="variability" class="level2">
@@ -659,20 +657,15 @@ window.Quarto = {
 <p>The second most important aspect of descriptive statistics is <em>variability</em> or <em>dispersion</em> in a dataset. This typically represents how the rest of the dataset relates to the mean or some other measure of central tendency. For example: are the scores close to or widely dispersed from the mean?</p>
 <section id="standard-deviation" class="level3">
 <h3 class="anchored" data-anchor-id="standard-deviation">Standard Deviation</h3>
-<p>Often times were interested in the average spread or deviation from the mean. <em>Deviance</em> is the distance from any particular score from the mean. So to find the deviance you simply take the score and subtract it from the mean. <span class="math display">\[
-deviance = X - \bar X
-\]</span> If we wanted to find out the total amount of deviance, we could simply add together the total deviance for each number in our dataset. So the equation would look like this: <span class="math display">\[
-total\;deviance = \Sigma(X-\bar X)
-\]</span> Unfortunately this equation causes some problems. If you remember, the mean is the average score, so it’s the score at around 50%. But that means that for any dataset about half the scores will be above the mean and half the scores will be below the mean. Or another way to think about it, half the deviation scores will be negative and half the deviation scores will be positive. So if we add up all these scores, the total deviation will be equal to 0, but 0 doesn’t tell us much about the spread of the scores.</p>
-<p>The way to overcome this problem is by squaring each deviation score, which makes all the deviation values positive and thus produces a positive number. This number is called the <em>sum of squared errors</em> of the <em>sum of squares</em> (SS) with the following formula. <span class="math display">\[
-sum\;of\;squares (SS) = \Sigma(X-\bar X)^2
-\]</span> This number is still somewhat inflated, since its constructed based on squared values. One way to fix this issue to to find the average dispersion, which will be based on the number in our sample. Since the sample is an estimate of the population, we actually don’t use N, but N -1. This number is called <em>variance</em> and has the following symbol and equation. <span class="math display">\[
-variance(s^2) = \frac {SS}{N-1} = \frac {\Sigma(X-\bar X)^2}{N-1}
-\]</span></p>
+<p>Often times we’re interested in the average spread or deviation from the mean. <em>Deviance</em> is the distance of any particular score from the mean. So to find the deviance you simply take the score and subtract it from the mean. <span class="math display">\[deviance = \bar x - x\]</span> If we wanted to find out the total amount of deviance, we could simply add together the total deviance for each number in our dataset. So the equation would look like this:</p>
+<p><span class="math display">\[total\;deviance = \Sigma(X-\bar X)\]</span></p>
+<p>Unfortunately this equation causes some problems. All the positive values above the mean and negative values below the mean cancel each other out, leaving a total deviance of zero. Zero doesn’t tell us much about variability and deviation, so we need a way to fix this issue.</p>
+<p>The way to overcome this problem is by squaring each deviation score, which makes all the deviation values positive and thus produces a positive number. This number is called the <em>sum of squared errors</em> or the <em>sum of squares</em> (SS) with the following formula.</p>
+<p><span class="math display">\[sum\;of\;squares (SS) = \Sigma(X-\bar X)^2\]</span></p>
+<p>This number is still somewhat inflated, since it’s constructed based on squared values. One way to fix this issue to find the average dispersion, which will be based on the number in our sample. Since the sample is an estimate of the population, we actually don’t use N, but N -1. This number is called <em>variance</em> and has the following symbol and equation.</p>
+<p><span class="math display">\[variance(s^2) = \frac {SS}{n-1} = \frac {\Sigma(x-\bar x)^2}{n-1}\]</span></p>
 <p>This number is closer to the original units of measurement, but to make it more accurate, the original squared values need to be taken back out of the measure. To do this, the square root of the variance is calculated.</p>
-<p><span class="math display">\[
-s = \sqrt {\frac {\Sigma (X- \bar X)^2}{N-1}}
-\]</span></p>
+<p><span class="math display">\[s = \sqrt {\frac {\Sigma (x- \bar x)^2}{n-1}}\]</span></p>
 <p>To find the standard deviation using R Studio we use the <code>sd</code> command to find it.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(Album_Sales<span class="sc">$</span>Adverts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -683,7 +676,7 @@ s = \sqrt {\frac {\Sigma (X- \bar X)^2}{N-1}}
 </section>
 <section id="range" class="level3">
 <h3 class="anchored" data-anchor-id="range">Range</h3>
-<p>Another measure of dispersion is range. This is simply subtracting the highest score from the lowest score for a particular variable or vector of scores. So to find the range simply use the <code>range</code> function and then subtract the two numbers provided, which are the highest and the lowest.</p>
+<p>Another measure of dispersion is range. This is simply subtracting the lowest score from the highest score for a particular variable or vector of scores. So to find the range simply use the <code>range</code> function and then subtract the two numbers provided, which are the min and max.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(Album_Sales<span class="sc">$</span>Adverts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -700,7 +693,7 @@ s = \sqrt {\frac {\Sigma (X- \bar X)^2}{N-1}}
 </section>
 <section id="interquartile-range" class="level3">
 <h3 class="anchored" data-anchor-id="interquartile-range">Interquartile Range</h3>
-<p>Another helpful type of range is the <em>interquartile range</em>, which is the range of numbers from the 25th and 75th percentile. Percentiles are just dividing up a dataset based on where certain scores are based on percentages. For example, we can look at what score is at the 50th percentile. To do that we use the <code>quantile</code> function (a <em>quantile</em> is the same thing as a <em>percentile</em>). x is the variable we are analyzing, and .5 is the percentile (.5 = 50%; .35 = 35%)</p>
+<p>Another helpful type of range is the <em>interquartile range</em>, which is the range of numbers from the 25th and 75th percentile. Percentiles are just dividing up a dataset based on where certain scores are based on percentages. For example, we can look at what score is at the 50th percentile. To do that we use the <code>quantile</code> function. x is the variable we are analyzing, and .5 is the percentile (.5 = 50%; .35 = 35%)</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(<span class="at">x =</span> diamonds<span class="sc">$</span>carat, <span class="at">probs =</span> .<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -708,8 +701,8 @@ s = \sqrt {\frac {\Sigma (X- \bar X)^2}{N-1}}
 0.7 </code></pre>
 </div>
 </div>
-<p>So the number at the 50th percentile is 0.7. Notice that this is the same as the median, described earlier. Remember that the median is the number from the dataset that is in the middle or center of the dataset. Because the mean is calculated, it may or may not be a number in the dataset. The mean is the number that describes the closest number to the average, but may or may not be a number contained in the dataset.</p>
-<p>So to find the interquartile range, we want our two quartiles or numbers at “quarters” of the dataset, so 25% and 75%. Think of a dollar, which is made up of 4 quarters. We already know that half a dolar is 50 cents, which would be the median, but the other two quartiles (quarters) would be 25 cents and 75 cents.</p>
+<p>So the number at the 50th percentile is 0.7. Notice that this is the same as the median, described earlier. Remember that the median is the number from the dataset that is in the middle or center of the dataset. Because the mean is calculated, it may or may not be a number in the dataset.</p>
+<p>So to find the interquartile range, we want our two quartiles or numbers at “quarters” of the dataset, so 25% and 75%. Think of a dollar, which is made up of 4 quarters. We already know that half a dollar is 50 cents, which would be the median, but the other two quartiles (quarters) would be 25 cents and 75 cents.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(<span class="at">x =</span> diamonds<span class="sc">$</span>carat, <span class="at">probs =</span> <span class="fu">c</span>(.<span class="dv">25</span>, .<span class="dv">75</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -717,7 +710,7 @@ s = \sqrt {\frac {\Sigma (X- \bar X)^2}{N-1}}
 0.40 1.04 </code></pre>
 </div>
 </div>
-<p>Finally, to get the interquartile ranks we simply subtract these two numbers.</p>
+<p>Finally, to get the interquartile range we simply subtract these two numbers.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.04-.40</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
