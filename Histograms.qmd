@@ -27,7 +27,7 @@ ggplot(data = diamonds) +
 
 ### Understanding the Code
 
-As a refresher, let's talk through the code. *ggplot* gives us the primary command, followed by the data set we want to use in parentheses (). Then we use a new geom called *geom_histogram* with a mapping of the variable we are investigating, carat (mapping = aes(x=carat)). Finally we use *binwidth* to define how many intervals to divide the x axis.
+As a refresher, let's talk through the code. *ggplot* gives us the primary command, followed by the data set we want to use in parentheses (). Then we use a new geom called *geom_histogram* with a mapping of the variable we are investigating, carat (mapping = aes(x=carat)). Finally we use *binwidth* to set the width of each bin, which is shown by each individual bar.
 
 ### Binwidth
 
@@ -86,6 +86,7 @@ One of the more important histograms is called the **normal curve**. The normal 
 To demonstrate this, let's create a variable that is normally distributed and part of a dataset that has a second categorical variable. To do this, we can use the `rnorm` function to create this type of variable and include it with a categorical variable using the `rep` function.
 
 ```{r, eval=TRUE}
+set.seed(42)
 Practice <- data.frame(Condition = 
             c(rep(c("A", "B"), each=250)), 
             Dist = rnorm(500, mean = 0, sd = 1))
@@ -110,21 +111,43 @@ So the greatest density or percentage of scores lies close to the mean and the l
 
 Datasets may also be **skewed**, which means that the bulk of the scores is either more toward the higher end or lower end of the graph.
 
-![](https://learningstatisticswithr.com/book/lsr_files/figure-html/skewness-1.png)
+```{r}
+#| echo: false
+library(tidyverse)
 
-Skew is basically a measure of asymmetry in comparisong to the symmetry present in a normal curve. Negatively skewed histograms have a greater frequency of scores that tend to be larger and more extreme smaller scores at the left tail of the distribution. Positive skew is the exact opposite. Greater frequency of scores that tend to be smaller and more extreme scores at the right tail of the distribution.
+set.seed(42)
 
-### Kurtosis
+# Positive (right) skew — long tail extends right
+df_pos_skew <- tibble(x = rgamma(2000, shape = 2, rate = 1))
 
-*Kurtosis* is a measure of the "pointiness" of a data set. The more kurtosis the closer the scores are to the mean and less kurtosis the more spread out the data set.
+# Negative (left) skew — mirror the gamma by negating it
+df_neg_skew <- tibble(x = -rgamma(2000, shape = 2, rate = 1))
 
-![](https://learningstatisticswithr.com/book/lsr_files/figure-html/kurtosis-1.png)
+p_pos <- ggplot(df_pos_skew, aes(x = x)) +
+  geom_histogram(aes(y = after_stat(density)), bins = 50,
+                 fill = "darkorange", color = "white", alpha = 0.85) +
+  geom_vline(aes(xintercept = mean(x)), color = "black", linetype = "dashed") +
+  geom_vline(aes(xintercept = median(x)), color = "firebrick", linetype = "dotted") +
+  labs(title = "Positive (Right) Skew",
+       subtitle = "Mean (dashed) sits to the right of the median (dotted)",
+       x = "Value", y = "Density") +
+  theme_minimal(base_size = 13)
 
-There are a few different types of kurtosis.
+p_neg <- ggplot(df_neg_skew, aes(x = x)) +
+  geom_histogram(aes(y = after_stat(density)), bins = 50,
+                 fill = "steelblue", color = "white", alpha = 0.85) +
+  geom_vline(aes(xintercept = mean(x)), color = "black", linetype = "dashed") +
+  geom_vline(aes(xintercept = median(x)), color = "firebrick", linetype = "dotted") +
+  labs(title = "Negative (Left) Skew",
+       subtitle = "Mean (dashed) sits to the left of the median (dotted)",
+       x = "Value", y = "Density") +
+  theme_minimal(base_size = 13)
 
--   Platykurtic - Flat, spread out
--   Mesokurtic - Even distribution, kurtosis close to 0
--   Leptokurtic - Too "pointy", bunched around the mean
+p_pos
+p_neg
+```
+
+Skew is basically a measure of asymmetry in comparison to the symmetry present in a normal curve. Negatively skewed histograms have a greater frequency of scores that tend to be larger and more extreme smaller scores at the left tail of the distribution. Positive skew is the exact opposite. Greater frequency of scores that tend to be smaller and more extreme scores at the right tail of the distribution.
 
 ### Density Curve
 
