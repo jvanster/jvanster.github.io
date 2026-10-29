@@ -1,6 +1,11 @@
 ---
 title: "Sampling Distributions & the CLT for Proportions"
 author: "James Van Slyke"
+format:
+  html:
+    theme:
+      light: litera
+      dark: superhero
 ---
 
 ```{r}
@@ -169,7 +174,7 @@ The proportion of blue beads is just the **mean** of those 0s and 1s. A single b
 The CLT only works when certain conditions are met. Let's check each one for our bead jar.
 
 | Condition | Rule | Bead jar ($n = 20$) | Met? |
-|----|----|----|----|
+|------------------|------------------|------------------|------------------|
 | Random | Data come from a random sample | `sample()` draws at random | Yes |
 | Independence | $n \leq 10\%$ of the population | $20 \leq 140$ | Yes |
 | Large counts | $np \geq 10$ and $n(1-p) \geq 10$ | $np = 12$, $n(1-p) = 8$ | Borderline |

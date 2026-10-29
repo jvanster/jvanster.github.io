@@ -4,8 +4,8 @@ project:
 format:
   html:
     theme:
-      light: minty
-      dark: darkly
+      light: litera
+      dark: superhero
     css: styles.css
     toc: true
     link-external-newwindow: true
@@ -42,8 +42,8 @@ website:
         - Descriptive Statistics.qmd
         - Hypothesis_Testing.qmd
         - Probability Theory.qmd
-        - Independent t test.qmd
-        - Paired Samples t test.qmd
+        - Sampling Distributions.qmd
+        - z Test.qmd
     - section: "Graphs"
       contents:
         - Intro to ggplot.qmd
@@ -54,6 +54,8 @@ website:
       contents: 
         - Correlation.qmd
         - Regression.qmd
+        - Independent t test.qmd
+        - Paired Samples t test.qmd       
         - One-Way ANOVA.qmd
         - Two-Way ANOVA.qmd
         - ANCOVA.qmd

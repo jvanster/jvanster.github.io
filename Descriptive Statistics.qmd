@@ -28,7 +28,6 @@ Here is the code for importing the file from the web.
 ```{r, eval=TRUE}
 library(haven)
 Album_Sales <- read_sav("https://github.com/jvanster/Psy_300_Datasets/raw/refs/heads/main/SPSS_Datasets/Album%20Sales.sav")
-View(Album_Sales)
 ```
 
 ## Descriptive Statistics
@@ -39,9 +38,7 @@ One of the most common sets of descriptive statistics is known as *central tende
 
 ### Mean
 
-One measure of central tendency is the *mean or average*, which shows us the center of a distribution of data. The formula for the mean is very straightforward. It's simply the sum of all the scores divided by the number of scores. The symbol for the sample mean is an x with a bar over it.
-$$\bar x=\frac{\Sigma x}{n}$$
-The capital Greek letter Sigma in the numerator stands for sum and X stands in for all the values in a dataset with the N standing for the number of values in the dataset. In R Studio, we simply use the mean command to find the mean for a particular variable
+One measure of central tendency is the *mean or average*, which shows us the center of a distribution of data. The formula for the mean is very straightforward. It's simply the sum of all the scores divided by the number of scores. The symbol for the sample mean is an x with a bar over it. $$\bar x=\frac{\Sigma x}{n}$$ The capital Greek letter Sigma in the numerator stands for sum and X stands in for all the values in a dataset with the N standing for the number of values in the dataset. In R Studio, we simply use the mean command to find the mean for a particular variable
 
 ```{r, eval= TRUE}
 mean(diamonds$carat)
@@ -75,13 +72,11 @@ The second most important aspect of descriptive statistics is *variability* or *
 
 ### Standard Deviation
 
-Often times we're interested in the average spread or deviation from the mean. *Deviance* is the distance of any particular score from the mean. So to find the deviance you simply take the score and subtract it from the mean.
-$$deviance = \bar x - x$$
-If we wanted to find out the total amount of deviance, we could simply add together the total deviance for each number in our dataset. So the equation would look like this:
+Often times we're interested in the average spread or deviation from the mean. *Deviance* is the distance of any particular score from the mean. So to find the deviance you simply take the score and subtract it from the mean. $$deviance = \bar x - x$$ If we wanted to find out the total amount of deviance, we could simply add together the total deviance for each number in our dataset. So the equation would look like this:
 
 $$total\;deviance = \Sigma(X-\bar X)$$
 
-Unfortunately this equation causes some problems. All the positive values above the mean and negative values below the mean cancel each other out, leaving a total deviance of zero. Zero doesn't tell us much about variability and deviation, so we need a way to fix this issue. 
+Unfortunately this equation causes some problems. All the positive values above the mean and negative values below the mean cancel each other out, leaving a total deviance of zero. Zero doesn't tell us much about variability and deviation, so we need a way to fix this issue.
 
 The way to overcome this problem is by squaring each deviation score, which makes all the deviation values positive and thus produces a positive number. This number is called the *sum of squared errors* or the *sum of squares* (SS) with the following formula.
 
